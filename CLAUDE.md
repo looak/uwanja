@@ -17,8 +17,8 @@ work.
 
 ## Working here
 
-- `python -m venv .venv`, then `.venv/Scripts/pip install -e ".[dev]"` (`.venv/bin/pip` on Linux); `pytest` runs the
-  suite. The live path is tested against a recorded gauntlet in `tests/data`; `uwanja follow` and `uwanja replay`
+- `python -m venv .venv`, then `.venv/Scripts/pip install -r requirements.txt` and `pip install pytest`
+  (`.venv/bin/pip` on Linux); `pytest` runs the suite. The live path is tested against a recorded gauntlet in `tests/data`; `uwanja follow` and `uwanja replay`
   are how to develop it without playing one.
 - Config keys live in the tables at the top of `config.py`; asset and CPU spellings in `assets.py` and
   `hostinfo.TIERS` are data, a new engine's naming is a line there.

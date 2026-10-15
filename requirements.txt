@@ -1,0 +1,4 @@
+# pip install -r requirements.txt   sets up everything, uwanja itself editable
+chess>=1.11          # python-chess: PGN and board logic
+py-cpuinfo>=9.0      # CPUID: which instruction sets the host has, to pick the right engine build
+-e .

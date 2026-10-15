@@ -63,3 +63,17 @@ def test_android_builds_are_not_linux():
     assert choose_asset(names, host("linux", "arm64")) == "engine-linux-arm64-universal.tar.gz"
     with pytest.raises(NoAsset):
         choose_asset(names[:1], host("linux", "arm64"))
+
+
+def test_cpuinfo_flags_become_tiers():
+    from uwanja.hostinfo import parse_cpuinfo
+    info = {"brand_raw": "AMD Ryzen 9 5950X", "vendor_id_raw": "AuthenticAMD", "family": 25,
+            "flags": ["sse4_1", "sse4_2", "popcnt", "avx", "avx2", "bmi1", "bmi2", "avx512f", "avx512bw",
+                      "avx512vl", "avx512_vnni"]}
+    flags, name, vendor, family = parse_cpuinfo(info)
+    assert {"avx2", "bmi2", "avx512vnni", "popcnt"} <= flags and family == 25
+    zen5 = HostInfo("linux", "x86_64", flags=frozenset(flags))
+    assert [tier for tier, _ in zen5.tiers()][:2] == ["vnni512", "avx512"]
+    assert choose_asset(STOCKFISH, zen5) == "stockfish-ubuntu-x86-64-vnni512.tar"
+    assert choose_asset(STOCKFISH, HostInfo("linux", "x86_64", flags=frozenset(flags - {"avx512vnni"}))) \
+        == "stockfish-ubuntu-x86-64-avx512.tar"

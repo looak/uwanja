@@ -9,7 +9,7 @@ description = "Engine-agnostic gauntlet runner: fetches UCI engines, plays them 
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "GPL-3.0-only" }
-dependencies = ["chess>=1.11"]
+dependencies = ["chess>=1.11", "py-cpuinfo>=9.0"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8"]

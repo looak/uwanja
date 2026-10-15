@@ -17,9 +17,11 @@ from __future__ import annotations
 import json
 import os
 import re
+import signal
 import subprocess
 import sys
 import time
+from contextlib import contextmanager
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable
@@ -58,6 +60,30 @@ class RunPaths:
     def out(self) -> Path: return self.root / "fastchess.out"
     @property
     def fastchess_config(self) -> Path: return self.root / "fastchess-config.json"
+
+
+@contextmanager
+def stop_on_signals():
+    """SIGTERM (systemd, `kill`), SIGHUP (the terminal closed) and Ctrl-Break are a stop, as Ctrl-C is: fastchess is
+    stopped and nyayo is told `stopped`, not left showing `running`. Only the main thread can take signals."""
+    previous = {}
+
+    def stop(number, frame):
+        raise KeyboardInterrupt
+
+    for name in ("SIGTERM", "SIGHUP", "SIGBREAK"):
+        number = getattr(signal, name, None)
+        if number is None:
+            continue
+        try:
+            previous[number] = signal.signal(number, stop)
+        except (ValueError, OSError):
+            pass
+    try:
+        yield
+    finally:
+        for number, handler in previous.items():
+            signal.signal(number, handler)
 
 
 def write_atomic(path: Path, text: str) -> None:
@@ -244,6 +270,10 @@ class Session:
         self._dirty, self._last_document = False, now
 
     def run(self, argv: list[str] | None, idle_exit: float | None = None) -> int:
+        with stop_on_signals():
+            return self._run(argv, idle_exit)
+
+    def _run(self, argv: list[str] | None, idle_exit: float | None) -> int:
         """Plays the gauntlet (`argv` is fastchess' command line), or with None only follows the files already
         there, for a recorded gauntlet or a replay. Returns the exit code: 0 finished, 130 stopped, 1 error."""
         process: subprocess.Popen | None = None

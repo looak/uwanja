@@ -76,14 +76,37 @@ def arch_name() -> str:
 
 def detect() -> HostInfo:
     system, arch = os_name(), arch_name()
+    flags: set[str] = set()
+    name = vendor = family = None
+    if arch == "x86_64":
+        try:
+            flags, name, vendor, family = _cpuinfo()       # the CPU's own answer, on every OS
+        except ImportError:
+            pass
+        except Exception as failure:
+            print(f"uwanja: py-cpuinfo failed ({failure}), reading the OS instead", file=sys.stderr)
     reader = {"linux": _linux, "macos": _macos, "windows": _windows}.get(system)
-    try:
-        flags, name, vendor, family = reader(arch) if reader else (set(), None, None, None)
-    except Exception as failure:     # a host we can't read still runs, with generic builds
-        print(f"uwanja: couldn't read the CPU ({failure}), assuming a generic build", file=sys.stderr)
-        flags, name, vendor, family = set(), None, None, None
+    if not flags and reader is not None:
+        try:
+            flags, name, vendor, family = reader(arch)
+        except Exception as failure:     # a host we can't read still runs, with generic builds
+            print(f"uwanja: couldn't read the CPU ({failure}), assuming a generic build", file=sys.stderr)
     slow = bool(vendor) and any(maker in vendor.upper() for maker in ("AMD", "HYGON")) and family in (23, 24)
     return HostInfo(system, arch, name, frozenset(flags), slow)
+
+
+def parse_cpuinfo(info: dict) -> tuple[set[str], str | None, str | None, int | None]:
+    """(flags, name, vendor, family) from py-cpuinfo's dictionary."""
+    flags = {_flag(str(token)) for token in info.get("flags", [])}
+    family = info.get("family")
+    return flags, info.get("brand_raw"), info.get("vendor_id_raw"), family if isinstance(family, int) else None
+
+
+def _cpuinfo():
+    """CPUID through py-cpuinfo: every flag, BMI2 and the AVX-512 subsets included, which Windows' own API can't say.
+    It takes a second or so, once per run."""
+    import cpuinfo
+    return parse_cpuinfo(cpuinfo.get_cpu_info())
 
 
 def _linux(arch: str):
@@ -121,7 +144,7 @@ def _macos(arch: str):
     return flags, name, sysctl("machdep.cpu.vendor") or None, None
 
 
-# IsProcessorFeaturePresent ids, the one API Windows gives without CPUID. It doesn't know BMI2 or the AVX-512
+# IsProcessorFeaturePresent ids, the fallback when py-cpuinfo isn't there. It doesn't know BMI2 or the AVX-512
 # subsets: AVX2 CPUs are taken to have BMI2 (every Intel and AMD part with AVX2 does), AVX512F to mean BW and VL
 # too, and VNNI is never claimed. UWANJA_CPU can say more.
 _PF = {"ssse3": 36, "sse4_1": 37, "sse4_2": 38, "avx": 39, "avx2": 40, "avx512f": 41, "arm_v8": 29, "arm_dp": 43}

@@ -10,13 +10,16 @@ at the end.
 It knows nothing about any one engine: the engine under test is any UCI binary, as the opponents are. It runs the
 same on Windows, Linux and macOS, Python 3.11+ with one dependency (python-chess).
 
+A stop signal (Ctrl-C, SIGTERM, SIGHUP, Ctrl-Break) stops fastchess and reports the match `stopped`.
+
 Status: working end to end against fastchess and a mock nyayo. Building engines from source, resuming a stopped
 gauntlet and `selfplay` are not done, see Not yet. The design is in ramani's `plans/gauntlet-runner.md`.
 
 ## Using it
 
 ```bash
-python -m venv .venv && .venv/bin/pip install -e .      # .venv/Scripts/pip on Windows
+python -m venv .venv
+.venv/bin/pip install -r requirements.txt    # .venv/Scripts/pip on Windows; python-chess, py-cpuinfo, uwanja
 
 uwanja run gauntlet.toml               # fetch, play, report
 uwanja run gauntlet.toml --dry-run     # fetch and resolve everything, print fastchess' command line, play nothing
@@ -86,7 +89,8 @@ error that lists the ones it does.
 ## What it does
 
 1. **Fetches** fastchess (a pinned release, cached) and each engine's release asset for this OS, CPU architecture and
-   instruction set (`avx512`, `bmi2`, `avx2`, `sse41`, ...), detected from the host, the best the CPU runs first. AMD
+   instruction set (`vnni512`, `avx512`, `bmi2`, `avx2`, `sse41`, ...), read from the CPU's CPUID through py-cpuinfo,
+   the best the CPU runs first. AMD
    before Zen 3 prefers `avx2` over `bmi2`, its PEXT is slow. `UWANJA_CPU=avx2` overrides detection. Downloads are
    cached by release and asset in `$UWANJA_HOME` or the OS's cache directory.
 2. **Asks each engine who it is**: `uci` for its name, `buildinfo` for version and commit, `bench` for the node count,

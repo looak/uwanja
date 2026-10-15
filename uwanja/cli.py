@@ -135,10 +135,12 @@ def cmd_report(args: argparse.Namespace) -> int:
 
 def cmd_host(args: argparse.Namespace) -> int:
     host = detect()
+    from .hostinfo import TIERS
+    used = set().union(*(needs for tiers in TIERS.values() for _, _, needs in tiers))
     print(json.dumps({
         "os": host.os, "arch": host.arch, "cpu": host.cpu_name, "logical_cores": host.logical_cores,
-        "flags": sorted(host.flags), "slow_pext": host.slow_pext, "tiers": [tier for tier, _ in host.tiers()],
-        "cache": str(cache_dir()),
+        "flags": sorted(host.flags & used), "slow_pext": host.slow_pext,
+        "tiers": [tier for tier, _ in host.tiers()], "cache": str(cache_dir()),
     }, indent=2))
     return 0
 
