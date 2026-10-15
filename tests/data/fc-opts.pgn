@@ -1,0 +1,725 @@
+[Event "Fastchess Tournament"]
+[Site "?"]
+[Date "2026.10.15"]
+[Round "1"]
+[White "b"]
+[Black "a"]
+[Result "0-1"]
+[EngineWhiteAuthor "Alexander Loodin Ek"]
+[EngineBlackAuthor "Alexander Loodin Ek"]
+[SetUp "1"]
+[FEN "rnbqkb1r/pppppppp/5n2/8/3P4/8/PPP1PPPP/RNBQKBNR w KQkq - 1 2"]
+[GameDuration "00:00:03"]
+[GameStartTime "2026-10-15T16:29:28 -0700"]
+[GameEndTime "2026-10-15T16:29:31 -0700"]
+[PlyCount "148"]
+[Termination "normal"]
+[TimeControl "1+0.01"]
+[ECO "D05"]
+[Opening "Queen's Pawn Game: Colle System"]
+
+2. e3 {+0.04/10 0.051s, n=123659, nps=0, pv="e2e3 d7d5 g1f3 b8c6 f1b5 e7e6 b1c3 f8e7 f3e5 c8d7"}
+d5 {-0.14/10 0.051s, n=125051, nps=0, pv="d7d5 g1f3 e7e6 b1c3 f8d6 f1d3 e8g8 e1g1 b8c6 c1d2"}
+3. Nf3 {+0.04/10 0.047s, n=118159, nps=0, pv="g1f3 b8c6 f1b5 e7e6 e1g1 f8d6 f3e5 c8d7 e5d7 d8d7"}
+e6 {-0.14/10 0.066s, n=162374, nps=0, pv="e7e6 b1c3 b8c6 f1d3 f8d6 e1g1 e8g8 c1d2 c6b4 c3b5"}
+4. c4 {+0.17/9 0.059s, n=148308, nps=0, pv="c2c4 f8b4 b1c3 e8g8 f1d3 c7c5 a2a3 c5d4 a3b4 d4c3"}
+Bb4+ {-0.15/8 0.043s, n=112877, nps=0, pv="f8b4 c1d2 b4d6 c4c5 d6e7 f1d3 b8c6 e1g1 e8g8"}
+5. Nc3 {+0.19/9 0.033s, n=87828, nps=0, pv="b1c3 e8g8 f1d3 c7c5 a2a3 c5d4 e3d4 d5c4 a3b4 c4d3"}
+c5 {-0.24/8 0.033s, n=91514, nps=0, pv="c7c5 c4d5 f6d5 c1d2 e8g8 f1d3 c5d4 c3d5"}
+6. cxd5 {+0.14/9 0.061s, n=159149, nps=0, pv="c4d5 e6d5 a2a3 b4c3 b2c3 f6e4 d4c5 e8g8 c1b2 e4c5"}
+exd5 {-0.21/8 0.030s, n=80588, nps=0, pv="e6d5 f1b5 c8d7 b5d7 b8d7 e1g1 e8g8 a2a3 b4c3 b2c3"}
+7. Bb5+ {+0.15/9 0.052s, n=133377, nps=0, pv="f1b5 b8c6 a2a3 b4c3 b2c3 d8a5 b5c6 b7c6 c1d2 f6e4 f3e5 c8b7"}
+Bd7 {-0.21/8 0.030s, n=80794, nps=0, pv="c8d7 b5d7 b8d7 e1g1 e8g8 a2a3 b4c3 b2c3 c5d4 c3d4"}
+8. Bxd7+ {+0.19/9 0.037s, n=96986, nps=0, pv="b5d7 b8d7 a2a3 b4c3 b2c3 f6e4 c1b2 e8g8 e1g1 a8c8 a1c1"}
+Nbxd7 {-0.17/10 0.051s, n=128560, nps=0, pv="b8d7 e1g1 e8g8 c1d2 c5d4 e3d4 a8c8 d1b3 b4c3 d2c3 d8c7"}
+9. O-O {+0.09/10 0.046s, n=116004, nps=0, pv="e1g1 e8g8 c1d2 c5d4 e3d4 d8b6 c3a4 b6a5 d2b4 a5b4"}
+O-O {-0.19/10 0.042s, n=112420, nps=0, pv="e8g8 c1d2 b4c3 d2c3 f6e4 a1c1 a8c8 d1b3 e4c3 b3c3"}
+10. Bd2 {+0.14/10 0.055s, n=135024, nps=0, pv="c1d2 c5d4 e3d4 d7b6 a2a3 b4d6 c3b5 b6c4 b5d6 d8d6"}
+cxd4 {-0.17/10 0.055s, n=131631, nps=0, pv="c5d4 e3d4 a7a5 a2a3 b4c3 d2c3 f6e4 a1c1 a8c8 f1e1"}
+11. exd4 {+0.11/10 0.028s, n=64816, nps=0, pv="e3d4 d7b6 d1b3 a7a5 a1d1 b6c4 d2f4 a8c8 a2a3 c4a3"}
+a5 {-0.13/9 0.037s, n=79867, nps=0, pv="a7a5 a1c1 a8c8 d2f4 f8e8 a2a3 b4e7 f3e5 d7e5"}
+12. Qb3 {+0.27/9 0.023s, n=55736, nps=0, pv="d1b3 d7b6 a2a3 b4d6 a1d1 a8c8 h2h3 b6c4 b3b7"}
+Nb6 {-0.28/9 0.025s, n=56219, nps=0, pv="d7b6 a1d1 b6c4 d2g5 a8c8 g5f6 g7f6 a2a3 b4c3"}
+13. a3 {+0.21/9 0.028s, n=63965, nps=0, pv="a2a3 b4d6 a1e1 a5a4 b3d1 b6c4 c3a4 c4d2 f3d2"}
+Bxc3 {-0.05/11 0.032s, n=71943, nps=0, pv="b4c3 d2c3 a5a4 b3c2 f6e4 a1e1 e4c3 b2c3 b6c4 c2f5 a8c8"}
+14. Bxc3 {+0.04/11 0.045s, n=102584, nps=0, pv="d2c3 a5a4 b3b4 f6e4 f3e5 d8c7 a1c1 b6c4 e5c4 d5c4 c1d1"}
+a4 {-0.02/11 0.062s, n=133403, nps=0, pv="a5a4 b3b4 f6e4 a1d1 a8c8 f3e5 f8e8 f1e1 d8f6 e1f1 c8d8"}
+15. Qb5 {+0.12/11 0.079s, n=176425, nps=0, pv="b3b5 f6e4 a1d1 e4c3 b2c3 f8e8 d1b1 b6c4 b5b7 e8e2 b7c6"}
+Ne4 {-0.09/11 0.041s, n=86556, nps=0, pv="f6e4 c3b4 f8e8 a1e1 a8c8 b4a5 e8e6 f3e5 c8c2 e1c1 c2c1"}
+16. Rae1 {+0.12/9 0.019s, n=40254, nps=0, pv="a1e1 e4c3 b2c3 d8d6 f3e5 a8c8 b5b2 c8d8 h2h3"}
+Nxc3 {-0.06/10 0.027s, n=56445, nps=0, pv="e4c3 b2c3 d8d6 f3e5 a8c8 b5b2 c8d8 b2b4 f8e8 b4d6"}
+17. bxc3 {+0.10/10 0.027s, n=59710, nps=0, pv="b2c3 d8d6 h2h3 h7h6 e1b1 a8a6 b5b2 d6f6 f3e5 f6f4"}
+Qd6 {-0.03/9 0.027s, n=58756, nps=0, pv="d8d6 h2h4 f8c8 b5b2 c8d8 f3e5 a8c8 h4h5 b6c4"}
+18. Rb1 {+0.09/9 0.024s, n=52386, nps=0, pv="e1b1 b6c4 b1b4 f8d8 b4a4 a8a4 b5a4 d6a3 a4a3"}
+Nc4 {+0.18/10 0.029s, n=61808, nps=0, pv="b6c4 b5b4 d6b4 b1b4 b7b6 f3e5 c4e5 d4e5 a8c8 b4b6"}
+19. Qb4 {-0.30/9 0.033s, n=67858, nps=0, pv="b5b4 f8c8 f1c1 d6b4 b1b4 c8c7 h2h3 c4a3 f3e5"}
+Qxb4 {+0.59/10 0.022s, n=50226, nps=0, pv="d6b4 b1b4 c4a3 b4b7 a3c4 f1a1 a4a3 b7d7 a3a2 d7d5"}
+20. Rxb4 {-0.62/10 0.025s, n=59977, nps=0, pv="b1b4 c4a3 b4b7 a3c4 f1a1 a4a3 b7e7 a8a4 a1a2 f8d8"}
+Nxa3 {+0.67/10 0.018s, n=44495, nps=0, pv="c4a3 b4b7 a3c4 f1a1 a4a3 b7e7 f8e8 e7d7 a3a2 d7d5"}
+21. Rxb7 {-0.86/10 0.019s, n=46511, nps=0, pv="b4b7 a3c4 f1a1 a4a3 b7e7 f8e8 e7e8 a8e8 f3e5 c4e5 d4e5"}
+Nc4 {+1.04/10 0.020s, n=50393, nps=0, pv="a3c4 f1a1 a4a3 a1a2 a8b8 b7b4 b8b4 c3b4 f8b8 f3e5"}
+22. Ra1 {-1.04/10 0.016s, n=41185, nps=0, pv="f1a1 a4a3 a1a2 f8b8 b7b4 b8b4 c3b4 a8b8 f3e5 b8b4"}
+a3 {+1.15/11 0.055s, n=121731, nps=0, pv="a4a3 f3e5 c4e5 d4e5 f8e8 b7b3 e8e5 f2f4 e5e4 a1a3 a8a3"}
+23. Ne5 {-0.85/10 0.022s, n=50911, nps=0, pv="f3e5 f8b8 b7b8 a8b8 e5d3 h7h6 a1e1 b8d8 e1a1 g8h7 a1d1"}
+Rfc8 {+0.78/10 0.023s, n=52787, nps=0, pv="f8c8 e5c4 d5c4 b7b6 h7h6 a1a2 c8e8 g1f1 e8e4 a2d2"}
+24. Nd3 {-0.78/9 0.026s, n=54483, nps=0, pv="e5d3 a8b8 b7b8 c8b8 h2h4 b8b3 a1e1 g8f8 d3f4"}
+Na5 {+0.82/9 0.034s, n=69362, nps=0, pv="c4a5 b7b1 c8c3 d3f4 a5c6 f4d5 c3d3 d5b4 c6b4"}
+25. Rbb1 {-1.45/11 0.040s, n=82175, nps=0, pv="b7b1 c8c3 d3f4 a5b3 f4d5 b3a1 d5c3 a1c2 c3d5 a3a2 d5e7 g8f8"}
+Rxc3 {+1.45/10 0.017s, n=36986, nps=0, pv="c8c3 d3f4 a5b3 f4d5 b3a1 d5c3 a1c2 c3d5 a3a2 d5e7 g8f8"}
+26. Nf4 {-2.14/10 0.029s, n=59710, nps=0, pv="d3f4 a5b3 f4d5 b3a1 d5c3 a1c2 c3a2 c2d4 b1b7 a8d8"}
+Nb3 {+1.92/11 0.019s, n=40985, nps=0, pv="a5b3 f4d5 b3a1 d5c3 a1c2 g2g3 c2d4 g1g2 g8f8 b1a1 f8e7"}
+27. Nxd5 {-1.67/10 0.015s, n=33414, nps=0, pv="f4d5 c3d3 a1a2 b3d4 d5f4 d3c3 f4d5 c3c5 d5b6 a8a6"}
+Rd3 {+1.51/10 0.033s, n=61785, nps=0, pv="c3d3 a1a2 b3d4 d5f4 d3b3 b1b3 d4b3 f4d5 a8a5 d5f4"}
+28. Ra2 {-1.72/10 0.025s, n=46006, nps=0, pv="a1a2 b3d4 d5f4 d3c3 f4d5 c3c5 d5b6 a8a6 b1d1 c5c3"}
+Nxd4 {+1.68/10 0.024s, n=46543, nps=0, pv="b3d4 d5f4 d3b3 b1b3 d4b3 f4d3 b3d4 d3e5 f7f6 e5c4"}
+29. Rba1 {-1.55/8 0.014s, n=27775, nps=0, pv="b1a1 d4e2 a2e2 d3d5 a1e1 h7h5 e2e8 a8e8 e1e8 g8h7 h2h4"}
+Rb8 {+1.78/8 0.020s, n=39024, nps=0, pv="a8b8 d5f4 d3b3 h2h4 b3b1 a1b1 b8b1 g1h2 b1b3 h4h5"}
+30. h4 {-1.43/8 0.026s, n=49761, nps=0, pv="h2h4 d4b5 d5e7 g8h8 e7c6 b8e8 a1c1 b5d6 a2c2"}
+Nb5 {+1.29/8 0.015s, n=29347, nps=0, pv="d4b5 d5e7 g8h8 e7c6 b8b7 c6e5 d3c3 a1d1 h8g8"}
+31. Ne7+ {-1.45/8 0.013s, n=26900, nps=0, pv="d5e7 g8f8 e7c6 b8c8 c6e5 d3d4 h4h5 d4e4 e5d3"}
+Kf8 {+1.53/9 0.027s, n=52779, nps=0, pv="g8f8 e7c6 b8c8 c6e5 d3d4 h4h5 d4e4 e5d7 f8g8 a2d2 c8c3"}
+32. Nc6 {-1.44/9 0.014s, n=25020, nps=0, pv="e7c6 b8e8 a2c2 e8e4 c2c5 b5d4 c6e5 d3b3 h4h5"}
+Rc8 {+1.54/10 0.021s, n=38043, nps=0, pv="b8c8 c6e5 d3c3 g1h2 c3c2 h4h5 c2b2 e5d3 b2c2 a2c2"}
+33. Rc2 {-1.63/8 0.016s, n=30009, nps=0, pv="a2c2 d3c3 c2c3 b5c3 c6b4 c3e2 g1f1 c8c1 a1c1 e2c1"}
+Rd6 {+1.77/9 0.012s, n=23027, nps=0, pv="d3d6 c6b4 c8c2 b4c2 d6d3 h4h5 d3c3 c2e3 b5d4"}
+34. Nb4 {-1.69/10 0.013s, n=25253, nps=0, pv="c6b4 c8c2 b4c2 d6d3 h4h5 f8e7 a1e1 e7d6 c2b4 d3b3 e1d1 d6c5"}
+Rxc2 {+1.78/10 0.018s, n=31053, nps=0, pv="c8c2 b4c2 d6d3 h4h5 f8e7 c2e3 b5d6 e3g4 d6e4 g4e5"}
+35. Nxc2 {-1.79/9 0.014s, n=24292, nps=0, pv="b4c2 d6d3 g1f1 d3b3 f1g1 f8e7 g1h2 e7e6 c2e3"}
+Rd3 {+1.72/10 0.025s, n=43674, nps=0, pv="d6d3 h4h5 d3b3 g1h2 f8e7 c2e3 b5d6 h2g3 d6f5 g3f3 f5d4 f3e4"}
+36. h5 {-1.77/9 0.031s, n=53979, nps=0, pv="h4h5 f8e7 g2g3 e7f6 c2e3 b5d6 g1g2 d6f5 e3c4"}
+Ke7 {+1.86/9 0.033s, n=58106, nps=0, pv="f8e7 g1h2 e7f6 h2g1 f6f5 c2e3 f5g5 g2g4 b5d4 a1c1"}
+37. g3 {-1.84/8 0.016s, n=28165, nps=0, pv="g2g3 e7f6 g1g2 d3c3 c2e3 f6e6 g2f3 b5d4 f3e4"}
+Kf6 {+1.83/8 0.015s, n=24991, nps=0, pv="e7f6 g1g2 f6g5 a1e1 d3d2 e1e5 g5f6 e5b5 d2c2"}
+38. Kg2 {-1.79/8 0.018s, n=30493, nps=0, pv="g1g2 f6g5 a1e1 b5d6 e1e5 g5f6 e5e3 d3e3 c2e3"}
+Kg5 {+1.82/8 0.016s, n=25225, nps=0, pv="f6g5 a1e1 b5d6 e1e5 g5f6 e5a5 d6c4 a5a6 f6e5 a6a8"}
+39. Nb4 {-2.34/8 0.033s, n=53467, nps=0, pv="c2b4 d3d2 a1c1 b5d6 c1c5 g5g4 c5a5 d6e4 a5a3"}
+Rb3 {+2.47/8 0.016s, n=25393, nps=0, pv="d3b3 h5h6 g5h6 b4c6 h6g6 c6e5 g6f6 e5d7 f6f5 a1d1"}
+40. Nc6 {-2.52/8 0.019s, n=28650, nps=0, pv="b4c6 g5h5 c6e5 f7f6 a1h1 h5g5 f2f4 g5f5 h1h5 f5e4 e5c4"}
+Kxh5 {+2.51/8 0.013s, n=19852, nps=0, pv="g5h5 c6e5 f7f6 e5d7 h5g4 d7c5 b3c3 c5e6"}
+41. Ne5 {-2.61/8 0.024s, n=36711, nps=0, pv="c6e5 f7f6 e5c4 h5g6 c4d2 b3b4 d2f3 b4b2"}
+f6 {+2.48/8 0.011s, n=16474, nps=0, pv="f7f6 e5d7 h5g6 d7c5 b3b2 c5d3 b2d2 d3c5"}
+42. Nc4 {-2.52/8 0.016s, n=23318, nps=0, pv="e5c4 h5g5 c4d2 b3b4 d2f3 g5f5 f3h4 f5g5 h4f3 g5f5 a1a2"}
+Kg6 {+2.52/9 0.033s, n=47354, nps=0, pv="h5g6 a1a2 b3c3 c4e3 c3b3 e3d5 b5c3 d5f4 g6f5 a2d2"}
+43. Ra2 {-2.49/7 0.014s, n=15005, nps=0, pv="a1a2 b3c3 c4e3 c3d3 e3c4 d3c3 c4e3"}
+Rb4 {+3.45/8 0.014s, n=21074, nps=0, pv="b3b4 c4e3 b4b2 a2a1 a3a2 e3d5 b2d2 d5f4 g6f5"}
+44. Ne3 {-3.56/10 0.013s, n=19603, nps=0, pv="c4e3 b4b2 a2a1 a3a2 e3c4 b2c2 c4e3 c2e2 e3d5 b5d4"}
+Rb2 {+3.49/10 0.010s, n=15561, nps=0, pv="b4b2 a2a1 a3a2 e3d5 b2d2 d5f4 g6f5 f4h5 g7g5 g3g4 f5g6 a1c1"}
+45. Ra1 {-3.52/10 0.011s, n=16283, nps=0, pv="a2a1 a3a2 e3c4 b2e2 c4e3 g6g5 g2f3 e2d2 a1c1 b5d4 f3e4"}
+a2 {+3.56/9 0.009s, n=13645, nps=0, pv="a3a2 e3d5 b2d2 d5f4 g6f7 g2f3 g7g5 f4e2 g5g4 f3e3 d2c2"}
+46. Nc4 {-3.56/9 0.010s, n=14430, nps=0, pv="e3c4 b2e2 c4e3 g6g5 g2f3 b5d4 f3e4 e2d2 a1c1 h7h5"}
+Re2 {+3.59/9 0.016s, n=22219, nps=0, pv="b2e2 c4e3 e2d2 e3c4 d2e2 a1g1 b5d4 g1d1 g6f5"}
+47. Ne3 {-3.62/8 0.012s, n=16644, nps=0, pv="c4e3 g6g5 a1f1 b5d4 e3d5 e2d2 f1c1 g5g4"}
+Nc3 {+3.54/8 0.010s, n=14001, nps=0, pv="b5c3 e3c4 c3b5 c4e3 b5c3 e3c4 h7h5 g2f3"}
+48. Nc4 {-3.56/9 0.013s, n=17531, nps=0, pv="e3c4 e2c2 g2f3 c3d5 c4d6 c2c6 d6b5 c6c2 b5d4"}
+Re4 {+3.81/8 0.015s, n=20480, nps=0, pv="e2e4 c4d2 e4b4 g2f3 b4b2 f3e3 c3d5 e3d3 g6f5"}
+49. Nd6 {-3.59/7 0.018s, n=23773, nps=0, pv="c4d6 e4a4 d6c8 a4d4 c8e7 g6g5 e7c6 d4d2"}
+Rb4 {+6.58/9 0.034s, n=38345, nps=0, pv="e4b4 g2f3 b4b1 a1a2 c3a2 f3e2 b1b2 e2e3 a2c3 e3d3"}
+50. Kf3 {-6.58/8 0.012s, n=15772, nps=0, pv="g2f3 b4b1 a1a2 c3a2 f3e2 b1b2 e2e3 a2c3 e3d3"}
+Rb1 {+6.63/10 0.014s, n=17534, nps=0, pv="b4b1 a1a2 c3a2 f3e3 a2c3 e3d2 c3d5 d2c2 b1e1 g3g4"}
+51. Rxa2 {-6.68/9 0.015s, n=19513, nps=0, pv="a1a2 c3a2 f3e2 a2c3 e2d2 c3d5 d2c2 b1e1 c2d2 e1a1"}
+Nxa2 {+6.61/9 0.011s, n=13611, nps=0, pv="c3a2 f3e3 a2c3 e3d3 b1d1 d3c3 d1d6 g3g4 d6d1 c3c2"}
+52. Ke3 {-6.70/8 0.014s, n=17085, nps=0, pv="f3e3 a2c3 e3d3 c3d5 d3d4 b1d1 d4c5 h7h5 c5b5"}
+Rb3+ {+6.68/7 0.008s, n=10643, nps=0, pv="b1b3 e3e4 b3b2 f2f4 a2c3 e4d3 c3d5 f4f5 g6g5 d3c4"}
+53. Ke2 {-6.68/6 0.009s, n=11751, nps=0, pv="e3e2 b3b2 e2e3 a2b4 d6c4 b2a2 c4d6 b4d5 e3d4"}
+Rb2+ {+6.78/8 0.017s, n=19738, nps=0, pv="b3b2 e2e3 a2b4 f2f3 b4d5 e3d3 h7h5 f3f4 h5h4 f4f5 g6g5"}
+54. Ke3 {-6.75/7 0.012s, n=14186, nps=0, pv="e2e3 a2b4 d6c4 b2b3 e3e4 b4d3 f2f3 g6g5 e4d4"}
+Nb4 {+6.90/8 0.028s, n=27717, nps=0, pv="a2b4 g3g4 g6g5 f2f3 b4d5 e3e4 b2d2 d6f5 g7g6"}
+55. f3 {-6.77/7 0.009s, n=8879, nps=0, pv="f2f3 b4d5 e3d3 h7h5 d6c4 b2b1 d3c2 b1e1"}
+Rb3+ {+6.97/7 0.012s, n=10358, nps=0, pv="b2b3 e3e2 b4d5 e2f2 b3b2 f2e1 g6g5 e1d1 h7h5"}
+56. Ke2 {-6.93/6 0.011s, n=11211, nps=0, pv="e3e2 b4d5 e2f2 b3b2 f2e1 b2b6 d6c4 b6b3"}
+Nc2 {+7.13/7 0.008s, n=8405, nps=0, pv="b4c2 e2f2 c2d4 f3f4 b3d3 f2g2 d3d1"}
+57. Kf2 {-7.30/7 0.008s, n=8742, nps=0, pv="e2f2 c2d4 f3f4 g6h5 d6e4 b3f3 f2g2 h5g4"}
+Rd3 {+7.34/8 0.012s, n=11907, nps=0, pv="b3d3 d6c4 c2d4 f3f4 g6f5 c4d6 f5g4 d6e4 d3d1"}
+58. Ne8 {-7.42/8 0.034s, n=32114, nps=0, pv="d6e8 c2d4 f3f4 g6f5 e8g7 f5g4 f4f5 d3f3 f2g2 f3g3 g2f2"}
+Rd2+ {+7.62/7 0.012s, n=10979, nps=0, pv="d3d2 f2g1 c2d4 f3f4 d4e2 g1f2 e2f4 f2e3 d2e2 e3f4 e2e8"}
+59. Kf1 {-7.39/7 0.009s, n=6680, nps=0, pv="f2f1 d2d3 f1e2 d3e3 e2d2 e3e8 d2c2 e8e3 g3g4"}
+Nd4 {+7.86/7 0.010s, n=8137, nps=0, pv="c2d4 e8d6 d4f3 d6c4 f3h2 f1g1 h2f3 g1f1 d2c2"}
+60. f4 {-7.60/7 0.009s, n=7012, nps=0, pv="f3f4 d4f5 g3g4 f5g3 f1g1 g3e2 g1f2 e2f4 f2e3 d2e2 e3f4"}
+Nf5 {+7.84/7 0.010s, n=6462, nps=0, pv="d4f5 f1e1 d2g2 e8c7 f5g3 c7d5 g3e4"}
+61. Ke1 {-7.83/7 0.009s, n=6594, nps=0, pv="f1e1 d2g2 e8c7 g2g3 e1f2 g3d3 c7e6"}
+Rd3 {+8.19/7 0.011s, n=8019, nps=0, pv="d2d3 g3g4 d3e3 e1f2 e3e8 g4f5 g6f5 f2f3 e8e1"}
+62. g4 {-8.19/6 0.008s, n=4926, nps=0, pv="g3g4 d3e3 e1f2 e3e8 g4f5 g6f5 f2f3 e8e1"}
+Re3+ {+9.03/7 0.007s, n=5462, nps=0, pv="d3e3 e1d2 e3e8 g4f5 g6f5 d2d3 f5f4 d3c4 e8e1"}
+63. Kd2 {-8.89/7 0.008s, n=6217, nps=0, pv="e1d2 e3e8 g4f5 g6f5 d2d3 f5f4 d3c4 e8c8 c4b5 c8c1"}
+Rxe8 {+9.03/8 0.012s, n=6806, nps=0, pv="e3e8 g4f5 g6f5 d2c3 f5f4 c3b4 e8e1 b4b5 f4e5"}
+64. gxf5+ {-9.11/8 0.012s, n=9363, nps=0, pv="g4f5 g6f5 d2d3 e8e4 d3c3 f5f4 c3b3 f4f3 b3c2"}
+Kxf5 {+9.11/7 0.008s, n=5334, nps=0, pv="g6f5 d2c3 e8e4 c3b2 f5f4 b2c3 f4f3 c3c2"}
+65. Kd3 {-9.19/8 0.009s, n=6026, nps=0, pv="d2d3 e8e4 d3c3 f5f4 c3d2 f4f3 d2c3 h7h5"}
+Kxf4 {+8.99/6 0.007s, n=4022, nps=0, pv="f5f4 d3c4 e8c8 c4b5 f4e5 b5b6 c8c1"}
+66. Kc4 {-9.37/7 0.020s, n=11924, nps=0, pv="d3c4 h7h5 c4b5 h5h4 b5a6 h4h3 a6b7"}
+Ke5 {+8.98/5 0.009s, n=4861, nps=0, pv="f4e5 c4c5 e8b8 c5c6 b8b2"}
+67. Kb5 {-9.55/7 0.014s, n=8370, nps=0, pv="c4b5 h7h5 b5a6 h5h4 a6a7 e8e7 a7b6 h4h3"}
+h5 {+9.51/6 0.008s, n=5194, nps=0, pv="h7h5 b5c6 e8e6 c6c7 h5h4 c7b7 h4h3"}
+68. Kc6 {-10.46/7 0.007s, n=3970, nps=0, pv="b5c6 e8e6 c6d7 h5h4 d7c7 h4h3 c7b7 h3h2"}
+Re6+ {+17.63/7 0.007s, n=4029, nps=0, pv="e8e6 c6c7 h5h4 c7c8 h4h3 c8b7 h3h2 b7a7"}
+69. Kd7 {-17.65/8 0.018s, n=10590, nps=0, pv="c6d7 h5h4 d7c7 h4h3 c7b7 h3h2 b7b8 e5d5 b8b7"}
+h4 {+17.56/8 0.014s, n=7699, nps=0, pv="h5h4 d7c7 h4h3 c7b8 e6e8 b8a7 e8e7 a7a6 h3h2 a6b6"}
+70. Kc7 {-17.65/9 0.008s, n=3906, nps=0, pv="d7c7 h4h3 c7b7 e6e7 b7b6 e7e6 b6a7 h3h2 a7b8 e5d5 b8b7"}
+h3 {+M11/9 0.030s, n=14212, nps=0, pv="h4h3 c7b7 h3h2 b7b8 h2h1q b8c8 h1c6 c8b8 e6e8 b8a7 e8a8"}
+71. Kb7 {-18.00/8 0.010s, n=4558, nps=0, pv="c7b7 h3h2 b7a7 h2h1q a7b8 e6b6 b8c7 h1c6 c7d8 b6b1"}
+h2 {+M9/7 0.002s, n=830, nps=0, pv="h3h2 b7b8 h2h1q b8c8 h1c6 c8b8 e6e8 b8a7 e8a8"}
+72. Kc7 {-M8/7 0.020s, n=11313, nps=0, pv="b7c7 h2h1q c7c8 h1c6 c8b8 e6e8 b8a7 e8a8"}
+h1=Q {+M7/5 0.003s, n=1346, nps=0, pv="h2h1q c7c8 h1c6 c8b8 e6e8 b8a7 e8a8"}
+73. Kc8 {-M6/4 0.001s, n=550, nps=0, pv="c7c8 h1c6 c8b8 e6e8 b8a7 e8a8"}
+Qc6+ {+M5/3 0.001s, n=439, nps=0, pv="h1c6 c8b8 e6e8 b8a7 e8a8"}
+74. Kb8 {-M4/2 0.000s, n=133, nps=0, pv="c8b8 e6e8 b8a7 e8a8"}
+Re8+ {+M3/2 0.000s, n=127, nps=0, pv="e6e8 b8a7 e8a8"}
+75. Ka7 {-M2/1 0.000s, n=41, nps=0, pv="b8a7 e8a8"}
+Ra8# {+M1/1 0.000s, n=40, nps=0, pv="e8a8", Black mates} 0-1
+
+[Event "Fastchess Tournament"]
+[Site "?"]
+[Date "2026.10.15"]
+[Round "1"]
+[White "a"]
+[Black "b"]
+[Result "0-1"]
+[EngineWhiteAuthor "Alexander Loodin Ek"]
+[EngineBlackAuthor "Alexander Loodin Ek"]
+[SetUp "1"]
+[FEN "rnbqkb1r/pppppppp/5n2/8/3P4/8/PPP1PPPP/RNBQKBNR w KQkq - 1 2"]
+[GameDuration "00:00:03"]
+[GameStartTime "2026-10-15T16:29:28 -0700"]
+[GameEndTime "2026-10-15T16:29:32 -0700"]
+[PlyCount "178"]
+[Termination "normal"]
+[TimeControl "1+0.01"]
+[ECO "D05"]
+[Opening "Queen's Pawn Game: Colle System"]
+
+2. e3 {+0.04/10 0.052s, n=123659, nps=0, pv="e2e3 d7d5 g1f3 b8c6 f1b5 e7e6 b1c3 f8e7 f3e5 c8d7"}
+d5 {-0.14/10 0.049s, n=125051, nps=0, pv="d7d5 g1f3 e7e6 b1c3 f8d6 f1d3 e8g8 e1g1 b8c6 c1d2"}
+3. Nf3 {+0.04/10 0.047s, n=118159, nps=0, pv="g1f3 b8c6 f1b5 e7e6 e1g1 f8d6 f3e5 c8d7 e5d7 d8d7"}
+e6 {-0.14/10 0.066s, n=162374, nps=0, pv="e7e6 b1c3 b8c6 f1d3 f8d6 e1g1 e8g8 c1d2 c6b4 c3b5"}
+4. c4 {+0.17/9 0.059s, n=148308, nps=0, pv="c2c4 f8b4 b1c3 e8g8 f1d3 c7c5 a2a3 c5d4 a3b4 d4c3"}
+Bb4+ {-0.15/8 0.044s, n=112877, nps=0, pv="f8b4 c1d2 b4d6 c4c5 d6e7 f1d3 b8c6 e1g1 e8g8"}
+5. Nc3 {+0.19/9 0.032s, n=87828, nps=0, pv="b1c3 e8g8 f1d3 c7c5 a2a3 c5d4 e3d4 d5c4 a3b4 c4d3"}
+c5 {-0.24/8 0.034s, n=91514, nps=0, pv="c7c5 c4d5 f6d5 c1d2 e8g8 f1d3 c5d4 c3d5"}
+6. cxd5 {+0.14/9 0.061s, n=159149, nps=0, pv="c4d5 e6d5 a2a3 b4c3 b2c3 f6e4 d4c5 e8g8 c1b2 e4c5"}
+exd5 {-0.21/8 0.029s, n=80588, nps=0, pv="e6d5 f1b5 c8d7 b5d7 b8d7 e1g1 e8g8 a2a3 b4c3 b2c3"}
+7. Bb5+ {+0.15/9 0.054s, n=133377, nps=0, pv="f1b5 b8c6 a2a3 b4c3 b2c3 d8a5 b5c6 b7c6 c1d2 f6e4 f3e5 c8b7"}
+Bd7 {-0.21/8 0.029s, n=80794, nps=0, pv="c8d7 b5d7 b8d7 e1g1 e8g8 a2a3 b4c3 b2c3 c5d4 c3d4"}
+8. Bxd7+ {+0.19/9 0.038s, n=96986, nps=0, pv="b5d7 b8d7 a2a3 b4c3 b2c3 f6e4 c1b2 e8g8 e1g1 a8c8 a1c1"}
+Nbxd7 {-0.17/10 0.050s, n=128560, nps=0, pv="b8d7 e1g1 e8g8 c1d2 c5d4 e3d4 a8c8 d1b3 b4c3 d2c3 d8c7"}
+9. O-O {+0.09/10 0.047s, n=116004, nps=0, pv="e1g1 e8g8 c1d2 c5d4 e3d4 d8b6 c3a4 b6a5 d2b4 a5b4"}
+O-O {-0.19/10 0.043s, n=112420, nps=0, pv="e8g8 c1d2 b4c3 d2c3 f6e4 a1c1 a8c8 d1b3 e4c3 b3c3"}
+10. Bd2 {+0.14/10 0.055s, n=135024, nps=0, pv="c1d2 c5d4 e3d4 d7b6 a2a3 b4d6 c3b5 b6c4 b5d6 d8d6"}
+cxd4 {-0.17/10 0.055s, n=131631, nps=0, pv="c5d4 e3d4 a7a5 a2a3 b4c3 d2c3 f6e4 a1c1 a8c8 f1e1"}
+11. exd4 {+0.11/10 0.033s, n=64816, nps=0, pv="e3d4 d7b6 d1b3 a7a5 a1d1 b6c4 d2f4 a8c8 a2a3 c4a3"}
+a5 {-0.13/9 0.034s, n=79867, nps=0, pv="a7a5 a1c1 a8c8 d2f4 f8e8 a2a3 b4e7 f3e5 d7e5"}
+12. Qb3 {+0.27/9 0.028s, n=55736, nps=0, pv="d1b3 d7b6 a2a3 b4d6 a1d1 a8c8 h2h3 b6c4 b3b7"}
+Nb6 {-0.28/9 0.024s, n=56219, nps=0, pv="d7b6 a1d1 b6c4 d2g5 a8c8 g5f6 g7f6 a2a3 b4c3"}
+13. a3 {+0.21/9 0.028s, n=63965, nps=0, pv="a2a3 b4d6 a1e1 a5a4 b3d1 b6c4 c3a4 c4d2 f3d2"}
+Bxc3 {-0.05/11 0.032s, n=71943, nps=0, pv="b4c3 d2c3 a5a4 b3c2 f6e4 a1e1 e4c3 b2c3 b6c4 c2f5 a8c8"}
+14. Bxc3 {+0.04/11 0.046s, n=102584, nps=0, pv="d2c3 a5a4 b3b4 f6e4 f3e5 d8c7 a1c1 b6c4 e5c4 d5c4 c1d1"}
+a4 {-0.02/11 0.061s, n=133403, nps=0, pv="a5a4 b3b4 f6e4 a1d1 a8c8 f3e5 f8e8 f1e1 d8f6 e1f1 c8d8"}
+15. Qb5 {+0.12/11 0.082s, n=176425, nps=0, pv="b3b5 f6e4 a1d1 e4c3 b2c3 f8e8 d1b1 b6c4 b5b7 e8e2 b7c6"}
+Ne4 {-0.09/11 0.042s, n=86556, nps=0, pv="f6e4 c3b4 f8e8 a1e1 a8c8 b4a5 e8e6 f3e5 c8c2 e1c1 c2c1"}
+16. Rae1 {+0.12/9 0.018s, n=40254, nps=0, pv="a1e1 e4c3 b2c3 d8d6 f3e5 a8c8 b5b2 c8d8 h2h3"}
+Nxc3 {-0.06/10 0.026s, n=56445, nps=0, pv="e4c3 b2c3 d8d6 f3e5 a8c8 b5b2 c8d8 b2b4 f8e8 b4d6"}
+17. bxc3 {+0.10/10 0.027s, n=59710, nps=0, pv="b2c3 d8d6 h2h3 h7h6 e1b1 a8a6 b5b2 d6f6 f3e5 f6f4"}
+Qd6 {-0.03/9 0.026s, n=58756, nps=0, pv="d8d6 h2h4 f8c8 b5b2 c8d8 f3e5 a8c8 h4h5 b6c4"}
+18. Rb1 {+0.09/9 0.023s, n=52386, nps=0, pv="e1b1 b6c4 b1b4 f8d8 b4a4 a8a4 b5a4 d6a3 a4a3"}
+Nc4 {+0.18/10 0.028s, n=61808, nps=0, pv="b6c4 b5b4 d6b4 b1b4 b7b6 f3e5 c4e5 d4e5 a8c8 b4b6"}
+19. Qb4 {-0.30/9 0.032s, n=67858, nps=0, pv="b5b4 f8c8 f1c1 d6b4 b1b4 c8c7 h2h3 c4a3 f3e5"}
+Qxb4 {+0.59/10 0.022s, n=50226, nps=0, pv="d6b4 b1b4 c4a3 b4b7 a3c4 f1a1 a4a3 b7d7 a3a2 d7d5"}
+20. Rxb4 {-0.62/10 0.026s, n=59977, nps=0, pv="b1b4 c4a3 b4b7 a3c4 f1a1 a4a3 b7e7 a8a4 a1a2 f8d8"}
+Nxa3 {+0.67/10 0.018s, n=44495, nps=0, pv="c4a3 b4b7 a3c4 f1a1 a4a3 b7e7 f8e8 e7d7 a3a2 d7d5"}
+21. Rxb7 {-0.86/10 0.019s, n=46511, nps=0, pv="b4b7 a3c4 f1a1 a4a3 b7e7 f8e8 e7e8 a8e8 f3e5 c4e5 d4e5"}
+Nc4 {+1.04/10 0.020s, n=50393, nps=0, pv="a3c4 f1a1 a4a3 a1a2 a8b8 b7b4 b8b4 c3b4 f8b8 f3e5"}
+22. Ra1 {-1.04/10 0.016s, n=41185, nps=0, pv="f1a1 a4a3 a1a2 f8b8 b7b4 b8b4 c3b4 a8b8 f3e5 b8b4"}
+a3 {+1.15/11 0.054s, n=121731, nps=0, pv="a4a3 f3e5 c4e5 d4e5 f8e8 b7b3 e8e5 f2f4 e5e4 a1a3 a8a3"}
+23. Ne5 {-0.85/10 0.022s, n=50911, nps=0, pv="f3e5 f8b8 b7b8 a8b8 e5d3 h7h6 a1e1 b8d8 e1a1 g8h7 a1d1"}
+Rfc8 {+0.78/10 0.023s, n=52787, nps=0, pv="f8c8 e5c4 d5c4 b7b6 h7h6 a1a2 c8e8 g1f1 e8e4 a2d2"}
+24. Nd3 {-0.78/9 0.025s, n=54483, nps=0, pv="e5d3 a8b8 b7b8 c8b8 h2h4 b8b3 a1e1 g8f8 d3f4"}
+Na5 {+0.82/9 0.033s, n=69362, nps=0, pv="c4a5 b7b1 c8c3 d3f4 a5c6 f4d5 c3d3 d5b4 c6b4"}
+25. Rbb1 {-1.45/11 0.040s, n=82175, nps=0, pv="b7b1 c8c3 d3f4 a5b3 f4d5 b3a1 d5c3 a1c2 c3d5 a3a2 d5e7 g8f8"}
+Rxc3 {+1.45/10 0.017s, n=36986, nps=0, pv="c8c3 d3f4 a5b3 f4d5 b3a1 d5c3 a1c2 c3d5 a3a2 d5e7 g8f8"}
+26. Nf4 {-2.14/10 0.028s, n=59710, nps=0, pv="d3f4 a5b3 f4d5 b3a1 d5c3 a1c2 c3a2 c2d4 b1b7 a8d8"}
+Nb3 {+1.92/11 0.019s, n=40985, nps=0, pv="a5b3 f4d5 b3a1 d5c3 a1c2 g2g3 c2d4 g1g2 g8f8 b1a1 f8e7"}
+27. Nxd5 {-1.67/10 0.016s, n=33414, nps=0, pv="f4d5 c3d3 a1a2 b3d4 d5f4 d3c3 f4d5 c3c5 d5b6 a8a6"}
+Rd3 {+1.51/10 0.032s, n=61785, nps=0, pv="c3d3 a1a2 b3d4 d5f4 d3b3 b1b3 d4b3 f4d5 a8a5 d5f4"}
+28. Ra2 {-1.72/10 0.025s, n=46006, nps=0, pv="a1a2 b3d4 d5f4 d3c3 f4d5 c3c5 d5b6 a8a6 b1d1 c5c3"}
+Nxd4 {+1.68/10 0.025s, n=46543, nps=0, pv="b3d4 d5f4 d3b3 b1b3 d4b3 f4d3 b3d4 d3e5 f7f6 e5c4"}
+29. Rba1 {-1.55/8 0.014s, n=27775, nps=0, pv="b1a1 d4e2 a2e2 d3d5 a1e1 h7h5 e2e8 a8e8 e1e8 g8h7 h2h4"}
+Rb8 {+1.78/8 0.020s, n=39024, nps=0, pv="a8b8 d5f4 d3b3 h2h4 b3b1 a1b1 b8b1 g1h2 b1b3 h4h5"}
+30. h4 {-1.04/7 0.012s, n=24562, nps=0, pv="h2h4 b8a8 d5b6 a8a5 b6c4 a5h5 a2a3"}
+Nb5 {+1.29/8 0.015s, n=29347, nps=0, pv="d4b5 d5e7 g8h8 e7c6 b8b7 c6e5 d3c3 a1d1 h8g8"}
+31. Ne7+ {-1.48/9 0.018s, n=35190, nps=0, pv="d5e7 g8f8 e7c6 b8c8 c6e5 d3d4 h4h5 f7f6 e5f3 d4d3"}
+Kf8 {+1.53/9 0.028s, n=52779, nps=0, pv="g8f8 e7c6 b8c8 c6e5 d3d4 h4h5 d4e4 e5d7 f8g8 a2d2 c8c3"}
+32. Nc6 {-1.65/10 0.021s, n=39417, nps=0, pv="e7c6 b8c8 c6b4 d3c3 b4d5 c3c5 d5e3 c5c1 g1h2 f8e7 e3d5 e7e6"}
+Rc8 {+1.54/10 0.020s, n=38043, nps=0, pv="b8c8 c6e5 d3c3 g1h2 c3c2 h4h5 c2b2 e5d3 b2c2 a2c2"}
+33. Ne5 {-1.54/9 0.016s, n=30610, nps=0, pv="c6e5 d3c3 a2d2 c3c1 a1c1 c8c1 g1h2 f8e7 e5d3 c1a1 h4h5"}
+Rd4 {+1.47/8 0.029s, n=53032, nps=0, pv="d3d4 e5f3 d4c4 a2d2 f8g8 d2d7 c4c1 a1c1 c8c1 g1h2"}
+34. Nf3 {-1.61/8 0.023s, n=40554, nps=0, pv="e5f3 d4c4 g1h2 h7h5 a2d2 c4c1 d2d1 c1a1"}
+Rdc4 {+1.65/9 0.016s, n=29817, nps=0, pv="d4c4 g1h2 c4c1 f3e5 f8e7 h4h5 e7f6 a1c1 c8c1"}
+35. Re1 {-1.69/9 0.028s, n=49035, nps=0, pv="a1e1 c4c1 e1c1 c8c1 g1h2 f7f6 h2g3 f8f7 h4h5 f7e6"}
+Rc2 {+2.27/9 0.020s, n=36519, nps=0, pv="c4c2 e1a1 c2b2 f3e1 b2a2 a1a2 c8c1 g1f1 f8e7"}
+36. Rea1 {-2.39/8 0.015s, n=25560, nps=0, pv="e1a1 c2b2 f3e5 c8c2 a1e1 c2d2 a2b2 a3b2"}
+Rb2 {+2.24/10 0.021s, n=36823, nps=0, pv="c2b2 f3e1 c8c3 g2g3 f8e7 g1g2 b2a2 a1a2 b5d4 a2d2"}
+37. Ne1 {-2.31/9 0.018s, n=33089, nps=0, pv="f3e1 c8c3 g1h2 f8e7 h2g1 b2a2 a1a2 b5d4 a2d2"}
+Rc3 {+2.30/9 0.013s, n=24703, nps=0, pv="c8c3 g1h2 f8e7 h2g1 b2a2 a1a2 b5d4 a2d2 c3c4"}
+38. Kh2 {-2.30/8 0.017s, n=30268, nps=0, pv="g1h2 f8e7 h2g1 b2a2 a1a2 b5d4 a2d2 c3c4"}
+Ke7 {+2.36/8 0.013s, n=23400, nps=0, pv="f8e7 h2g1 e7e6 g1h2 b2a2 a1a2 b5d4 a2d2"}
+39. h5 {-2.08/8 0.020s, n=33707, nps=0, pv="h4h5 c3c4 e1d3 b2a2 a1a2 c4h4 h2g3 h4h5 a2d2"}
+Kf6 {+2.55/9 0.012s, n=19920, nps=0, pv="e7f6 a2b2 a3b2 a1b1 c3b3 e1f3 b3b4 h2g3 b5c3"}
+40. g4 {-2.90/7 0.011s, n=18618, nps=0, pv="g2g4 f6g5 a2b2 a3b2 a1b1 c3b3 f2f3"}
+Kg5 {+3.53/9 0.014s, n=21596, nps=0, pv="f6g5 h2g2 b2a2 a1a2 g5g4 a2e2 c3c5 e2e7 a3a2"}
+41. Kg2 {-3.05/8 0.011s, n=17712, nps=0, pv="h2g2 f7f6 a2b2 a3b2 a1b1 c3b3 f2f3 b5d4"}
+Rxa2 {+3.93/9 0.014s, n=23072, nps=0, pv="b2a2 a1a2 g5g4 a2e2 c3b3 e2e5 a3a2 e1c2 b5d4"}
+42. Rxa2 {-4.05/9 0.012s, n=17921, nps=0, pv="a1a2 g5g4 a2e2 c3b3 e1c2 g4h5 e2e7 h5g6 c2e3"}
+Kxg4 {+4.10/9 0.015s, n=21556, nps=0, pv="g5g4 a2e2 b5c7 e2d2 g4h5 e1f3 h5g6 f3e5 g6f6 d2e2"}
+43. Rd2 {-4.17/8 0.010s, n=15830, nps=0, pv="a2d2 c3c5 f2f3 g4h5 e1d3 c5g5 g2f2 h5g6 d3f4 g6f5 f4d5"}
+Rc5 {+4.21/8 0.015s, n=22746, nps=0, pv="c3c5 h5h6 g7h6 f2f3 g4f4 e1d3 f4e3 d3c5 e3d2 g2g3"}
+44. h6 {-4.25/8 0.020s, n=29878, nps=0, pv="h5h6 g7h6 e1d3 c5g5 d2a2 g4f5 g2f3 g5g1 a2d2"}
+gxh6 {+4.38/8 0.022s, n=25348, nps=0, pv="g7h6 f2f3 g4f4 g2f2 f4f5 f2g2 f5f4 e1d3 f4e3 d3c5"}
+45. Nc2 {-4.35/8 0.043s, n=59661, nps=0, pv="e1c2 g4f4 c2e3 c5g5 g2f1 f4e4 e3c4 g5c5 c4e3"}
+Kf4 {+4.42/8 0.012s, n=18099, nps=0, pv="g4f4 c2e3 c5g5 g2f1 f4e4 e3c4 g5c5 d2e2 e4f4 e2c2"}
+46. Nb4 {-4.18/8 0.027s, n=38170, nps=0, pv="c2b4 c5g5 g2f1 b5c3 d2d4 f4e5 b4c6 e5f6 d4h4 h6h5 h4c4"}
+Rg5+ {+4.26/7 0.014s, n=19180, nps=0, pv="c5g5 g2f1 g5f5 f1g2 f5g5 g2f1 g5f5 f1g2 f4e4"}
+47. Kf1 {-4.32/7 0.010s, n=14798, nps=0, pv="g2f1 g5f5 d2d3 h6h5 d3d8 b5c3 d8a8 c3b5"}
+Rf5 {+4.17/8 0.029s, n=37699, nps=0, pv="g5f5 d2d8 f4f3 d8d3 f3f4 d3d8 f4f3 d8d3 f3e4 d3d8"}
+48. Rd8 {-4.19/7 0.013s, n=17362, nps=0, pv="d2d8 f5g5 d8h8 g5g7 b4d3 f4e4 d3c5 e4f3 h8e8"}
+Kf3 {+4.08/7 0.011s, n=15105, nps=0, pv="f4f3 d8d3 f3f4 d3h3 h6h5 b4d3 f4e4 h3e3 e4d4 f1g2"}
+49. Rd3+ {-4.14/7 0.023s, n=24456, nps=0, pv="d8d3 f3f4 d3e3 h6h5 b4d3 f4g4 e3e4 g4g5 e4a4 f5f3"}
+Kf4 {+4.13/7 0.017s, n=21951, nps=0, pv="f3f4 d3e3 f4g5 e3e8 b5d4 e8h8 f5b5 b4d3"}
+50. Rd8 {0.00/14 0.010s, n=11173, nps=0, pv="d3d8"}
+Kg5 {+3.81/7 0.010s, n=13277, nps=0, pv="f4g5 d8h8 g5g6 h8g8 g6f6 g8h8 f6g6 h8c8"}
+51. Rg8+ {-3.80/6 0.007s, n=9066, nps=0, pv="d8g8 g5f6 g8h8 f6g6 h8a8 g6f6 b4c6"}
+Kf6 {+3.83/8 0.015s, n=18763, nps=0, pv="g5f6 g8h8 f6g7 h8a8 f5f3 b4d5 f3d3 d5f4 d3d2"}
+52. Rh8 {-3.83/7 0.007s, n=8660, nps=0, pv="g8h8 f6g7 h8a8 f5c5 f1e2 c5e5 e2d3 g7f6"}
+Kg7 {+3.82/8 0.012s, n=14340, nps=0, pv="f6g7 h8a8 f5c5 f1e2 g7f6 e2d2 f6f5 b4d3"}
+53. Ra8 {-3.83/7 0.007s, n=9110, nps=0, pv="h8a8 g7f6 b4d3 f5d5 f1e2 b5d4 e2d1 d4b3"}
+Rc5 {+3.89/7 0.013s, n=16212, nps=0, pv="f5c5 f1g2 g7f6 a8a6 f6g7 b4d3 c5c2 d3e5"}
+54. Ke2 {-3.75/6 0.007s, n=7916, nps=0, pv="f1e2 g7f6 a8a6 f6g5 e2d2 h6h5 b4c6"}
+Rc4 {+4.44/8 0.011s, n=13299, nps=0, pv="c5c4 b4d5 c4c5 d5b4 c5c4 b4d5 c4c2 e2e3 a3a2"}
+55. Nd5 {-3.88/7 0.009s, n=10185, nps=0, pv="b4d5 b5c3 d5c3 c4c3 e2d2 c3h3 a8a6 h3b3"}
+Rc2+ {+3.85/6 0.012s, n=10676, nps=0, pv="c4c2 e2e3 g7g6 a8a6 g6g7 d5b4 c2c3 b4d3 c3c2"}
+56. Ke3 {-4.44/5 0.008s, n=7369, nps=0, pv="e2e3 c2b2 a8a4 a3a2 a4g4 g7f8 g4g1"}
+Rb2 {+4.40/7 0.026s, n=20205, nps=0, pv="c2b2 f2f4 a3a2 f4f5 f7f6 e3d3 b5d6"}
+57. f4 {-4.40/6 0.010s, n=8356, nps=0, pv="f2f4 a3a2 f4f5 f7f6 e3d3 b5d6"}
+a2 {+4.31/8 0.018s, n=18158, nps=0, pv="a3a2 f4f5 f7f6 e3d3 b2b3 d3d2 b3b2 d2e3 b5d6 a8a7 g7f8"}
+58. f5 {-4.38/8 0.026s, n=26902, nps=0, pv="f4f5 f7f6 e3d3 b2b3 d3c2 b5d4 c2d2 d4f3 d2c2 f3d4 c2d2 b3b5"}
+f6 {+4.49/7 0.021s, n=21528, nps=0, pv="f7f6 e3d3 b2b3 d3d2 b3b2 d2e3 g7f7 e3d3 b5d6"}
+59. Kd3 {-4.29/7 0.020s, n=14940, nps=0, pv="e3d3 h6h5 a8a6 b2g2 a6a8 h5h4 d3c4"}
+Rb3+ {+4.19/6 0.010s, n=7247, nps=0, pv="b2b3 d3c2 b5d4 c2d2 d4f3 d2c2 f3d4 c2d2 d4f3 d2c2 b3b5"}
+60. Kc2 {-4.40/6 0.009s, n=7276, nps=0, pv="d3c2 b5d4 c2d2 d4f3 d2c2 f3d4 c2d2 b3b5 a8a7 g7f8 d5e3"}
+Nd4+ {+3.77/7 0.012s, n=8703, nps=0, pv="b5d4 c2d2 d4f3 d2c2 f3d4 c2d2 b3b5 a8a7 g7f8 a7a8 f8g7 a8a7 g7f8"}
+61. Kd2 {-3.77/6 0.007s, n=5484, nps=0, pv="c2d2 d4f3 d2c2 f3d4 c2d2 b3b5 a8a7 g7f8 a7a8 f8f7 a8a7 f7f8"}
+Nf3+ {+3.65/7 0.008s, n=7571, nps=0, pv="d4f3 d2c2 f3d4 c2d2 d4f3 d2c2 b3b5 a8a7 g7f8 d5f6 b5f5"}
+62. Kc2 {-3.65/7 0.015s, n=11660, nps=0, pv="d2c2 f3d4 c2d2 d4f3 d2c2 b3b5 a8a7 g7f8 d5f6 b5f5 f6h7 f8g8"}
+Rb5 {+3.24/7 0.011s, n=9179, nps=0, pv="b3b5 a8a7 g7f8 d5f6 f3e1 c2c3 b5f5 f6h7 f8g8 c3c4"}
+63. Ra7+ {-3.24/6 0.010s, n=6866, nps=0, pv="a8a7 g7f8 d5f6 f3e1 c2c3 b5f5 f6h7 f8g8 c3c4"}
+Kf8 {+2.64/6 0.011s, n=9470, nps=0, pv="g7f8 d5f6 f3e1 c2d2 e1f3 d2c2 f3e1 c2d2 b5b2 d2c3 b2c2 c3d4"}
+64. Nxf6 {-2.64/6 0.009s, n=6495, nps=0, pv="d5f6 f3e1 c2d2 e1f3 d2c2 f3e1 c2d2 b5b2 d2c3 b2c2 c3d4"}
+Rxf5 {+1.88/6 0.017s, n=13472, nps=0, pv="b5f5 f6h7 f8g8 c2b2 f5f7 a7f7 a2a1q b2a1"}
+65. Nxh7+ {-1.88/6 0.010s, n=6267, nps=0, pv="f6h7 f8g8 c2b2 a2a1q b2a1 f5f7 a7f7 g8f7"}
+Kg8 {+1.85/6 0.009s, n=5732, nps=0, pv="f8g8 c2b2 f3d4 b2a2 f5f7 a7f7 g8f7"}
+66. Kb2 {-3.70/7 0.011s, n=6797, nps=0, pv="c2b2 f3e5 b2a2 e5f7 a7b7 f5f2 b7b2 f2b2 a2b2"}
+Rf7 {+3.85/7 0.008s, n=4695, nps=0, pv="f5f7 a7f7 g8f7 b2a2 f7g7 a2b2 g7h7"}
+67. Rxf7 {-4.20/8 0.026s, n=15559, nps=0, pv="a7f7 g8f7 b2a2 f7g7 a2b2 g7h7 b2c2 h7g6"}
+Kxf7 {+4.48/10 0.008s, n=5157, nps=0, pv="g8f7 b2a2 f7g7 a2b3 g7h7 b3c4 h7g6 c4b5 g6f5 b5a6"}
+68. Kxa2 {-4.71/10 0.012s, n=7226, nps=0, pv="b2a2 f7g7 a2a3 g7h7 a3b4 h7g6 b4b5 g6f5 b5c6 f5e5"}
+Kg7 {+4.74/10 0.008s, n=5033, nps=0, pv="f7g7 a2b3 g7h7 b3c4 h7g6 c4b5 g6f5 b5a5 f3d4 a5a6"}
+69. Ka3 {-4.79/10 0.014s, n=7798, nps=0, pv="a2a3 g7h7 a3b4 h7g6 b4b5 g6f5 b5b6 f5e4 b6b7 f3d4"}
+Kxh7 {+4.87/9 0.020s, n=8974, nps=0, pv="g7h7 a3a4 h7g6 a4b5 g6f6 b5c6 f6e5 c6b7 f3d4"}
+70. Kb4 {-4.87/8 0.006s, n=3570, nps=0, pv="a3b4 h7g6 b4b5 g6f6 b5c5 f6e5 c5c6 f3d4 c6b7"}
+Kg6 {+4.87/8 0.009s, n=6494, nps=0, pv="h7g6 b4b5 g6f6 b5c6 f6e5 c6b6 f3d4 b6b7"}
+71. Kc5 {-4.80/7 0.006s, n=4034, nps=0, pv="b4c5 g6f5 c5d5 f3e5 d5c5 f5e6 c5d4"}
+Kf5 {+4.86/7 0.010s, n=6116, nps=0, pv="g6f5 c5d5 f3e5 d5c5 f5e6 c5d4 e6d6"}
+72. Kc4 {-5.07/6 0.008s, n=4282, nps=0, pv="c5c4 h6h5 c4d3 f5e5 d3e2 f3d4 e2d3"}
+h5 {+5.29/6 0.009s, n=4609, nps=0, pv="h6h5 c4b5 h5h4 b5a6 h4h3 a6b7"}
+73. Kd3 {-5.69/7 0.011s, n=5377, nps=0, pv="c4d3 f3e5 d3e3 h5h4 e3f2 f5g4 f2e2 h4h3"}
+h4 {+5.61/6 0.009s, n=4003, nps=0, pv="h5h4 d3e3 f3e5 e3d2 h4h3 d2c2"}
+74. Ke3 {-7.01/10 0.012s, n=8920, nps=0, pv="d3e3 f5g4 e3f2 f3d4 f2g2 h4h3 g2g1 d4f3 g1f2 f3d4 f2f1 h3h2"}
+Kg4 {+7.00/8 0.010s, n=6217, nps=0, pv="f5g4 e3e2 f3e5 e2f2 h4h3 f2f1 h3h2 f1g2"}
+75. Kd3 {-13.71/9 0.012s, n=7093, nps=0, pv="e3d3 h4h3 d3c2 g4f5 c2c3 h3h2 c3b2 h2h1q b2c2"}
+h3 {+13.73/9 0.011s, n=6581, nps=0, pv="h4h3 d3c4 h3h2 c4b5 h2h1q b5b6 h1h6 b6b7 h6e3 b7a6"}
+76. Kc4 {-13.79/8 0.010s, n=4572, nps=0, pv="d3c4 h3h2 c4b5 h2h1q b5c6 f3d4 c6c5 h1e4 c5b6"}
+h2 {+13.81/8 0.008s, n=3483, nps=0, pv="h3h2 c4b5 h2h1q b5b6 h1h6 b6a7 h6e3 a7a6 g4f4 a6b7"}
+77. Kc5 {-13.81/7 0.017s, n=8997, nps=0, pv="c4c5 h2h1q c5b6 h1h6 b6a7 h6e3 a7a6 g4f4 a6b7"}
+h1=Q {+13.81/6 0.040s, n=2259, nps=0, pv="h2h1q c5b6 h1h6 b6c7 h6e3 c7b7 g4f4"}
+78. Kd5 {-13.85/5 0.008s, n=3931, nps=0, pv="c5d5 h1h5 d5c6 f3d4 c6c7 h5c5 c7d7 g4f3"}
+Kf4 {+13.95/5 0.014s, n=6690, nps=0, pv="g4f4 d5c6 f3d4 c6c5 h1e4 c5b6"}
+79. Kc5 {-13.96/5 0.007s, n=2694, nps=0, pv="d5c5 h1c1 c5b6 c1e3 b6a6 f4e5 a6b7"}
+Qc1+ {+14.05/5 0.015s, n=5837, nps=0, pv="h1c1 c5b6 c1e3 b6a6 f4e5 a6b7 f3d4"}
+80. Kd5 {-14.04/4 0.008s, n=3947, nps=0, pv="c5d5 c1e3 d5d6 e3d3 d6c6 f4e5"}
+Qe3 {+14.05/5 0.009s, n=3802, nps=0, pv="c1e3 d5c6 e3e4 c6b6 f4e5 b6a6"}
+81. Kc6 {-14.12/5 0.007s, n=2820, nps=0, pv="d5c6 f3d4 c6b6 f4e5 b6b7 e5d5"}
+Nd4+ {+14.12/4 0.011s, n=4146, nps=0, pv="f3d4 c6c7 f4e5 c7b7 e5d5"}
+82. Kb6 {-14.12/4 0.012s, n=4451, nps=0, pv="c6b6 f4e5 b6a6 e5d5 a6b7"}
+Ke5 {+14.17/5 0.015s, n=6782, nps=0, pv="f4e5 b6c5 e3e4 c5b6 e5d5"}
+83. Kc7 {-14.14/5 0.013s, n=5697, nps=0, pv="b6c7 e5d5 c7b6 e3e4 b6b7"}
+Kd5 {+14.14/4 0.010s, n=3458, nps=0, pv="e5d5 c7b6 e3e4 b6b7"}
+84. Kb6 {-14.16/5 0.013s, n=4940, nps=0, pv="c7b6 e3e6 b6c7 e6e4 c7b6 e4g4"}
+Qe4 {+14.15/4 0.008s, n=3318, nps=0, pv="e3e4 b6c7 d5c5 c7d7"}
+85. Kc7 {-14.28/5 0.019s, n=7996, nps=0, pv="b6c7 d5c5 c7d7 c5d5 d7c7"}
+Kc5 {+14.24/4 0.008s, n=2744, nps=0, pv="d5c5 c7b8 c5c6 b8a7"}
+86. Kd7 {-14.31/5 0.010s, n=4152, nps=0, pv="c7d7 e4e6 d7d8 e6e4 d8d7 c5d5"}
+Qe6+ {+14.28/4 0.011s, n=4441, nps=0, pv="e4e6 d7d8 e6e4 d8c7 e4g4"}
+87. Kd8 {-M8/5 0.026s, n=9717, nps=0, pv="d7d8 d4c6 d8c7 e6h3 c7b7 h3d7 b7a6 d7a7"}
+Nc6+ {+M7/5 0.024s, n=8997, nps=0, pv="d4c6 d8c7 e6g4 c7b7 g4d7 b7a6 d7a7"}
+88. Kc7 {-M6/4 0.005s, n=1788, nps=0, pv="d8c7 e6h3 c7b7 h3d7 b7a6 d7a7"}
+Qg4 {+M5/4 0.004s, n=1633, nps=0, pv="e6g4 c7b7 g4d7 b7a6 d7a7"}
+89. Kb7 {-M4/3 0.000s, n=154, nps=0, pv="c7b7 g4d7 b7a6 d7a7"}
+Qd7+ {+M3/2 0.000s, n=163, nps=0, pv="g4d7 b7a6 d7a7"}
+90. Ka6 {-M2/1 0.000s, n=35, nps=0, pv="b7a6 d7a7"}
+Qa7# {+M1/1 0.000s, n=33, nps=0, pv="d7a7", Black mates} 0-1
+
+[Event "Fastchess Tournament"]
+[Site "?"]
+[Date "2026.10.15"]
+[Round "2"]
+[White "a"]
+[Black "b"]
+[Result "0-1"]
+[EngineWhiteAuthor "Alexander Loodin Ek"]
+[EngineBlackAuthor "Alexander Loodin Ek"]
+[SetUp "1"]
+[FEN "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2"]
+[GameDuration "00:00:03"]
+[GameStartTime "2026-10-15T16:29:31 -0700"]
+[GameEndTime "2026-10-15T16:29:35 -0700"]
+[PlyCount "170"]
+[Termination "normal"]
+[TimeControl "1+0.01"]
+[ECO "C42"]
+[Opening "Petrov's Defense: Nimzowitsch Attack"]
+
+2. Nf3 {+0.18/10 0.052s, n=90728, nps=0, pv="g1f3 g8f6 b1c3 b8c6 f1c4 f8d6 e1g1 e8g8 d2d4 e5d4"}
+Nf6 {-0.09/9 0.062s, n=106951, nps=0, pv="g8f6 f3e5 d7d6 e5f3 f6e4 b1c3 e4c3 d2c3 b8c6"}
+3. Nxe5 {+0.16/10 0.077s, n=133484, nps=0, pv="f3e5 d7d6 e5f3 f6e4 f1d3 d6d5 b1c3 e4c3 d2c3 b8c6"}
+d6 {-0.34/10 0.079s, n=129773, nps=0, pv="d7d6 e5f3 f6e4 b1c3 d6d5 f1d3 e4c5 e1g1 b8c6 d3e2"}
+4. Nf3 {+0.24/10 0.037s, n=65620, nps=0, pv="e5f3 f6e4 b1c3 e4c3 d2c3 b8c6 f1b5 c8e6 e1g1 d6d5"}
+Nxe4 {-0.45/10 0.056s, n=106974, nps=0, pv="f6e4 b1c3 e4c3 d2c3 b8c6 f1d3 f8e7 e1g1 e8g8 c1e3"}
+5. Nc3 {+0.20/10 0.095s, n=170363, nps=0, pv="b1c3 e4c3 d2c3 f8e7 f1c4 b8c6 e1g1 e8g8 c4d5 c8e6"}
+Nxc3 {-0.31/11 0.060s, n=104335, nps=0, pv="e4c3 d2c3 b8c6 f1c4 f8e7 e1g1 e8g8 c1e3 c8f5 c4d5 a8c8"}
+6. dxc3 {+0.30/10 0.048s, n=83219, nps=0, pv="d2c3 f8e7 f1c4 e8g8 e1g1 b8c6 c1e3 e7f6 c4d5 c8e6"}
+d5 {-0.32/10 0.111s, n=194803, nps=0, pv="d6d5 f1d3 f8e7 e1g1 e8g8 c1f4 b8c6 f3e5 c8e6 a1c1"}
+7. Bd3 {+0.31/9 0.083s, n=136111, nps=0, pv="f1d3 f8e7 e1g1 e8g8 c1e3 b8c6 d1e2 c8e6 a1d1"}
+Be7 {-0.27/10 0.042s, n=73186, nps=0, pv="f8e7 e1g1 b8c6 c3c4 d5c4 d3c4 d8d1 f1d1 c8f5 c2c3"}
+8. O-O {+0.25/10 0.052s, n=86577, nps=0, pv="e1g1 e8g8 c3c4 c8e6 f3d4 b8c6 d4e6 f7e6 c1e3 c6e5"}
+O-O {-0.16/9 0.047s, n=82791, nps=0, pv="e8g8 c3c4 c7c6 f3e5 e7f6 c1f4 b8d7 f1e1 d7c5"}
+9. c4 {+0.20/10 0.059s, n=101903, nps=0, pv="c3c4 d5c4 d3c4 d8d1 f1d1 b8c6 c1f4 c8f5 a1c1 a8c8"}
+c6 {-0.25/9 0.032s, n=55405, nps=0, pv="c7c6 c1e3 e7f6 c2c3 c8e6 d1b3 d5c4 d3c4 e6c4"}
+10. cxd5 {+0.29/9 0.029s, n=51510, nps=0, pv="c4d5 c6d5 c2c4 d5c4 d3c4 b8c6 d1d8 f8d8 c1e3"}
+cxd5 {-0.26/10 0.023s, n=43553, nps=0, pv="c6d5 c2c4 d5c4 d3c4 b8c6 c1e3 e7f6 d1d8 f8d8 a1b1"}
+11. c4 {+0.15/10 0.038s, n=64369, nps=0, pv="c2c4 d5c4 d3c4 b8c6 c1e3 c8f5 d1e2 e7d6 a1d1 f5e4"}
+dxc4 {-0.10/10 0.030s, n=57520, nps=0, pv="d5c4 d3c4 b8c6 c4d5 c6b4 d5e4 d8d1 f1d1 f7f5 e4b1"}
+12. Bxc4 {+0.21/9 0.027s, n=47985, nps=0, pv="d3c4 b8c6 c1e3 c8g4 d1e2 g4f3 g2f3 a8c8 a1d1"}
+Nc6 {-0.08/9 0.028s, n=50767, nps=0, pv="b8c6 d1e2 c8g4 f1d1 d8c7 c1e3 a8d8 c4d5 e7f6"}
+13. Be3 {+0.14/8 0.019s, n=32984, nps=0, pv="c1e3 c8g4 h2h3 g4f3 d1f3 c6e5 f3e4 e7f6"}
+Bg4 {-0.08/8 0.020s, n=40455, nps=0, pv="c8g4 d1e2 g4f3 e2f3 c6e5 f3e4 e5c4 e4c4"}
+14. Qe2 {+0.15/8 0.028s, n=46832, nps=0, pv="d1e2 g4f3 g2f3 d8d6 a1d1 d6g6 g1h1 a8d8 c4d5"}
+Bxf3 {-0.19/10 0.040s, n=64939, nps=0, pv="g4f3 e2f3 c6e5 f3e4 e5c4 e4c4 e7f6 a1d1 a8c8 d1d8"}
+15. Qxf3 {+0.21/10 0.021s, n=41163, nps=0, pv="e2f3 c6e5 f3e2 e5c4 e2c4 e7f6 a1d1 d8e7 e3c5 f8c8"}
+Ne5 {-0.19/10 0.030s, n=56221, nps=0, pv="c6e5 f3e4 e5c4 e4c4 a8c8 c4e4 e7f6 a1d1 d8c7 e3d4"}
+16. Qe2 {+0.19/11 0.048s, n=75780, nps=0, pv="f3e2 e5c4 e2c4 e7f6 a1d1 d8e7 e3c5 f8c8 c5e7 c8c4 d1d7"}
+Nxc4 {-0.11/9 0.025s, n=41476, nps=0, pv="e5c4 e2c4 e7f6 a1d1 d8e7 e3c5 e7c7 b2b3 f8e8"}
+17. Qxc4 {+0.19/10 0.018s, n=27646, nps=0, pv="e2c4 e7f6 a1d1 d8e7 e3c5 f8c8 c5e7 c8c4 d1d7 f6e7"}
+Bf6 {-0.21/10 0.054s, n=89446, nps=0, pv="e7f6 a1d1 d8e7 e3c5 e7c7 c4d5 f8d8 c5d6 c7c2 b2b4"}
+18. Rad1 {+0.20/9 0.018s, n=36818, nps=0, pv="a1d1 d8e7 e3c5 e7c7 c4d5 a8d8 d5f5 f8e8 d1d8"}
+Qe7 {-0.14/9 0.018s, n=32354, nps=0, pv="d8e7 b2b4 f8e8 c4g4 e7e4 g4e4 e8e4 b4b5 f6c3"}
+19. Bc5 {+0.20/9 0.018s, n=31944, nps=0, pv="e3c5 e7c7 c4d5 a8d8 d5f5 f8e8 d1d8 e8d8 b2b4"}
+Qc7 {-0.01/8 0.016s, n=24453, nps=0, pv="e7c7 c4b5 a7a6 b5b4 a6a5 b4a3 f6b2 a3b2"}
+20. Qb5 {0.00/8 0.026s, n=41680, nps=0, pv="c4b5 f8c8 c5d4 f6d4 d1d4 c7b6 b5b6 a7b6"}
+Qe5 {0.00/8 0.020s, n=32258, nps=0, pv="c7e5 b5b4 a7a5 b4d4 f8d8 d4e5 f6e5 b2b3"}
+21. Qb4 {-0.03/8 0.021s, n=43035, nps=0, pv="b5b4 f8d8 d1d8 a8d8 c5a7 e5b2 b4b2 f6b2 a7c5"}
+a5 {+0.15/9 0.017s, n=34785, nps=0, pv="a7a5 b4b6 f8d8 b2b3 d8d1 f1d1 a8c8 c5d4 e5e2"}
+22. Qd4 {-0.19/10 0.023s, n=46226, nps=0, pv="b4d4 e5f5 d4d5 f5d5 d1d5 f8d8 d5d8 a8d8 b2b4 a5b4 c5b4"}
+Qf5 {+0.30/10 0.020s, n=38582, nps=0, pv="e5f5 d4d5 f5d5 d1d5 f8d8 d5d8 a8d8 b2b4 a5b4 c5b4 f6d4"}
+23. Qd5 {-0.22/11 0.019s, n=36311, nps=0, pv="d4d5 f5d5 d1d5 f8d8 d5d8 a8d8 f1b1 a5a4 b2b3 a4b3 a2b3 d8d2"}
+Qxd5 {+0.17/11 0.017s, n=30584, nps=0, pv="f5d5 d1d5 f8d8 d5d8 a8d8 c5b6 d8d2 f1e1 g7g6 b6a5 d2b2 e1e8 g8g7"}
+24. Rxd5 {-0.26/11 0.019s, n=35115, nps=0, pv="d1d5 f8d8 d5d8 a8d8 b2b3 h7h5 f1e1 d8d2 a2a4 g8h7 c5e3 d2c2"}
+Rfd8 {+0.21/11 0.020s, n=36287, nps=0, pv="f8d8 d5d8 a8d8 c5b6 d8d2 f1c1 g8f8 b6a5 d2b2 c1c8 f8e7 a5d8 e7e6 d8f6"}
+25. Rxd8+ {-0.21/10 0.017s, n=37202, nps=0, pv="d5d8 a8d8 c5b6 d8d2 f1c1 g8f8 b6a5 d2b2 c1c8 f8e7 a5d8 e7e6 d8f6"}
+Rxd8 {+0.24/9 0.023s, n=43658, nps=0, pv="a8d8 b2b3 d8d2 f1e1 h7h5 a2a4 h5h4 b3b4 a5b4 e1e8 g8h7"}
+26. b3 {-0.29/10 0.018s, n=36121, nps=0, pv="b2b3 d8d2 f1e1 h7h5 a2a4 g8h7 c5b6 d2b2 b6a5 b2b3"}
+Rd2 {+0.34/10 0.020s, n=35568, nps=0, pv="d8d2 f1e1 h7h5 a2a3 d2d3 e1b1 h5h4 c5e3 f6e5 a3a4"}
+27. a3 {-0.41/10 0.044s, n=88211, nps=0, pv="a2a3 h7h5 f1b1 h5h4 c5b6 f6d4 b6d4 d2d4 a3a4 d4d2"}
+h5 {+0.39/9 0.016s, n=30757, nps=0, pv="h7h5 f1c1 d2d3 c1b1 h5h4 a3a4 d3d2 b1e1 f6c3"}
+28. Rb1 {-0.38/10 0.019s, n=38586, nps=0, pv="f1b1 d2c2 c5e3 g8h7 a3a4 f6c3 h2h4 h7g6 b1d1 g6f5"}
+b5 {+0.30/8 0.014s, n=27386, nps=0, pv="b7b5 c5b6 a5a4 b6e3 d2c2 b3a4 b5a4 b1b7"}
+29. Bb6 {-0.26/9 0.018s, n=35146, nps=0, pv="c5b6 d2a2 b6a5 a2a3 a5b6 h5h4 b6c5 a3a2 b1d1"}
+a4 {+0.54/9 0.031s, n=61818, nps=0, pv="a5a4 b3a4 b5a4 b6c5 g8h7 b1c1 h5h4 c5e3 d2e2"}
+30. bxa4 {-0.46/9 0.014s, n=27711, nps=0, pv="b3a4 b5a4 b6c5 g8h7 b1e1 h5h4 c5b4 d2c2 e1e8"}
+bxa4 {+0.63/9 0.014s, n=28294, nps=0, pv="b5a4 b6c5 d2c2 c5d6 f6d4 d6g3 g8h7 b1d1 d4c5"}
+31. Bc5 {-0.71/8 0.014s, n=28076, nps=0, pv="b6c5 d2c2 c5d6 g8h7 b1d1 h7g6 g2g3 h5h4"}
+Rc2 {+0.99/9 0.013s, n=25177, nps=0, pv="d2c2 b1b8 g8h7 c5e3 c2a2 g2g3 a2a3 g1g2 a3a1 g2f3"}
+32. Bd6 {-1.10/9 0.031s, n=59834, nps=0, pv="c5d6 f6d4 b1f1 c2a2 d6e7 d4f6 e7c5 f6b2 f1d1"}
+Ra2 {+1.14/9 0.018s, n=34886, nps=0, pv="c2a2 d6c5 g8h7 b1d1 f6b2 h2h4 b2a3 c5d4 a3d6"}
+33. Kf1 {-1.03/9 0.027s, n=52766, nps=0, pv="g1f1 f6b2 b1d1 b2a3 d6a3 a2a3 d1d8 g8h7 f1e2 h7g6"}
+Bb2 {+1.16/9 0.017s, n=30243, nps=0, pv="f6b2 b1d1 b2a3 d6a3 a2a3 d1d8 g8h7 d8d7 a3a1 f1e2 h7g6"}
+34. Rd1 {-1.07/9 0.015s, n=29171, nps=0, pv="b1d1 b2a3 d6a3 a2a3 h2h4 a3a2 d1d5 g7g6 d5d7"}
+Bxa3 {+1.22/10 0.013s, n=23530, nps=0, pv="b2a3 d6a3 a2a3 h2h4 a3a2 d1d8 g8h7 d8d5 h7g6 d5g5 g6h6 g5c5"}
+35. Bxa3 {-1.43/10 0.044s, n=78097, nps=0, pv="d6a3 a2a3 h2h4 a3a2 d1d8 g8h7 d8d5 h7g6 d5g5 g6h6 g5f5 h6g6"}
+Rxa3 {+1.43/9 0.019s, n=34609, nps=0, pv="a2a3 h2h4 a3a2 d1d8 g8h7 d8d5 h7g6 d5g5 g6h6 g5f5 h6g6"}
+36. h4 {-1.43/8 0.011s, n=19890, nps=0, pv="h2h4 a3a2 d1d8 g8h7 d8d5 h7g6 d5g5 g6h6 g5f5 h6g6"}
+Ra2 {+1.65/10 0.012s, n=20200, nps=0, pv="a3a2 d1d8 g8h7 g2g3 a4a3 f1g2 h7g6 d8d6 g6f5 d6d5 f5g6 d5g5 g6h6 g5c5"}
+37. Rd8+ {-1.74/9 0.014s, n=25506, nps=0, pv="d1d8 g8h7 d8d5 h7h6 d5f5 f7f6 f5c5 a4a3 c5c8 h6g6"}
+Kh7 {+1.83/9 0.015s, n=22748, nps=0, pv="g8h7 d8d5 g7g6 f1g1 a4a3 d5d1 h7g7 d1c1 g7f6 c1c7"}
+38. Rd5 {-1.62/9 0.011s, n=16817, nps=0, pv="d8d5 h7g6 d5g5 g6f6 g5h5 a2a1 f1e2 a4a3 h5c5 a3a2 h4h5"}
+g6 {+2.15/9 0.023s, n=28631, nps=0, pv="g7g6 f2f3 a4a3 d5d1 h7g7 g2g4 h5g4 f3g4 g7f6"}
+39. Rd7 {-1.91/8 0.013s, n=22528, nps=0, pv="d5d7 h7g7 f1e1 a2a1 e1e2 a4a3 d7d1 a1d1 e2d1"}
+Kg7 {+2.42/11 0.018s, n=30895, nps=0, pv="h7g7 d7a7 a4a3 a7a8 a2a1 f1e2 a3a2 a8a6 g7h7 a6a8 h7g7 e2f3"}
+40. Rd6 {-2.33/8 0.010s, n=17237, nps=0, pv="d7d6 a4a3 d6a6 a2a1 f1e2 a3a2 e2f3 g7h6 a6a8"}
+a3 {+2.34/11 0.021s, n=32982, nps=0, pv="a4a3 d6a6 a2a1 f1e2 a3a2 e2f3 g7f8 a6a7 f8g7 a7a6 g7h7 a6a7"}
+41. Ra6 {-2.33/10 0.021s, n=34968, nps=0, pv="d6a6 a2a1 f1e2 a3a2 e2f3 g7f8 a6a7 f8g7 a7a6 g7h6 a6a8"}
+Ra1+ {+2.44/10 0.011s, n=17591, nps=0, pv="a2a1 f1e2 a3a2 e2f3 g7f8 a6a7 f8g7 a7a6 g7f8 a6a7 f8g7"}
+42. Ke2 {-2.25/11 0.017s, n=26767, nps=0, pv="f1e2 a3a2 e2f3 g7f8 a6a7 f8g7 a7a6 g7f8 a6a7 f8g8 a7a8 g8h7 f3e4"}
+a2 {+2.31/12 0.017s, n=26299, nps=0, pv="a3a2 e2f3 g7f8 a6a7 f8g7 a7a6 g7f8 a6a7 f8g8 a7a8 g8h7 a8a7 h7g8"}
+43. Kf3 {-2.20/12 0.026s, n=38631, nps=0, pv="e2f3 g7f8 a6a7 f8g7 a7a6 g7f8 a6a7 f8g8 f3f4 g8g7 f4g5 g7f8"}
+Kf8 {+2.20/11 0.021s, n=32685, nps=0, pv="g7f8 a6a7 f8g7 a7a6 g7f8 a6a7 f8g8 f3f4 g8g7 f4g5 g7g8"}
+44. Ra7 {-2.27/11 0.010s, n=16128, nps=0, pv="a6a7 f8g7 a7a6 g7f8 a6a7 f8g8 a7a8 g8h7 a8a7 h7g8 a7a8 g8h7 a8e8"}
+Kg7 {+2.21/12 0.017s, n=25521, nps=0, pv="f8g7 a7a6 f7f6 a6a7 g7f8 f3f4 f8g8 a7a8 g8g7 a8a7 g7g8 a7a8 g8g7 a8a7 g7f8 f4f3 g6g5"}
+45. Ra6 {0.00/18 0.013s, n=19291, nps=0, pv="a7a6"}
+Kh7 {+2.20/10 0.011s, n=16149, nps=0, pv="g7h7 f3f4 f7f6 a6a7 h7g8 a7a6 g8g7 a6a7 g7g8 f4f3 g8f8 f3f4"}
+46. Ra7 {-2.05/10 0.010s, n=13904, nps=0, pv="a6a7 h7g8 a7a8 g8h7 a8a7 h7h6 f3f4 f7f6 g2g3 g6g5 f4f5 g5h4"}
+Kh6 {+1.51/10 0.011s, n=15530, nps=0, pv="h7h6 f3f4 h6g7 f4g5 a1g1 a7a2 g1g2 g5f4 g2g4 f4e3 g4h4 a2a8"}
+47. Kf4 {-1.51/9 0.010s, n=13771, nps=0, pv="f3f4 h6g7 f4g5 a1g1 a7a2 g1g2 g5f4 g2g4 f4e3 g4h4 a2a8"}
+Kg7 {+1.65/10 0.012s, n=17175, nps=0, pv="h6g7 f4g5 a1g1 a7a2 g1g2 g5f4 g2g4 f4e5 g4h4 a2a8 h4h2 f2f3"}
+48. Kg5 {-1.74/10 0.011s, n=15028, nps=0, pv="f4g5 a1g1 a7a2 g1g2 g5f4 g2g4 f4e3 g4h4 a2a8 h4h1 a8d8 h5h4"}
+Rb1 {+5.96/10 0.019s, n=26172, nps=0, pv="a1b1 g2g4 a2a1q a7a1 b1a1 g4h5 a1a5 g5f4 a5h5 f4g3 g7f6"}
+49. g4 {-5.96/9 0.009s, n=11483, nps=0, pv="g2g4 a2a1q a7a1 b1a1 g4h5 a1a5 g5f4 a5h5 f4g3 g7f6"}
+a1=Q {+6.25/10 0.013s, n=17479, nps=0, pv="a2a1q a7a1 b1a1 g4h5 a1g1 g5f4 g6h5 f2f3 g7f6 f4e4 f6e6"}
+50. Rxa1 {-6.55/10 0.016s, n=20717, nps=0, pv="a7a1 b1a1 g4h5 a1g1 g5f4 g6h5 f4e5 g1g4 f2f3 g4h4 e5d5"}
+Rxa1 {+6.55/9 0.011s, n=14470, nps=0, pv="b1a1 g4h5 a1g1 g5f4 g6h5 f4e5 g1g4 f2f4 g4h4 f4f5"}
+51. gxh5 {-6.59/9 0.012s, n=15034, nps=0, pv="g4h5 a1g1 g5f4 g6h5 f4e5 g1g4 e5f5 f7f6 f2f3 g4h4"}
+Rg1+ {+6.67/8 0.012s, n=15802, nps=0, pv="a1g1 g5f4 g6h5 f4e5 g1g4 f2f4 g4h4 f4f5 h4c4"}
+52. Kf4 {-6.67/8 0.009s, n=11182, nps=0, pv="g5f4 g6h5 f4f5 g1g4 f2f3 g4h4 f3f4 h4h1 f5e4"}
+gxh5 {+6.80/9 0.013s, n=16304, nps=0, pv="g6h5 f4e5 g1g4 f2f3 g4h4 f3f4 h4h1 f4f5 h5h4"}
+53. Kf5 {-6.81/8 0.014s, n=16929, nps=0, pv="f4f5 g1g4 f5e5 g4h4 f2f4 g7f8 e5f5 f8e7"}
+Rg4 {+6.84/8 0.011s, n=13457, nps=0, pv="g1g4 f2f3 g4h4 f5g5 h4h1 g5f5 h1e1 f5f4"}
+54. f4 {-7.04/8 0.008s, n=9841, nps=0, pv="f2f4 f7f6 f5e4 g7g6 e4e3 g6f5 e3d3 f5f4"}
+f6 {+7.61/8 0.015s, n=17364, nps=0, pv="f7f6 f5e4 g7g6 e4d5 g4f4 d5c6 g6f5 c6b7"}
+55. Ke4 {-7.72/9 0.008s, n=10199, nps=0, pv="f5e4 g7g6 e4d5 g4f4 d5c6 g6f5 c6d5 f4h4 d5c6"}
+Kg6 {+7.87/9 0.017s, n=19438, nps=0, pv="g7g6 e4d5 g4f4 d5d6 g6f5 d6e7 f4h4 e7f7 h4c4"}
+56. Kd5 {-7.90/9 0.010s, n=11727, nps=0, pv="e4d5 g6f5 d5d6 g4h4 d6c6 h4f4 c6b7 f4b4 b7a6 f5e5"}
+Kf5 {+8.43/9 0.017s, n=17601, nps=0, pv="g6f5 d5d6 g4h4 d6c7 h4f4 c7b6 h5h4 b6b7 h4h3"}
+57. Kd6 {-8.43/9 0.010s, n=10373, nps=0, pv="d5d6 g4h4 d6c6 h4f4 c6b7 h5h4 b7b6 h4h3 b6b7"}
+Rxh4 {+9.39/9 0.010s, n=10855, nps=0, pv="g4h4 d6c7 h4f4 c7b6 h5h4 b6a6 h4h3 a6b7 h3h2"}
+58. Kc6 {-16.52/11 0.014s, n=15146, nps=0, pv="d6c6 h4f4 c6b5 h5h4 b5c5 h4h3 c5b6 h3h2 b6a5 h2h1q a5b6"}
+Rxf4 {+9.64/9 0.045s, n=9208, nps=0, pv="h4f4 c6b6 f5e5 b6a6 h5h4 a6b7 h4h3 b7b6 h3h2"}
+59. Kb5 {-9.58/10 0.016s, n=17151, nps=0, pv="c6b5 f5e6 b5a6 e6d6 a6b5 h5h4 b5a6 h4h3 a6b5 h3h2"}
+Ke5 {+16.52/10 0.009s, n=10034, nps=0, pv="f5e5 b5a6 h5h4 a6b6 h4h3 b6b5 e5f5 b5b6 h3h2 b6b7"}
+60. Kb6 {-16.52/10 0.010s, n=9874, nps=0, pv="b5b6 e5f5 b6a6 h5h4 a6b6 h4h3 b6b7 h3h2 b7b6 h2h1q"}
+Rb4+ {+9.64/8 0.016s, n=16306, nps=0, pv="f4b4 b6c7 h5h4 c7d7 b4b1 d7e7 h4h3 e7f7 h3h2"}
+61. Kc5 {-9.91/8 0.012s, n=12698, nps=0, pv="b6c5 b4f4 c5b6 h5h4 b6c7 f4c4 c7d7 h4h3 d7e7 h3h2"}
+Rb1 {+11.64/9 0.009s, n=9293, nps=0, pv="b4b1 c5c4 h5h4 c4c3 h4h3 c3c2 h3h2 c2b1 h2h1q b1c2"}
+62. Kc4 {-11.95/10 0.008s, n=7965, nps=0, pv="c5c4 h5h4 c4c3 h4h3 c3c2 h3h2 c2b1 h2h1q b1b2 h1e4 b2a2"}
+h4 {+12.08/10 0.010s, n=9370, nps=0, pv="h5h4 c4c3 h4h3 c3c2 h3h2 c2b1 h2h1q b1b2 e5d4 b2c2 h1e4 c2b2"}
+63. Kc3 {-12.08/10 0.010s, n=8443, nps=0, pv="c4c3 h4h3 c3c2 h3h2 c2b1 h2h1q b1b2 e5d4 b2a2 h1d5 a2b2 d5e4"}
+Rb5 {+11.79/9 0.022s, n=19742, nps=0, pv="b1b5 c3d3 h4h3 d3c4 h3h2 c4b5 h2h1q b5b6 h1e4"}
+64. Kd3 {-16.89/9 0.012s, n=11348, nps=0, pv="c3d3 h4h3 d3c4 b5b1 c4c3 h3h2 c3d2 h2h1q d2c2"}
+h3 {+11.85/9 0.010s, n=9082, nps=0, pv="h4h3 d3c4 h3h2 c4b5 h2h1q b5c5 h1e4 c5b6 e5d5"}
+65. Kc4 {-17.28/10 0.011s, n=9551, nps=0, pv="d3c4 b5b1 c4c3 h3h2 c3d2 h2h1q d2d3 h1e4 d3c3 e5d5 c3d2"}
+Rb4+ {+11.82/9 0.011s, n=9489, nps=0, pv="b5b4 c4b4 h3h2 b4b5 h2h1q b5b6 h1e4 b6a6 e5d5 a6b7"}
+66. Kxb4 {-11.85/9 0.009s, n=8022, nps=0, pv="c4b4 h3h2 b4b5 h2h1q b5a6 e5d5 a6b5 h1e4 b5b6 e4g4"}
+h2 {+11.95/10 0.025s, n=22143, nps=0, pv="h3h2 b4b5 h2h1q b5b6 h1b1 b6c6 e5d4 c6d7 b1e4 d7c7 d4d5"}
+67. Kb5 {-11.93/9 0.027s, n=21952, nps=0, pv="b4b5 h2h1q b5b6 e5d5 b6b7 d5c5 b7b8 h1e4 b8a7 c5d5"}
+h1=Q {+11.96/9 0.029s, n=25356, nps=0, pv="h2h1q b5b6 e5d6 b6b5 h1c6 b5b4 d6d5 b4a3 c6a6 a3b2 a6e2 b2c3"}
+68. Kb6 {-11.92/7 0.007s, n=6506, nps=0, pv="b5b6 e5d5 b6c7 d5d4 c7b8 h1e4 b8c7"}
+Kd6 {+12.06/7 0.013s, n=12036, nps=0, pv="e5d6 b6a5 h1b1 a5a4 d6d5 a4a3 b1e4"}
+69. Kb5 {-12.07/6 0.013s, n=10334, nps=0, pv="b6b5 h1f1 b5a5 d6c5 a5a4 f1d3 a4a5"}
+Qb1+ {+11.97/5 0.006s, n=4969, nps=0, pv="h1b1 b5c4 b1e4 c4b3 e4d3 b3b2 d6d5 b2a2"}
+70. Kc4 {-12.03/6 0.016s, n=13327, nps=0, pv="b5c4 b1e4 c4b3 d6c5 b3c3 e4e3 c3b2 c5c4 b2c2"}
+Qe4+ {+12.11/6 0.013s, n=10356, nps=0, pv="b1e4 c4b3 d6d5 b3c3 e4e2 c3b3 d5d4"}
+71. Kb3 {-12.08/6 0.015s, n=11749, nps=0, pv="c4b3 d6e5 b3c3 e4e2 c3b4 e5d4 b4a5"}
+Ke5 {+12.13/6 0.012s, n=9602, nps=0, pv="d6e5 b3c3 e5f4 c3b3 f4f3 b3b2"}
+72. Kc3 {-12.08/7 0.013s, n=10161, nps=0, pv="b3c3 e4e2 c3b4 e5d4 b4a4 d4c4 a4a5"}
+Kf4 {+12.13/6 0.010s, n=8115, nps=0, pv="e5f4 c3b3 e4d4 b3c2 d4e4 c2b2 f4f3"}
+73. Kb3 {-12.22/6 0.009s, n=6978, nps=0, pv="c3b3 f4f3 b3c3 f6f5 c3b2 f5f4"}
+Kf3 {+12.22/5 0.006s, n=4756, nps=0, pv="f4f3 b3c3 f6f5 c3b2 f5f4"}
+74. Kc3 {-12.20/7 0.026s, n=19419, nps=0, pv="b3c3 e4g4 c3c2 g4g6 c2c1 g6e4 c1d2 e4g4"}
+f5 {+12.19/6 0.013s, n=10194, nps=0, pv="f6f5 c3b3 e4g4 b3b2 f5f4 b2c2"}
+75. Kb3 {-12.24/7 0.018s, n=13234, nps=0, pv="c3b3 e4g4 b3a3 g4e4 a3b2 f5f4 b2c3"}
+Qg4 {+12.15/6 0.011s, n=8578, nps=0, pv="e4g4 b3b2 g4a4 b2c3 a4e4 c3b3"}
+76. Ka3 {-12.21/7 0.033s, n=3206, nps=0, pv="b3a3 g4e4 a3b2 e4b4 b2c2 b4e4 c2b3 e4g4 b3a3"}
+Qe4 {+12.21/6 0.008s, n=5976, nps=0, pv="g4e4 a3b2 e4d4 b2c2 d4g4 c2b2 f5f4"}
+77. Kb3 {0.00/34 0.007s, n=4835, nps=0, pv="a3b3"}
+Qf4 {+12.17/6 0.015s, n=10693, nps=0, pv="e4f4 b3c2 f4d4 c2c1 d4g4 c1b1"}
+78. Kb2 {-12.18/5 0.007s, n=4779, nps=0, pv="b3b2 f4e3 b2c2 f5f4 c2b2"}
+Qb4+ {+12.22/6 0.013s, n=8892, nps=0, pv="f4b4 b2c1 b4c4 c1b2 f5f4 b2a3 c4e4 a3b2"}
+79. Kc2 {-12.22/6 0.010s, n=7256, nps=0, pv="b2c2 b4g4 c2d3 g4e4 d3c3 f5f4 c3b2 e4e2 b2c3"}
+Qc4+ {+12.22/6 0.007s, n=5021, nps=0, pv="b4c4 c2b2 f5f4 b2a3 c4e4 a3b2 e4e2 b2c3"}
+80. Kb2 {-12.22/6 0.010s, n=6795, nps=0, pv="c2b2 c4b4 b2c2 b4g4 c2d3 g4e4 d3c3 f5f4 c3b2"}
+Qd3 {+12.24/6 0.009s, n=5808, nps=0, pv="c4d3 b2a2 f5f4 a2b2 d3e2 b2c3 e2e4"}
+81. Ka2 {-12.26/7 0.015s, n=9831, nps=0, pv="b2a2 d3b5 a2a3 f5f4 a3a2 b5e2 a2b3 e2e4"}
+f4 {+12.63/7 0.029s, n=18116, nps=0, pv="f5f4 a2b2 f3f2 b2a2 d3e3 a2b2 f4f3"}
+82. Ka1 {-12.62/6 0.008s, n=5275, nps=0, pv="a2a1 d3e2 a1b1 f3e4 b1c1 f4f3"}
+Ke2 {+20.99/6 0.007s, n=4370, nps=0, pv="f3e2 a1a2 f4f3 a2b2 f3f2 b2c1"}
+83. Ka2 {-20.99/7 0.009s, n=5857, nps=0, pv="a1a2 f4f3 a2a1 d3c3 a1b1 c3d3 b1a1 f3f2 a1b2"}
+f3 {+20.99/6 0.006s, n=4008, nps=0, pv="f4f3 a2a1 d3a3 a1b1 a3d3 b1a1 f3f2 a1b2"}
+84. Ka1 {-M6/6 0.005s, n=3152, nps=0, pv="a2a1 f3f2 a1b2 f2f1q b2a2 f1b1"}
+f2 {+M5/5 0.004s, n=2872, nps=0, pv="f3f2 a1b2 f2f1q b2a2 f1b1"}
+85. Kb2 {-M4/4 0.000s, n=273, nps=0, pv="a1b2 f2f1q b2a2 f1b1"}
+f1=Q {+M3/3 0.000s, n=259, nps=0, pv="f2f1q b2a2 f1b1"}
+86. Ka2 {-M2/2 0.000s, n=47, nps=0, pv="b2a2 f1b1"}
+Qfb1# {+M1/1 0.000s, n=45, nps=0, pv="f1b1", Black mates} 0-1
+
+[Event "Fastchess Tournament"]
+[Site "?"]
+[Date "2026.10.15"]
+[Round "2"]
+[White "b"]
+[Black "a"]
+[Result "1-0"]
+[EngineWhiteAuthor "Alexander Loodin Ek"]
+[EngineBlackAuthor "Alexander Loodin Ek"]
+[SetUp "1"]
+[FEN "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2"]
+[GameDuration "00:00:03"]
+[GameStartTime "2026-10-15T16:29:32 -0700"]
+[GameEndTime "2026-10-15T16:29:35 -0700"]
+[PlyCount "145"]
+[Termination "normal"]
+[TimeControl "1+0.01"]
+[ECO "C42"]
+[Opening "Petrov's Defense: Nimzowitsch Attack"]
+
+2. Nf3 {+0.15/10 0.053s, n=99215, nps=0, pv="g1f3 g8f6 b1c3 b8c6 f1c4 f8c5 c4d5 c5d4 f3d4 f6d5"}
+Nf6 {-0.07/9 0.034s, n=62145, nps=0, pv="g8f6 f3e5 d7d6 e5f3 f6e4 b1c3 c8f5 d2d3 e4f6"}
+3. Nxe5 {+0.29/9 0.039s, n=70808, nps=0, pv="f3e5 f6e4 b1c3 e4c3 d2c3 b8c6 e5c6 d7c6 c1e3"}
+d6 {-0.23/9 0.168s, n=40049, nps=0, pv="d7d6 e5f3 f6e4 d1e2 d8e7 b1c3 e4c3 e2e7 f8e7 d2c3"}
+4. Nf3 {+0.24/10 0.039s, n=67452, nps=0, pv="e5f3 f6e4 b1c3 e4c3 d2c3 b8c6 f1b5 c8e6 e1g1 d6d5"}
+Nxe4 {-0.45/10 0.036s, n=69970, nps=0, pv="f6e4 b1c3 e4c3 d2c3 b8c6 f1d3 f8e7 e1g1 e8g8 c1e3"}
+5. Nc3 {+0.26/10 0.051s, n=94564, nps=0, pv="b1c3 e4c3 d2c3 b8c6 c1g5 f8e7 g5e7 d8e7 f1e2 e8g8 e1g1"}
+Nxc3 {-0.32/10 0.035s, n=65764, nps=0, pv="e4c3 d2c3 b8c6 f1c4 f8e7 e1g1 e8g8 c1e3 c8e6 c4e6"}
+6. dxc3 {+0.32/10 0.032s, n=55256, nps=0, pv="d2c3 b8c6 f1c4 f8e7 e1g1 e8g8 c1e3 c8e6 c4e6 f7e6"}
+Nc6 {-0.32/9 0.028s, n=49519, nps=0, pv="b8c6 c1e3 f8e7 f1c4 e8g8 e1g1 c8e6 c4e6 f7e6"}
+7. Be3 {+0.26/10 0.053s, n=92245, nps=0, pv="c1e3 f8e7 f1c4 e8g8 e1g1 c6e5 f3e5 d6e5 c4d5 c8g4"}
+d5 {-0.34/9 0.030s, n=53712, nps=0, pv="d6d5 f1b5 f8e7 f3e5 d8d6 e3f4 d6f6 f4g3 a7a6"}
+8. Bb5 {+0.33/9 0.051s, n=87729, nps=0, pv="f1b5 a7a6 b5c6 b7c6 d1d4 c8b7 d4e5 d8e7 e1g1 e8c8 a1d1"}
+a6 {-0.35/8 0.025s, n=46661, nps=0, pv="a7a6 b5c6 b7c6 d1d4 d8d6 e1g1 a8b8 e3f4 d6g6"}
+9. Bxc6+ {+0.33/9 0.061s, n=111365, nps=0, pv="b5c6 b7c6 d1d4 c8e6 e1c1 c6c5 d4e5 d8d6 h1e1 e8c8"}
+bxc6 {-0.37/8 0.027s, n=46417, nps=0, pv="b7c6 d1d4 c6c5 d4e5 c8e6 h1f1 d8e7 e1c1 e8c8 c1b1"}
+10. Qd4 {+0.36/10 0.055s, n=90191, nps=0, pv="d1d4 f7f6 d4a4 c8b7 e1g1 f8d6 a4g4 d8e7 g4h5 e7f7 h5f5"}
+c5 {-0.33/8 0.031s, n=47639, nps=0, pv="c6c5 d4e5 c8e6 e1c1 d8d6 h1e1 e8c8 c1b1 c8b8"}
+11. Qe5+ {+0.33/9 0.035s, n=67749, nps=0, pv="d4e5 c8e6 e1g1 a8b8 b2b3 d8d6 a1d1 c7c6 f1e1 b8d8"}
+Be6 {-0.40/9 0.038s, n=67225, nps=0, pv="c8e6 e1c1 d8d6 e5g3 d6g3 h2g3 e8c8 f3g5 f8d6 g5e6"}
+12. O-O {+0.40/9 0.035s, n=62196, nps=0, pv="e1g1 a8b8 f3g5 d8d6 e5d6 f8d6 g5e6 f7e6 a1b1"}
+Rb8 {-0.40/8 0.024s, n=41070, nps=0, pv="a8b8 f3g5 d8d6 e5d6 f8d6 g5e6 f7e6 a1b1"}
+13. b3 {+0.30/9 0.031s, n=56570, nps=0, pv="b2b3 d8d6 e3f4 h7h6 e5e3 d6e7 a1d1 b8d8 f3e5"}
+Qd6 {-0.35/9 0.033s, n=58505, nps=0, pv="d8d6 e5g3 d6g3 h2g3 f8d6 f3g5 e8g8 a1d1 c5c4"}
+14. Bf4 {+0.32/10 0.046s, n=86921, nps=0, pv="e3f4 h7h6 a1d1 b8d8 a2a4 a6a5 h2h3 c7c6 f1e1 d6e7"}
+h6 {-0.39/9 0.023s, n=42881, nps=0, pv="h7h6 a1d1 b8d8 f1e1 c7c6 a2a4 d6e5 f4e5 c5c4"}
+15. Qe3 {+0.30/10 0.061s, n=114363, nps=0, pv="e5e3 d6b6 e3e5 b8c8 a1d1 c7c6 a2a3 c8d8 f1e1 a6a5"}
+Qb6 {-0.31/9 0.027s, n=51472, nps=0, pv="d6b6 f4e5 b8d8 a1d1 h8g8 e3f4 f8d6 f4g3 a6a5"}
+16. Be5 {+0.35/10 0.070s, n=136168, nps=0, pv="f4e5 b8d8 a1d1 c7c6 e3e2 b6b5 e2d2 b5a5 a2a4 a5b6"}
+Rd8 {-0.44/10 0.040s, n=67249, nps=0, pv="b8d8 a1d1 h8g8 e3d3 g8h8 f1e1 c7c6 h2h3 c5c4 b3c4"}
+17. a4 {+0.43/9 0.029s, n=53072, nps=0, pv="a2a4 c7c6 a1d1 h8g8 e3d3 f7f6 a4a5 b6a5 d3g6 e6f7"}
+Rg8 {-0.38/8 0.026s, n=45167, nps=0, pv="h8g8 a1d1 f8d6 d1d5 e6d5 e5d6 d5e6 d6c5 b6c6"}
+18. Rad1 {+0.44/8 0.024s, n=42937, nps=0, pv="a1d1 f8e7 f1e1 c7c6 e3d3 g7g6 d3d2 h6h5"}
+Qa5 {-0.47/9 0.065s, n=122514, nps=0, pv="b6a5 h2h3 f8d6 e5d6 d8d6 f3e5 a5b6 e3g3 d6d8"}
+19. Rfe1 {+0.51/8 0.020s, n=37291, nps=0, pv="f1e1 f8d6 d1d5 e6d5 e5d6 e8d7 d6c5 g8e8 c5e7"}
+Bd6 {-0.66/9 0.067s, n=121782, nps=0, pv="f8d6 e3d3 g7g6 d3d2 g6g5 e5f6 d6e7 f6e7 e8e7"}
+20. Bxd6 {+0.45/8 0.022s, n=40917, nps=0, pv="e5d6 d8d6 f3e5 d5d4 c3d4 c5d4 e3g3 d6d8"}
+Rxd6 {-0.52/9 0.021s, n=40727, nps=0, pv="d8d6 e3d3 g8f8 f3e5 c5c4 d3g3 g7g6 b3c4 d5c4"}
+21. h3 {+0.53/8 0.021s, n=41238, nps=0, pv="h2h3 g8f8 f3e5 d5d4 c3d4 c5d4 e3g3 g7g6"}
+c6 {-0.67/8 0.017s, n=36016, nps=0, pv="c7c6 f3e5 d5d4 c3d4 c5d4 e3d3 g8h8 d3g3"}
+22. Ne5 {+0.93/9 0.018s, n=36816, nps=0, pv="f3e5 d5d4 c3d4 c5d4 e3e4 f7f5 e4f3 a5c7 f3h5 e8f8"}
+d4 {-0.91/9 0.064s, n=124660, nps=0, pv="d5d4 c3d4 c5d4 e3d3 e8f8 c2c4 a5c7 d3h7 d6d8"}
+23. cxd4 {+1.41/8 0.026s, n=48637, nps=0, pv="c3d4 c5d4 e3f4 g7g5 f4f6 a5c7 e5c4 d6d8"}
+cxd4 {-1.49/9 0.022s, n=43878, nps=0, pv="c5d4 e3f4 g7g5 f4f6 a5c7 f6h6 a6a5 h6h7 g8f8"}
+24. Rxd4 {+1.68/9 0.017s, n=33569, nps=0, pv="d1d4 d6d4 e5c6 a5e1 e3e1 d4d6 c6e5 d6d8 a4a5 e6d5"}
+Rxd4 {-1.69/10 0.015s, n=31601, nps=0, pv="d6d4 e5c6 a5e1 e3e1 d4d6 c6e5 g8f8 a4a5 d6d4 e1e2 e6f5"}
+25. Nxc6 {+1.80/10 0.018s, n=34297, nps=0, pv="e5c6 a5e1 e3e1 d4d6 c6e5 d6d5 e1e2 a6a5 c2c4 d5d4 e2h5"}
+Qxe1+ {-1.75/11 0.031s, n=57992, nps=0, pv="a5e1 e3e1 d4d6 c6e5 g8f8 a4a5 h6h5 e1b4 d6d5 b4b8 d5d8 b8b4 e6d5"}
+26. Qxe1 {+1.78/9 0.017s, n=26283, nps=0, pv="e3e1 d4d6 c6e5 e6d5 e1e2 d5e6 a4a5 e8e7 e2h5 d6d2"}
+Rd6 {-1.81/9 0.015s, n=18425, nps=0, pv="d4d6 c6e5 d6d4 a4a5 d4d5 e5g6 d5f5 g6e5 g8f8"}
+27. Ne5 {+1.83/9 0.025s, n=48373, nps=0, pv="c6e5 e6f5 e1e2 f7f6 e5c4 d6e6 e2h5 g7g6 h5h6 e6e1 g1h2 f5c2"}
+Rf8 {-1.85/8 0.030s, n=56391, nps=0, pv="g8f8 e1c3 f7f6 e5g6 f8f7 g1h2 e6f5 c3g3"}
+28. Qe4 {+1.95/8 0.048s, n=89539, nps=0, pv="e1e4 e8e7 e5c6 e7d7 c6d4 f8c8 e4e5 f7f6 e5f4"}
+Ke7 {-1.95/8 0.024s, n=44116, nps=0, pv="e8e7 e5c6 e7d7 c6e5 d7e7 e5c6 e7d7 c6d4 f8c8 a4a5 c8d8"}
+29. Nc6+ {+2.00/8 0.019s, n=35070, nps=0, pv="e5c6 e7d7 c6d4 f8c8 d4e6 d6e6 e4f5 d7e7 a4a5"}
+Kd7 {-1.87/8 0.014s, n=28535, nps=0, pv="e7d7 c6d4 f8c8 e4e5 f7f6 e5f4 d6d5 c2c4 d5e5"}
+30. Nd4 {+1.91/9 0.020s, n=39727, nps=0, pv="c6d4 f8c8 g1h2 c8c5 d4e6 f7e6 e4h7 d7c6 a4a5"}
+Rc8 {-2.01/9 0.027s, n=53364, nps=0, pv="f8c8 e4e5 f7f6 e5e4 c8c5 d4e6 d6e6 e4g4 c5g5"}
+31. c4 {+2.05/8 0.036s, n=68190, nps=0, pv="c2c4 c8c7 e4e5 f7f6 e5e3 e6f7 a4a5 d7c8"}
+Rc7 {-2.20/7 0.016s, n=31199, nps=0, pv="c8c7 e4e3 h6h5 c4c5 d6d5 c5c6 c7c6 d4c6"}
+32. h4 {+2.20/8 0.021s, n=36854, nps=0, pv="h3h4 f7f6 a4a5 c7c5 d4e6 d6e6 e4g4 g7g5"}
+Kc8 {-2.05/8 0.018s, n=35313, nps=0, pv="d7c8 e4e5 c7d7 d4e6 f7e6 g1h2 d6b6 a4a5"}
+33. Qe5 {+2.20/9 0.016s, n=27576, nps=0, pv="e4e5 c7d7 d4e6 f7e6 c4c5 d6c6 a4a5 d7b7 e5e4"}
+Rcd7 {-2.19/9 0.013s, n=24318, nps=0, pv="c7d7 d4e6 f7e6 c4c5 d6c6 a4a5 d7b7 e5e4 c8c7"}
+34. Nxe6 {+2.20/9 0.019s, n=31385, nps=0, pv="d4e6 f7e6 c4c5 d6c6 a4a5 d7b7 e5e4 c6c5 e4e6 c8c7"}
+fxe6 {-2.25/10 0.016s, n=28782, nps=0, pv="f7e6 a4a5 d6c6 c4c5 d7b7 e5f4 b7c7 f4f8 c8b7 b3b4 c7d7"}
+35. c5 {+2.29/9 0.011s, n=20250, nps=0, pv="c4c5 d6c6 a4a5 d7b7 e5f4 b7d7 g1h2 d7c7 b3b4"}
+Rc6 {-2.36/9 0.020s, n=36780, nps=0, pv="d6c6 b3b4 d7b7 e5e4 b7c7 a4a5 c8b7 e4e5 c7f7"}
+36. a5 {+2.30/8 0.010s, n=20595, nps=0, pv="a4a5 d7b7 g1h2 b7d7 b3b4 d7b7 e5d4 b7d7"}
+Rd5 {-2.20/8 0.013s, n=24841, nps=0, pv="d7d5 e5g7 d5c5 g7f8 c8d7 f8g7 d7d6 g7h6 c5a5 h6f6"}
+37. Qxg7 {+2.40/9 0.014s, n=25788, nps=0, pv="e5g7 d5c5 b3b4 c5c1 g1h2 c1c4 g7h6 c8b7 h6f8 c4h4 h2g3"}
+Rdxc5 {-2.16/8 0.010s, n=18231, nps=0, pv="d5c5 g7f8 c8d7 f8g7 d7d6 g7f8 d6d7 f8g7 d7d6 g7h6 c5a5 h4h5"}
+38. b4 {+3.03/8 0.015s, n=27225, nps=0, pv="b3b4 c5c1 g1h2 c1e1 g7h6 c6c2 h6h8 c8b7 h8h7 c2c7 h7g6"}
+Rc1+ {-2.79/7 0.011s, n=19363, nps=0, pv="c5c1 g1h2 c1c2 f2f3 c6c4 g7h6 c2e2 h6h8 c8b7"}
+39. Kh2 {+3.04/7 0.018s, n=30180, nps=0, pv="g1h2 c6c2 g7h6 c1e1 h6f8 c8b7 h2g3 e1e2 f8f7 b7b8"}
+R1c4 {-3.02/8 0.051s, n=83018, nps=0, pv="c1c4 g7h6 c8b7 h6f6 b7a7 f6e7 c6c7 e7d8 c4c2"}
+40. Qxh6 {+3.11/8 0.020s, n=31917, nps=0, pv="g7h6 c6d6 h6f8 c8c7 f8f7 d6d7 f7e6 c4h4 h2g3 h4b4 e6a6"}
+Kb7 {-3.02/7 0.011s, n=17804, nps=0, pv="c8b7 h6f6 b7a7 f6g7 c6c7 g7g3 a7b8 g3g8 c7c8"}
+41. Qf6 {+3.11/7 0.009s, n=15311, nps=0, pv="h6f6 c6d6 f6e7 b7c6 e7e8 c6c7 e8e7 d6d7 e7e6 c4h4 h2g3"}
+Rd6 {-3.11/8 0.024s, n=39139, nps=0, pv="c6d6 f6e7 b7c6 e7e8 c6c7 e8e7 d6d7 e7e6 c4h4 h2g3 h4b4 e6a6"}
+42. Qe7+ {+3.11/8 0.020s, n=30560, nps=0, pv="f6e7 b7c6 e7e8 c6c7 e8e7 d6d7 e7f6 d7d2 f6f7 d2d7 f7e6 c4h4 h2g3"}
+Kc6 {-3.07/8 0.011s, n=18764, nps=0, pv="b7c6 e7e8 c6c7 e8e7 c7c6 e7e8 c6c7 e8f7 c7c6 f7f3 d6d5 f3f6 d5d6 f6f3 c6c7"}
+43. Qe8+ {+3.13/8 0.012s, n=19535, nps=0, pv="e7e8 c6c7 e8e7 c7c6 e7e8 c6c7 e8f7 c7c6 f7f3 c6b5 f3b7 b5a4 b7e7 d6d2"}
+Kd5 {-2.78/8 0.038s, n=57885, nps=0, pv="c6d5 b4b5 c4h4 h2g3 h4a4 b5a6 a4a5 e8a8 d5c5 a6a7 d6d2"}
+44. Qh5+ {+2.61/8 0.031s, n=47174, nps=0, pv="e8h5 d5c6 h5e8 c6b7 h4h5 c4h4 h2g3 h4b4 h5h6 b4b3 g3g4 b3b1"}
+Kc6 {-2.64/7 0.009s, n=13594, nps=0, pv="d5c6 h5e8 c6d5 b4b5 c4h4 h2g3 h4a4 b5a6 a4a5 e8h5 e6e5"}
+45. Qf3+ {+2.11/7 0.011s, n=17730, nps=0, pv="h5f3 c6b5 f3b7 b5a4 h4h5 c4b4 b7e7 d6d2 e7e6"}
+Kb5 {-1.91/7 0.015s, n=23880, nps=0, pv="c6b5 f3b7 b5a4 b7e7 c4d4 h4h5 a4b4 e7g5 d4d2"}
+46. Qb7+ {+2.45/8 0.013s, n=20166, nps=0, pv="f3b7 b5a4 b7e7 c4d4 h4h5 d6d5 h5h6 d5h5 h2g3 d4d3 g3f4"}
+Ka4 {-2.45/8 0.009s, n=13032, nps=0, pv="b5a4 b7e7 c4d4 h4h5 d6d5 h5h6 d5h5 h2g3 d4d3 g3f4 h5h6"}
+47. Qe7 {+2.45/8 0.008s, n=12043, nps=0, pv="b7e7 c4d4 h4h5 d6d5 h5h6 d5h5 h2g3 d4d3 g3f4 h5h6"}
+Rcd4 {-2.34/8 0.008s, n=12823, nps=0, pv="c4d4 h4h5 d6d5 e7e8 a4b4 h5h6 d5a5 e8e7 b4b3 e7e6 d4c4"}
+48. h5 {+2.40/8 0.015s, n=21625, nps=0, pv="h4h5 d6d5 e7e8 d5b5 h2g3 d4d3 g3g4 a4b4 h5h6 d3d2"}
+R6d5 {-2.32/8 0.024s, n=34408, nps=0, pv="d6d5 e7e8 a4a3 h2g3 d5g5 g3f3 d4b4 h5h6 b4b3 f3e2 g5g2"}
+49. Qe8+ {+2.32/7 0.022s, n=28551, nps=0, pv="e7e8 a4a3 h2g3 d5g5 g3f3 d4b4 h5h6 b4b3 f3e2 g5g2"}
+Kxb4 {-2.34/7 0.028s, n=39014, nps=0, pv="a4b4 h5h6 d4h4 h2g3 d5h5 e8e6 h5h6 e6e1 b4b3 e1e8"}
+50. h6 {+2.23/7 0.015s, n=18739, nps=0, pv="h5h6 d4h4 h2g3 d5h5 e8e6 h5h6 e6e5 h4h1"}
+Rh4+ {-2.19/7 0.012s, n=16452, nps=0, pv="d4h4 h2g3 d5h5 e8e6 h5h6 e6e1 b4c4 e1e8 h4h1"}
+51. Kg3 {+2.46/7 0.012s, n=15193, nps=0, pv="h2g3 d5h5 e8e7 b4a5 e7h4 h5h4 g3h4 a5b4 h6h7"}
+Rdh5 {-2.46/7 0.009s, n=12189, nps=0, pv="d5h5 e8e7 b4a5 e7h4 h5h4 g3h4 a5b4 h6h7"}
+52. Qe7+ {+10.09/7 0.017s, n=22921, nps=0, pv="e8e7 b4a5 e7h4 h5h4 g3h4 a5b4 h6h7 b4b3"}
+Kxa5 {-10.09/6 0.019s, n=26512, nps=0, pv="b4a5 e7h4 h5h4 g3h4 a5b4 h6h7 b4c3"}
+53. Qxh4 {+10.09/7 0.009s, n=13391, nps=0, pv="e7h4 h5h4 g3h4 a5a4 h6h7 a4b3 h7h8q"}
+Rxh4 {-10.67/9 0.012s, n=15132, nps=0, pv="h5h4 g3h4 a5b6 h6h7 b6b7 h7h8q b7c7 h8c3 c7d6 h4g5"}
+54. Kxh4 {+10.76/9 0.007s, n=9589, nps=0, pv="g3h4 a5b6 h6h7 a6a5 h7h8q a5a4 h8b8 b6c6 b8e8 c6d6 e8a4"}
+Kb4 {-11.06/9 0.013s, n=17761, nps=0, pv="a5b4 h6h7 a6a5 h7h8q a5a4 h8d4 b4b3 d4e3 b3b2 e3e5 b2c2 e5e6"}
+55. h7 {+11.11/9 0.014s, n=17999, nps=0, pv="h6h7 a6a5 h7h8q a5a4 h8b2 b4c4 b2c2 c4b4 c2e4 b4c5 h4g5 a4a3"}
+a5 {-11.15/9 0.015s, n=17551, nps=0, pv="a6a5 h7h8q a5a4 h8b2 b4c4 h4g5 c4d3 b2b5 d3d2 b5a4 e6e5"}
+56. h8=Q {+11.15/8 0.012s, n=14771, nps=0, pv="h7h8q a5a4 h8b2 b4c4 h4g5 c4d3 b2b5 d3d2 b5a4 e6e5"}
+a4 {-11.15/7 0.033s, n=3222, nps=0, pv="a5a4 h8b2 b4c4 h4g5 c4d3 b2b5 d3d2 b5a4 e6e5"}
+57. Qb2+ {+11.39/7 0.020s, n=23206, nps=0, pv="h8b2 b4c4 h4g5 e6e5 b2c2 c4b4 c2e4 b4b3 e4b1 b3c3 b1a1 c3b3"}
+Kc4 {-11.39/7 0.017s, n=17947, nps=0, pv="b4c4 h4g5 e6e5 b2a2 c4b4 a2b2 b4c4 b2e2 c4b4 e2e1 b4b3 e1e3 b3b2"}
+58. Kg5 {+11.39/7 0.015s, n=16530, nps=0, pv="h4g5 e6e5 b2c2 c4b4 c2e4 b4b3 e4e3 b3b4 e3e1 b4b3 e1e3 b3b2"}
+e5 {-11.39/6 0.027s, n=5243, nps=0, pv="e6e5 b2c1 c4b3 c1e3 b3a2 e3e2 a2b3 e2d1 b3b4 d1e1 b4b3"}
+59. Kf6 {+11.62/6 0.011s, n=11917, nps=0, pv="g5f6 e5e4 b2c2 c4b4 c2e4 b4b3 e4d5 b3b2 d5e5 b2b3"}
+e4 {-11.62/6 0.006s, n=6337, nps=0, pv="e5e4 b2c2 c4b4 c2e4 b4b3 e4d5 b3b2 d5e5 b2b3 e5g5"}
+60. Qc2+ {+11.62/6 0.008s, n=8226, nps=0, pv="b2c2 c4b4 c2e4 b4b3 e4e6 b3b2 e6e5 b2b3 e5d5 b3b2 d5e5 b2b3"}
+Kb4 {-11.62/5 0.005s, n=5092, nps=0, pv="c4b4 c2e4 b4b3 e4e6 b3b2 e6e5 b2b3 e5e3 b3b2 e3e5 b2b3"}
+61. Qb2+ {+11.60/6 0.010s, n=10853, nps=0, pv="c2b2 b4c5 b2c2 c5b4 c2b2 b4c5 f6e5 c5c4 b2d4 c4b3"}
+Kc4 {0.00/25 0.008s, n=7361, nps=0, pv="b4c4"}
+62. Ke5 {+11.58/6 0.008s, n=8817, nps=0, pv="f6e5 c4d3 b2d4 d3e2 d4a4 e2f2 a4e4"}
+e3 {-11.60/6 0.015s, n=15883, nps=0, pv="e4e3 b2d4 c4b3 d4e3 b3c4 e3d4 c4b3 d4d5 b3b2 e5d4"}
+63. fxe3 {+12.00/6 0.018s, n=16846, nps=0, pv="f2e3 c4d3 b2d4 d3e2 d4a4 e2e3 a4d7"}
+Kd3 {-11.96/6 0.005s, n=5304, nps=0, pv="c4d3 b2d4 d3e2 d4a4 e2e3 a4a7 e3d2 a7e7"}
+64. Qd4+ {+11.86/6 0.010s, n=9688, nps=0, pv="b2d4 d3e2 d4a4 e2e3 a4a7 e3e2 a7d4 e2f1"}
+Ke2 {-11.97/6 0.008s, n=7462, nps=0, pv="d3e2 d4a4 e2e3 a4d4 e3e2 e5f6 e2f1 d4d5"}
+65. Qxa4 {+11.90/7 0.022s, n=18395, nps=0, pv="d4a4 e2e3 a4d4 e3e2 e5f6 e2f1 g2g4 f1e2"}
+Kxe3 {-11.90/6 0.005s, n=4587, nps=0, pv="e2e3 a4d4 e3e2 e5f6 e2f1 g2g4 f1e2"}
+66. Qd4+ {+12.03/6 0.007s, n=6938, nps=0, pv="a4d4 e3e2 e5f6 e2f1 g2g4 f1e2 g4g5"}
+Ke2 {-11.93/6 0.008s, n=7745, nps=0, pv="e3e2 e5f6 e2f1 d4g4 f1g1 g4g5 g1f2"}
+67. Kf6 {+12.39/7 0.019s, n=16509, nps=0, pv="e5f6 e2f1 g2g4 f1g2 g4g5 g2g3 g5g6"}
+Kf1 {-12.39/7 0.010s, n=8040, nps=0, pv="e2f1 g2g4 f1g2 g4g5 g2f3 g5g6 f3g3"}
+68. g4 {+13.09/7 0.020s, n=17524, nps=0, pv="g2g4 f1g2 g4g5 g2h2 g5g6 h2g3 g6g7"}
+Kg2 {-20.76/7 0.006s, n=5192, nps=0, pv="f1g2 g4g5 g2f3 g5g6 f3g3 g6g7 g3g2"}
+69. g5 {+20.76/7 0.016s, n=13429, nps=0, pv="g4g5 g2f1 g5g6 f1e2 g6g7 e2f3 g7g8q"}
+Kf3 {-20.76/6 0.006s, n=5111, nps=0, pv="g2f3 g5g6 f3e2 g6g7 e2f3 g7g8q"}
+70. g6 {+21.00/7 0.009s, n=7515, nps=0, pv="g5g6 f3e2 g6g7 e2f1 g7g8q f1e2 g8g5"}
+Ke2 {-21.00/6 0.006s, n=5606, nps=0, pv="f3e2 g6g7 e2f1 g7g8q f1e2 g8g5"}
+71. g7 {+M7/6 0.012s, n=10321, nps=0, pv="g6g7 e2f1 g7g8q f1e2 g8a2 e2f1 a2f2"}
+Kf1 {-M6/5 0.004s, n=3355, nps=0, pv="e2f1 g7g8q f1e2 g8a2 e2e1 a2f2"}
+72. g8=Q {+M5/4 0.002s, n=2335, nps=0, pv="g7g8q f1e2 g8g4 e2f1 d4g1"}
+Ke2 {-M4/3 0.000s, n=280, nps=0, pv="f1e2 g8g4 e2f1 d4g1"}
+73. Qgg4+ {+M3/2 0.000s, n=176, nps=0, pv="g8g4 e2f1 d4g1"}
+Kf1 {-M2/1 0.000s, n=51, nps=0, pv="e2f1 d4g1"}
+74. Qdg1# {+M1/1 0.000s, n=49, nps=0, pv="d4g1", White mates} 1-0
+
