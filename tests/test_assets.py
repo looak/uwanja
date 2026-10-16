@@ -77,3 +77,19 @@ def test_cpuinfo_flags_become_tiers():
     assert choose_asset(STOCKFISH, zen5) == "stockfish-ubuntu-x86-64-vnni512.tar"
     assert choose_asset(STOCKFISH, HostInfo("linux", "x86_64", flags=frozenset(flags - {"avx512vnni"}))) \
         == "stockfish-ubuntu-x86-64-avx512.tar"
+
+
+ELEPHANT = ["elephant-gambit-1.0.0-linux-x86-64", "elephant-gambit-1.0.0-linux-x86-64-v2",
+            "elephant-gambit-1.0.0-linux-x86-64-v3", "elephant-gambit-1.0.0-windows-x86-64-v2.exe",
+            "elephant-gambit-1.0.0-windows-x86-64-v3.exe", "elephant-gambit-1.0.0-windows-x86-64.exe"]
+
+
+def test_microarchitecture_levels_as_elephants_releases_name_them():
+    v3 = {"avx2", "bmi1", "bmi2", "fma", "sse4_1", "sse4_2", "ssse3", "popcnt"}
+    assert choose_asset(ELEPHANT, host("windows", flags=v3)) == "elephant-gambit-1.0.0-windows-x86-64-v3.exe"
+    assert choose_asset(ELEPHANT, host("linux", flags=v3)) == "elephant-gambit-1.0.0-linux-x86-64-v3"
+    v2 = {"sse4_1", "sse4_2", "ssse3", "popcnt"}
+    assert choose_asset(ELEPHANT, host("linux", flags=v2)) == "elephant-gambit-1.0.0-linux-x86-64-v2"
+    assert choose_asset(ELEPHANT, host("linux")) == "elephant-gambit-1.0.0-linux-x86-64"
+    v4 = v3 | {"avx512f", "avx512bw", "avx512cd", "avx512dq", "avx512vl"}
+    assert choose_asset(ELEPHANT, host("windows", flags=v4)) == "elephant-gambit-1.0.0-windows-x86-64-v3.exe"

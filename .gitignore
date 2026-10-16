@@ -221,3 +221,6 @@ __marimo__/
 
 # uwanja run directories
 /runs/
+
+# downloaded books, the gauntlet files point at them
+/books/

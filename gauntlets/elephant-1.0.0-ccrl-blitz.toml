@@ -1,0 +1,106 @@
+# Elephant Gambit 1.0.0 against engines from the CCRL Blitz list (2'+1", list computed October 10, 2026).
+# Every opponent is the exact version CCRL rates, fetched from its GitHub release of the same tag.
+#
+#   uwanja run gauntlets/elephant-1.0.0-ccrl-blitz.toml
+#
+# The book is the UHO_Lichess_4852_v1.epd OpenBench uses (sha256 7a7f6470...35644a), downloaded into books/:
+#   https://raw.githubusercontent.com/AndyGrant/openbench-books/master/UHO_Lichess_4852_v1.epd.zip
+
+name = "elephant-1.0.0-ccrl-blitz"
+tc = "120+1"
+book = "../books/UHO_Lichess_4852_v1.epd"
+rounds = 50                  # game pairs per opponent: 14 opponents x 2 x 50 = 1400 games
+concurrency = 10
+
+[subject]
+url = "https://github.com/looak/elephant"
+ref = "1.0.0"
+options = { Threads = 1, Hash = 64 }
+
+[[opponent]]                 # CCRL Blitz 2278
+url = "https://github.com/spamdrew128/Apotheosis"
+ref = "v3.0.0"
+id = "apotheosis-3"
+options = { Hash = 64 }                # no Threads option, it's single threaded
+rating = { value = 2278, list = "CCRL Blitz", as_of = "2026-10-10" }
+
+[[opponent]]                 # 2364
+url = "https://github.com/amanjpro/zahak"
+ref = "3.0"
+options = { Hash = 64 }                # no Threads option
+rating = { value = 2364, list = "CCRL Blitz", as_of = "2026-10-10" }
+
+[[opponent]]                 # 2410
+url = "https://github.com/KierenP/Halogen"
+ref = "v6"
+options = { Threads = 1, Hash = 64 }
+rating = { value = 2410, list = "CCRL Blitz", as_of = "2026-10-10" }
+
+[[opponent]]                 # 2431
+url = "https://github.com/lynx-chess/Lynx"
+ref = "v1.0.1"
+options = { Threads = 1, Hash = 64 }
+rating = { value = 2431, list = "CCRL Blitz", as_of = "2026-10-10" }
+
+[[opponent]]                 # 2433
+url = "https://github.com/pkrisz99/Renegade"
+ref = "v0.10.0"
+options = { Hash = 64 }                # no Threads option
+rating = { value = 2433, list = "CCRL Blitz", as_of = "2026-10-10" }
+
+[[opponent]]                 # 2446
+url = "https://github.com/princesslana/princhess"
+ref = "0.10.0"
+options = { Threads = 1, Hash = 64 }
+rating = { value = 2446, list = "CCRL Blitz", as_of = "2026-10-10" }
+
+[[opponent]]                 # 2482
+url = "https://github.com/tcheran-chess/tcheran"
+ref = "v3.0"
+options = { Threads = 1, Hash = 64 }
+rating = { value = 2482, list = "CCRL Blitz", as_of = "2026-10-10" }
+
+[[opponent]]                 # 2510
+url = "https://github.com/FitzOReilly/fatalii"
+ref = "v0.8.0"
+options = { Hash = 64 }                # no Threads option
+rating = { value = 2510, list = "CCRL Blitz", as_of = "2026-10-10" }
+
+[[opponent]]                 # 2521
+url = "https://github.com/deanmchris/blunder"
+ref = "v7.4.0"
+options = { Hash = 64 }                # no Threads option
+rating = { value = 2521, list = "CCRL Blitz", as_of = "2026-10-10" }
+
+# --- stronger engines, CCRL Blitz 2700-3000
+
+[[opponent]]                 # 2747
+url = "https://github.com/spamdrew128/Apotheosis"
+ref = "v4.0.1"
+id = "apotheosis-4"
+options = { Hash = 64 }                # no Threads option
+rating = { value = 2747, list = "CCRL Blitz", as_of = "2026-10-10" }
+
+[[opponent]]                 # 2830
+url = "https://github.com/lithander/Leorik"
+ref = "2.4"
+options = { Hash = 64 }                # no Threads option
+rating = { value = 2830, list = "CCRL Blitz", as_of = "2026-10-10" }
+
+[[opponent]]                 # 2872
+url = "https://github.com/Heiaha/Weiawaga"
+ref = "v5.0"
+options = { Threads = 1, Hash = 64 }
+rating = { value = 2872, list = "CCRL Blitz", as_of = "2026-10-10" }
+
+[[opponent]]                 # 2896
+url = "https://github.com/TerjeKir/weiss"
+ref = "v1.0"
+options = { Threads = 1, Hash = 64 }
+rating = { value = 2896, list = "CCRL Blitz", as_of = "2026-10-10" }
+
+[[opponent]]                 # 2910
+url = "https://github.com/jhonnold/berserk"
+ref = "3.2.0"
+options = { Threads = 1, Hash = 64 }
+rating = { value = 2910, list = "CCRL Blitz", as_of = "2026-10-10" }

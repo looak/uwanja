@@ -39,6 +39,11 @@ def _engines(gauntlet: Gauntlet, host: HostInfo, fetch: bool = True) -> list[Res
         engine = resolve(gauntlet, spec, host, log=say)
         say(f"uwanja:   {engine.cmd}")
         found.append(probe(engine))
+        missing = [key for key in spec.options if engine.declared and key not in engine.declared]
+        if missing:
+            say(f"uwanja:   warning: {engine.id_name or spec.id} doesn't list the option(s) "
+                f"{', '.join(missing)}; fastchess sends them anyway"
+                f" (it has: {', '.join(sorted(engine.declared)) or 'none'})")
         say(f"uwanja:   {engine.id_name or '?'}"
             + (f", {engine.buildinfo.get('commit', '')[:10]}" if engine.buildinfo.get("commit") else "")
             + (f", bench {engine.bench_nodes}" if engine.bench_nodes else ""))

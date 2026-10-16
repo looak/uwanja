@@ -35,6 +35,10 @@ def cache_dir() -> Path:
     if os.environ.get("UWANJA_HOME"):
         return Path(os.environ["UWANJA_HOME"]) / "cache"
     if sys.platform == "win32":
+        if "WindowsApps" in sys.base_prefix:
+            # Python from the Microsoft Store virtualises AppData: files written there are real to Python but
+            # other programs see a different path, and .NET single-file engines can't resolve their own (Lynx).
+            return Path.home() / ".uwanja" / "cache"
         base = Path(os.environ.get("LOCALAPPDATA") or Path.home() / "AppData" / "Local")
         return base / "uwanja" / "cache"
     if sys.platform == "darwin":

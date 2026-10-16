@@ -23,6 +23,7 @@ class Resolved:
     id_name: str | None = None                         # UCI `id name`
     buildinfo: dict[str, str] = field(default_factory=dict)
     bench_nodes: int | None = None
+    declared: set[str] = field(default_factory=set)   # UCI option names the engine lists
 
     @property
     def name(self) -> str | None:
@@ -144,6 +145,9 @@ def probe(engine: Resolved, timeout: float = 15.0, bench_timeout: float = 120.0)
         for line in reply:
             if line.startswith("id name "):
                 engine.id_name = line[len("id name "):].strip()
+            declared = re.match(r"option name (.+?) type ", line)
+            if declared:
+                engine.declared.add(declared[1].strip())
         reply = process.ask("buildinfo\nisready", "readyok", timeout) or []
         for line in reply:
             match = re.match(r"buildinfo\s+(\S+)\s*(.*)$", line)

@@ -55,7 +55,8 @@ def _arch_of(name: str) -> str | None:
 def _tier_of(name: str, arch: str) -> str | None:
     """The most demanding tier the name mentions."""
     for tier, aliases, _ in TIERS.get(arch, []):
-        if any(_norm(alias) in name for alias in aliases):
+        # `x86-64-v3`, not `x86-64-v30`: a level is a whole token
+        if any(re.search(rf"(?<![0-9a-z]){re.escape(_norm(alias))}(?![0-9a-z])", name) for alias in aliases):
             return tier
     return None
 

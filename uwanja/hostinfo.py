@@ -21,9 +21,13 @@ TIERS: dict[str, list[tuple[str, tuple[str, ...], frozenset[str]]]] = {
         ("vnni512", ("vnni512", "avx512vnni", "avx512-vnni"),
          frozenset({"avx512f", "avx512bw", "avx512vl", "avx512vnni"})),
         ("avx512", ("avx512",), frozenset({"avx512f", "avx512bw", "avx512vl"})),
+        # the x86-64 microarchitecture levels (what Elephant's releases are called), v4 is AVX-512, v3 AVX2 and BMI2
+        ("v4", ("x86-64-v4",), frozenset({"avx512f", "avx512bw", "avx512cd", "avx512dq", "avx512vl"})),
         ("bmi2", ("bmi2", "pext"), frozenset({"avx2", "bmi2"})),
+        ("v3", ("x86-64-v3",), frozenset({"avx2", "bmi1", "bmi2", "fma"})),
         ("avx2", ("avx2",), frozenset({"avx2"})),
         ("sse41", ("sse41", "sse4.1", "sse4-1", "popcnt", "modern"), frozenset({"sse4_1", "popcnt"})),
+        ("v2", ("x86-64-v2",), frozenset({"ssse3", "sse4_1", "sse4_2", "popcnt"})),
         ("ssse3", ("ssse3",), frozenset({"ssse3"})),
     ],
     "arm64": [
@@ -168,9 +172,9 @@ def _windows(arch: str):
         elif present("sse4_1"):
             flags.add("sse4_1")
         if present("avx2"):
-            flags |= {"avx2", "bmi2"}
+            flags |= {"avx2", "bmi1", "bmi2", "fma"}
         if present("avx512f"):
-            flags |= {"avx512f", "avx512bw", "avx512vl"}
+            flags |= {"avx512f", "avx512bw", "avx512cd", "avx512dq", "avx512vl"}
     identifier = os.environ.get("PROCESSOR_IDENTIFIER", "")      # "AMD64 Family 25 Model 33 Stepping 2, AuthenticAMD"
     family = re.search(r"Family (\d+)", identifier)
     name = None
