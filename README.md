@@ -117,7 +117,7 @@ The match document is match schema v1 (ramani `plans/match-schema.md`), the game
 | `uwanja/fetch.py`, `engines.py`, `fastchess.py` | downloading and unpacking, resolving and probing engines, fastchess' command line |
 | `uwanja/events.py`, `uci.py`, `tracker.py` | fastchess log lines to UCI events to games (from bwawa) |
 | `uwanja/schedule.py`, `pgnout.py`, `results.py`, `document.py` | the games before they're played, a game as PGN, counts from the PGN, the match document |
-| `uwanja/nyayo.py`, `session.py` | the reporter thread, one run |
+| `uwanja/nyayo.py`, `session.py` | the reporter's two threads (the match document, the games), one run |
 | `uwanja/replay.py` | a recorded log at its pace (from bwawa) |
 | `tests/` | `tests/data` holds a recorded 16 game gauntlet (fastchess log and PGN) the live path runs against |
 

@@ -22,7 +22,7 @@ class FakeReporter:
 
     def start(self): self.started = True
     def close(self): self.closed = True
-    def put_match(self, document): self.documents.append(document)
+    def put_match(self, document, final=False): self.documents.append(document)
 
     def put_game(self, number, pgn, final=False):
         self.games.setdefault(str(number), []).append((pgn, final))
