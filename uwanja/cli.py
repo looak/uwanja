@@ -2,6 +2,7 @@
 
     uwanja run gauntlet.toml [--out DIR] [--no-report] [--dry-run]
     uwanja follow gauntlet.toml --log FILE --pgn FILE      play nothing, follow a recorded or replayed gauntlet
+    uwanja rebuild RUN_DIR                                 redo a run directory's games and document from fastchess' PGN
     uwanja report RUN_DIR [--config gauntlet.toml]         send a run's document and games to nyayo again
     uwanja replay SOURCE TARGET [--pgn SRC DST]            a recorded log at its pace, to develop `follow` against
     uwanja host                                            what this machine is, and which builds it'd pick
@@ -138,6 +139,16 @@ def cmd_report(args: argparse.Namespace) -> int:
     return 1 if reporter.failed else 0
 
 
+def cmd_rebuild(args: argparse.Namespace) -> int:
+    from .rebuild import rebuild
+    found = rebuild(args.run_dir)
+    say(f"uwanja: rebuilt {found.games} games into {found.entries} schedule slots"
+        + (f", {found.duplicates} repeated games ignored" if found.duplicates else "")
+        + f"; previous games/ and match.json kept as *.before-rebuild")
+    say(f"uwanja: now `uwanja report {args.run_dir}` sends it")
+    return 0
+
+
 def cmd_host(args: argparse.Namespace) -> int:
     host = detect()
     from .hostinfo import TIERS
@@ -192,6 +203,10 @@ def build_parser() -> argparse.ArgumentParser:
     report.add_argument("run_dir")
     report.add_argument("--config", metavar="FILE", help="gauntlet file for a directory that has none (older gauntlets)")
     report.set_defaults(func=cmd_report)
+
+    rebuild = commands.add_parser("rebuild", help="rebuild a run directory's games and document from fastchess' PGN")
+    rebuild.add_argument("run_dir")
+    rebuild.set_defaults(func=cmd_rebuild)
 
     commands.add_parser("host", help="print the detected OS, CPU, and the build tiers it would take").set_defaults(
         func=cmd_host)

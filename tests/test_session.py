@@ -160,3 +160,32 @@ def test_fastchess_stdout_drives_the_state(tmp_path):
     session.pump()
     entry = session.schedule.get(1)
     assert (entry.state, entry.result, entry.fault) == ("finished", "1-0", {"kind": "illegal", "side": "opponent"})
+
+
+def test_results_do_not_wait_for_the_log(tmp_path):
+    """The October CCRL gauntlet: a result whose game the log hadn't finished with, more than a few seconds, was given
+    a new number and took a later slot, and 37 phantom games came out beyond 1400. The PGN alone places every game."""
+    (tmp_path / "empty.log").write_text("", encoding="utf-8")
+    _, session, reporter, _ = play(tmp_path, log=str(tmp_path / "empty.log"))
+    numbers = sorted(int(n) for n in reporter.games)
+    assert numbers == list(range(1, 17))
+    assert len(session.schedule.entries) == 16
+    assert all(e.state == "finished" for e in session.schedule.entries)
+    assert session.results.totals()["games"] == 16
+
+
+def test_rebuild_puts_a_run_right_from_its_pgn(tmp_path):
+    import shutil
+    from uwanja.rebuild import rebuild
+    _, session, reporter, paths = play(tmp_path)
+    shutil.copy2(DATA / "fc.pgn", paths.pgn)
+    paths.config.write_text('tc = "3+0.03"\nrounds = 8\n[subject]\ncmd = "dev"\n[[opponent]]\ncmd = "main"\n', encoding="utf-8")
+    paths.identity.write_text(json.dumps(session.identity.to_json()), encoding="utf-8")
+    # a bad run: an extra live file past the schedule, and a slot left playing
+    (paths.games / "17.pgn").write_text('[Event "x"]\n[Result "*"]\n\n*\n', encoding="utf-8")
+    found = rebuild(paths.root)
+    assert (found.games, found.entries, found.duplicates) == (16, 16, 0)
+    assert sorted(int(p.stem) for p in paths.games.glob("*.pgn")) == list(range(1, 17))
+    assert (paths.root / "games.before-rebuild" / "17.pgn").exists()
+    assert found.document["progress"] == {"total": 16, "played": 16, "playing": 0}
+    assert found.document["results"][0]["games"] == 16

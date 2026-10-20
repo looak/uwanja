@@ -170,7 +170,7 @@ class Session:
         self.reporter = reporter
         self.log = log or (lambda text: print(text, file=sys.stderr))
         self.results = Results(identity.subject_id, [opponent["id"] for opponent in identity.opponents])
-        self.tracker = Tracker(on_update=self._game_updated, on_finish=self._game_finished)
+        self.tracker = Tracker(on_update=self._game_updated)
         self.schedule = Schedule(identity.subject_id, [opponent["id"] for opponent in identity.opponents],
                                  gauntlet.rounds)
         self.total_games = len(self.schedule.entries)
@@ -207,8 +207,10 @@ class Session:
         if self.reporter:
             self.reporter.put_game(entry.number, pgn)
 
-    def _game_finished(self, number: int, found: FinishedGame) -> None:
-        entry = self._entry(number, found.white, found.black)
+    def _game_finished(self, found: FinishedGame) -> None:
+        """A game fastchess has written to its PGN: its slot in the schedule is its round and colours, whatever the
+        log did or didn't show."""
+        entry = self.schedule.locate(found.round, found.white, found.black)
         reason = reason_of(found.comment) or (found.termination if found.termination != "normal" else None)
         if entry.state != "finished":
             self.schedule.finished(entry, found.result, reason)
@@ -253,8 +255,7 @@ class Session:
                 self.finished_marker = True
         games = self._pgn_follow.read()
         for game, text in games:
-            self.tracker.apply_result(to_finished(game, text))
-        self.tracker.release_pending()
+            self._game_finished(to_finished(game, text))
         return bool(printed or lines or games)
 
     def publish(self, state: str = "running", force: bool = False) -> None:
@@ -319,7 +320,6 @@ class Session:
         finally:
             if out is not None:
                 out.close()
-        self.tracker.release_pending(force=True)
         self.publish(state, force=True)
         if self.reporter:
             self.reporter.close()

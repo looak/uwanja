@@ -102,20 +102,21 @@ class Game:
 class Tracker:
     """Keeps the current game of every slot.
 
-    `on_update(game)` is called whenever a game's moves changed (a game started, a move was made), `on_finish(number,
-    entry)` when the PGN says a game ended, with the game's number in the match: the tracked game's own, or a new one
-    for a game the log never showed."""
+    `on_update(game)` is called whenever a game's moves changed (a game started, a move was made). How a game ended
+    is not the tracker's business: the log doesn't always show the last move (see below), the PGN is the authority
+    and the session reads it on its own.
 
-    def __init__(self, on_update: Callable[[Game], None] | None = None,
-                 on_finish: Callable[[int, FinishedGame], None] | None = None, pending_seconds: float = 5.0):
+    Known limit: fastchess logs an engine's output under the thread that read it, which for some engines (Leorik,
+    Weiawaga, Lynx, ...) is not the thread that wrote its commands, so its `info` and `bestmove` lines don't find
+    their game. The move still arrives with the next `position`, only without its eval, and a game's last move is
+    only in the PGN."""
+
+    def __init__(self, on_update: Callable[[Game], None] | None = None):
         self.on_update = on_update or (lambda game: None)
-        self.on_finish = on_finish or (lambda number, entry: None)
-        self.pending_seconds = pending_seconds
         self.slots: dict[str, Game] = {}
         self.games: dict[int, Game] = {}
         self.pending_new: set[str] = set()
         self.engine_ids: dict[str, str] = {}            # engine name in the match -> its `id name`
-        self.pending: list[FinishedGame] = []           # PGN results read before the log showed the game's end
         self._numbers = 0
 
     def next_number(self) -> int:
@@ -188,7 +189,6 @@ class Tracker:
                 record.pv = list(info.pv)
             record.think_ms = int((event.time - live.started) * 1000)
             self.on_update(game)
-            self._settle(game)
 
     def _sync_position(self, event: EngineIO, fen: str, moves: list[str]) -> None:
         game = self.slots.get(event.slot)
@@ -201,7 +201,6 @@ class Tracker:
             if game is not None and game.status == "live":
                 game.status = "abandoned"   # ended in a way the stream doesn't show: adjudication, time, a crash
                 game.live = None
-                self._settle(game)
             game = Game(self.next_number(), event.slot, fen, event.time)
             self.slots[event.slot] = game
             self.games[game.number] = game
@@ -214,45 +213,3 @@ class Tracker:
             changed = True
         if changed:
             self.on_update(game)
-
-    # --- results from the PGN ---
-    def apply_result(self, entry: FinishedGame) -> None:
-        """A finished game from the runner's PGN, matched to a tracked game by start position and moves. The PGN can
-        be read before the log's last move of that game, such a result waits until the game catches up."""
-        # games still without a result first, an identical earlier game mustn't take it
-        for game in sorted(self.games.values(), key=lambda g: g.result is not None):
-            if self._matches(game, entry):
-                self._finish(game, entry)
-                return
-        self.pending.append(entry)
-
-    def release_pending(self, force: bool = False) -> None:
-        """Results whose game the log never showed (or showed too late) become games of their own after a moment,
-        or at once with `force`, at the end."""
-        now = wallclock.monotonic()
-        for entry in list(self.pending):
-            if force or now - entry.seen >= self.pending_seconds:
-                self.pending.remove(entry)
-                self.on_finish(self.next_number(), entry)
-
-    @staticmethod
-    def _matches(game: Game, entry: FinishedGame) -> bool:
-        if game.start_fen.split()[:4] != entry.start_fen.split()[:4]:
-            return False
-        ours = game.uci_moves()
-        if ours != entry.moves and not (game.status != "live" and entry.moves[:len(ours)] == ours):
-            return False
-        return not (entry.white and entry.black and game.white and game.black
-                    and (entry.white, entry.black) != (game.white, game.black))
-
-    def _finish(self, game: Game, entry: FinishedGame) -> None:
-        game.status, game.result, game.live = "finished", entry.result, None
-        self.on_finish(game.number, entry)
-
-    def _settle(self, game: Game) -> None:
-        """A game moved on or ended, a waiting PGN result may be its own now."""
-        for entry in self.pending:
-            if self._matches(game, entry):
-                self.pending.remove(entry)
-                self._finish(game, entry)
-                return
