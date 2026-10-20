@@ -132,7 +132,7 @@ def cmd_report(args: argparse.Namespace) -> int:
         document = identity.document(results, state if state != "running" else "stopped", None)
         if paths.match.exists():     # the original finish time stays
             document["match"]["finished_at"] = json.loads(paths.match.read_text(encoding="utf-8"))["match"].get("finished_at")
-    reporter.put_match(document)
+    reporter.put_match(document, final=True)
     reporter.close()
     say(f"uwanja: sent match {identity.match_id} and {sent} games"
         + (f", last error: {reporter.failed}" if reporter.failed else ""))

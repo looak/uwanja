@@ -1,8 +1,8 @@
 """One gauntlet's run: follows fastchess' log and PGN, rebuilds the games, reports them.
 
 Everything polls on one thread (the files are the interface, fastchess needs nothing from us), the sender in
-nyayo.py is the only other thread. The run directory keeps what was reported so it can be sent again later
-(`uwanja report`):
+nyayo.py has the only other threads, one for the match document and one for the games. The run directory keeps what
+was reported so it can be sent again later (`uwanja report`):
 
     gauntlet.toml     the file the run was started from
     identity.json     what was fixed at the start: engines, settings, host
@@ -258,8 +258,9 @@ class Session:
             self._game_finished(to_finished(game, text))
         return bool(printed or lines or games)
 
-    def publish(self, state: str = "running", force: bool = False) -> None:
-        """Writes the match document and hands it to the sender, at most every few seconds unless forced."""
+    def publish(self, state: str = "running", force: bool = False, final: bool = False) -> None:
+        """Writes the match document and hands it to the sender, at most every few seconds unless forced. The final
+        one is sent after every game handed over before it."""
         now = time.monotonic()
         stale = now - self._last_document
         if not force and not ((self._dirty and stale >= DOCUMENT_SECONDS) or stale >= HEARTBEAT_SECONDS):
@@ -267,7 +268,7 @@ class Session:
         document = self.identity.document(self.results, state, now_iso(), self.schedule)
         write_atomic(self.paths.match, json.dumps(document, indent=2) + "\n")
         if self.reporter:
-            self.reporter.put_match(document)
+            self.reporter.put_match(document, final=final)
         self._dirty, self._last_document = False, now
 
     def run(self, argv: list[str] | None, idle_exit: float | None = None) -> int:
@@ -320,7 +321,7 @@ class Session:
         finally:
             if out is not None:
                 out.close()
-        self.publish(state, force=True)
+        self.publish(state, force=True, final=True)
         if self.reporter:
             self.reporter.close()
         totals = self.results.totals()

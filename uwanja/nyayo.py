@@ -2,7 +2,12 @@
 
 A producer's reports are all "the whole truth so far" (match-schema.md), so a lost one costs nothing: the sender keeps
 only the newest document and the newest PGN of each game, and a request that fails because nyayo is away is tried
-again with whatever is newest by then. Nothing here can slow the match, the sender is its own thread.
+again with whatever is newest by then. Nothing here can slow the match.
+
+The match document and the games have a thread each, each with its own requests, so a report never waits behind a
+round's games and a slow or failing game route leaves the reports going (ramani plans/live-updates.md, milestone 1).
+Games wait for the match only where nyayo needs it: until it has answered a document, and again when it answers a
+game with 404. The last document of a run waits for the games, so nyayo's final state comes after every game.
 """
 from __future__ import annotations
 
@@ -41,27 +46,43 @@ class Reporter:
         self.log = log or (lambda text: print(text, file=sys.stderr))
         self.timeout = timeout
         self._lock = threading.Condition()
-        self._match: dict | None = None
+        self._match: dict | None = None         # the newest document not yet sent, an older one is replaced
+        self._final = False                     # it's the run's last, it goes once the games have
+        self._match_busy = False
+        self._last_sent: dict | None = None     # sent again when a game finds nyayo doesn't know the match
+        self._known = False                     # nyayo has answered a document: games may go
+        self._refused = False                   # ... and the answer was a refusal
         self._games: dict[str, str] = {}
+        self._games_busy = False
         self._sealed: set[str] = set()          # games whose final PGN went (or is queued), nothing later replaces it
+        self._release = False                   # closing, the games are done or out of time: the last document goes
         self._stop = False
-        self._thread: threading.Thread | None = None
+        self._threads: list[threading.Thread] = []
         self.sent = {"match": 0, "games": 0}
-        self.failed: str | None = None          # the last error, for the run's summary
+        self._failed: dict[str, str | None] = {"match": None, "games": None}   # the last error of each path
+
+    @property
+    def failed(self) -> str | None:
+        """The last error still standing, for the run's summary."""
+        return self._failed["match"] or self._failed["games"]
 
     @property
     def enabled(self) -> bool:
         return self.url is not None
 
     def start(self) -> None:
-        if self.enabled and self._thread is None:
-            self._thread = threading.Thread(target=self._run, name="nyayo", daemon=True)
-            self._thread.start()
+        if self.enabled and not self._threads:
+            self._threads = [threading.Thread(target=self._run_match, name="nyayo-match", daemon=True),
+                             threading.Thread(target=self._run_games, name="nyayo-games", daemon=True)]
+            for thread in self._threads:
+                thread.start()
 
-    def put_match(self, document: dict) -> None:
+    def put_match(self, document: dict, final: bool = False) -> None:
+        """`final`: the run's last document, sent after the games queued before it."""
         with self._lock:
             self._match = document
-            self._lock.notify()
+            self._final = self._final or final
+            self._lock.notify_all()
 
     def put_game(self, number: int | str, pgn: str, final: bool = False) -> None:
         key = str(number)
@@ -71,66 +92,119 @@ class Reporter:
             self._games[key] = pgn
             if final:
                 self._sealed.add(key)
-            self._lock.notify()
+            self._lock.notify_all()
 
     def close(self, timeout: float = 30.0) -> None:
-        """Waits for what's queued to go, up to `timeout`."""
-        if self._thread is None:
+        """Waits for what's queued to go, the games and then the last document, up to `timeout`. The last document is
+        tried even when the games ran out of time: nyayo showing `running` forever is worse than a game missing."""
+        if not self._threads:
             return
         deadline = time.monotonic() + timeout
         with self._lock:
-            while (self._match is not None or self._games) and time.monotonic() < deadline:
+            while (self._games or self._games_busy) and time.monotonic() < deadline:
+                self._lock.wait(0.2)
+            self._release = True
+            self._lock.notify_all()
+            deadline = max(deadline, time.monotonic() + self.timeout)
+            while (self._match is not None or self._match_busy) and time.monotonic() < deadline:
                 self._lock.wait(0.2)
             self._stop = True
-            self._lock.notify()
-        self._thread.join(timeout=self.timeout + 2)    # a request may be on its way
+            self._lock.notify_all()
+        for thread in self._threads:
+            thread.join(timeout=self.timeout + 2)    # a request may be on its way
         if self._match is not None or self._games:
             self.log(f"uwanja: nyayo didn't take everything ({len(self._games)} games"
                      f"{', the match' if self._match else ''} left), `uwanja report <run dir>` sends it again")
 
-    # --- the sender ---
-    def _run(self) -> None:
+    # --- the match document ---
+    def _match_ready(self) -> bool:
+        """A document waits only when it's the last one and games are still going to a match nyayo knows."""
+        if self._match is None:
+            return False
+        return not self._final or self._release or not self._known or not (self._games or self._games_busy)
+
+    def _run_match(self) -> None:
         backoff = 1.0
         while True:
             with self._lock:
-                while not self._stop and self._match is None and not self._games:
+                while not self._stop and not self._match_ready():
                     self._lock.wait()
-                if self._stop and self._match is None and not self._games:
-                    return
-                games = dict(self._games)
-                match, self._match = self._match, None
-                self._games.clear()
-            failed = False
-            for key, pgn in games.items():
-                outcome = self._put(f"/games/{urllib.parse.quote(key, safe='')}", pgn.encode("utf-8"),
-                                    "application/x-chess-pgn", gz=False)
-                if outcome is None:
-                    failed = True
-                    with self._lock:
-                        self._games.setdefault(key, pgn)    # unless a newer one came meanwhile
-                else:
-                    self.sent["games"] += 1
-            if match is not None:
-                body = json.dumps(match, separators=(",", ":")).encode("utf-8")
-                if self._put("", body, "application/json", gz=True) is None:
-                    failed = True
-                    with self._lock:
-                        if self._match is None:
-                            self._match = match
-                else:
-                    self.sent["match"] += 1
-            with self._lock:
-                self._lock.notify_all()
-            if failed:
                 if self._stop:
                     return
+                match, final, self._match, self._final = self._match, self._final, None, False
+                early = final and not self._release and bool(self._games or self._games_busy)
+                self._match_busy = True
+            body = json.dumps(match, separators=(",", ":")).encode("utf-8")
+            status = self._put("", body, "application/json", gz=True)
+            with self._lock:
+                self._match_busy = False
+                if status is None:
+                    if self._match is None:             # unless a newer one came meanwhile
+                        self._match, self._final = match, self._final or final
+                else:
+                    self._known, self._refused = True, status >= 300
+                    if not self._refused:
+                        self.sent["match"] += 1
+                        self._last_sent = match
+                    if early and self._match is None:   # it went ahead of the games for one of them, and goes again
+                        self._match, self._final = match, True
+                self._lock.notify_all()
+            if status is None:
                 time.sleep(backoff)
                 backoff = min(backoff * 2, 15.0)
             else:
                 backoff = 1.0
 
-    def _put(self, suffix: str, body: bytes, content_type: str, gz: bool) -> bool | None:
-        """True sent, False refused (don't try again), None unreachable or a server error (try again)."""
+    # --- the games ---
+    def _run_games(self) -> None:
+        backoff = 1.0
+        while True:
+            with self._lock:
+                while not self._stop and not (self._games and self._known):
+                    self._lock.wait()
+                if self._stop:
+                    return
+                games = list(self._games.items())
+                self._games.clear()
+                self._games_busy = True
+            failed = False
+            for index, (key, pgn) in enumerate(games):
+                status = self._put(f"/games/{urllib.parse.quote(key, safe='')}", pgn.encode("utf-8"),
+                                   "application/x-chess-pgn", gz=False)
+                if status == 404 and not self._refused:
+                    self._unknown_match(games[index:])
+                    break
+                if status is None:
+                    failed = True
+                    with self._lock:
+                        self._games.setdefault(key, pgn)    # unless a newer one came meanwhile
+                elif status < 300 or status == 409:         # 409: sealed already, nothing to resend
+                    self.sent["games"] += 1
+                elif status == 404:
+                    self._note("games", "nyayo refused the match, so it has no games either")
+            with self._lock:
+                self._games_busy = False
+                self._lock.notify_all()
+            if failed:
+                time.sleep(backoff)
+                backoff = min(backoff * 2, 15.0)
+            else:
+                backoff = 1.0
+
+    def _unknown_match(self, games: list[tuple[str, str]]) -> None:
+        """nyayo doesn't know the match (not yet, or not any more): the match goes first, these games after it."""
+        with self._lock:
+            for key, pgn in games:
+                self._games.setdefault(key, pgn)
+            self._known = False
+            if self._match is None and not self._match_busy and self._last_sent is not None:
+                self._match = self._last_sent
+            self._lock.notify_all()
+
+    def _put(self, suffix: str, body: bytes, content_type: str, gz: bool) -> int | None:
+        """nyayo's HTTP status, a refusal's too (not tried again); None when it's unreachable or failing (tried
+        again)."""
+        path = "games" if suffix else "match"
         headers = {"Content-Type": content_type}
         if gz:
             body, headers["Content-Encoding"] = gzip.compress(body), "gzip"
@@ -139,21 +213,22 @@ class Reporter:
         url = f"{self.url}/api/matches/{urllib.parse.quote(self.match_id, safe='')}{suffix}"
         request = urllib.request.Request(url, data=body, method="PUT", headers=headers)
         try:
-            with urllib.request.urlopen(request, timeout=self.timeout):
-                self.failed = None
-                return True
+            with urllib.request.urlopen(request, timeout=self.timeout) as response:
+                self._failed[path] = None
+                return response.status
         except urllib.error.HTTPError as error:
             reason = error.read(300).decode("utf-8", "replace").strip()
             if error.code >= 500:
-                self._note(f"HTTP {error.code} from nyayo: {reason}")
+                self._note(path, f"HTTP {error.code} from nyayo: {reason}")
                 return None
-            self._note(f"nyayo refused {suffix or 'the match'}: HTTP {error.code} {reason}")
-            return True if error.code == 409 and suffix else False   # a sealed game, nothing to resend
+            if error.code != 404 or not suffix:     # a game's 404 is the match not there (yet), it's sent first
+                self._note(path, f"nyayo refused {suffix or 'the match'}: HTTP {error.code} {reason}")
+            return error.code
         except (urllib.error.URLError, OSError) as error:
-            self._note(f"nyayo unreachable: {error}")
+            self._note(path, f"nyayo unreachable: {error}")
             return None
 
-    def _note(self, text: str) -> None:
-        if text != self.failed:             # once per kind of trouble, not once per move
+    def _note(self, path: str, text: str) -> None:
+        if text != self._failed[path]:      # once per kind of trouble on each path, not once per move
             self.log(f"uwanja: {text}")
-        self.failed = text
+        self._failed[path] = text
