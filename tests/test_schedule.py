@@ -48,3 +48,32 @@ def test_reason_from_a_final_comment():
     assert reason_of("0.00/16 0.131s, Draw by adjudication") == "Draw by adjudication"
     assert reason_of("+0.31/18 0.452s") is None
     assert reason_of("+0.31/18 0.452s, n=2200412, sd=0") is None
+
+
+def test_a_finished_game_finds_its_slot_by_round_and_colours():
+    schedule = Schedule("subj", ["a", "b"], rounds=2)       # games 1-8, pairs 1-4: (1,2) a, (3,4) b, (5,6) a, (7,8) b
+    assert schedule.locate("3", "subj", "a").number == 5
+    assert schedule.locate("3", "a", "subj").number == 6
+    assert schedule.locate(4, "b", "subj").number == 8
+    assert len(schedule.entries) == 8
+
+
+def test_both_games_of_a_pair_land_on_their_own_slot_whichever_was_played_first():
+    schedule = Schedule("subj", ["a"], rounds=1)
+    first = schedule.locate("1", "a", "subj")                # fastchess played the opponent's white game first
+    second = schedule.locate("1", "subj", "a")
+    assert (first.number, second.number) == (2, 1)           # a pair's two numbers, each by its colours
+    assert len(schedule.entries) == 2
+
+
+def test_a_game_the_schedule_has_no_place_for_is_appended_not_stolen():
+    schedule = Schedule("subj", ["a"], rounds=1)
+    extra = schedule.locate("9", "subj", "zzz")
+    assert extra.number == 3 and len(schedule.entries) == 3
+    assert not any(e.bound for e in schedule.entries[:2])    # the real slots stay for their own games
+
+
+def test_live_binding_skips_a_slot_that_already_finished():
+    schedule = Schedule("subj", ["a"], rounds=2)             # games 1, 3 have subj as white
+    schedule.finished(schedule.get(1), "1-0", "White mates") # finished before the log was read
+    assert schedule.bind("subj", "a").number == 3

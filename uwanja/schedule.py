@@ -53,9 +53,34 @@ class Schedule:
         """The entry for a game seen in the log: the first not yet matched where these two play these colours. A
         game the schedule has no place for (a recorded gauntlet with more rounds) is appended."""
         for entry in self.entries:
-            if not entry.bound and (entry.white, entry.black) == (white, black):
+            if not entry.bound and entry.state != "finished" and (entry.white, entry.black) == (white, black):
                 entry.bound = True
                 return entry
+        opponent = black if white == self.subject else white
+        entry = Entry(len(self.entries) + 1, opponent or "?", white or "?", black or "?")
+        entry.bound = True
+        self.entries.append(entry)
+        return entry
+
+    def locate(self, round_: str | int | None, white: str | None, black: str | None) -> Entry:
+        """The entry of a finished game from its PGN: fastchess' `Round` is the pair, 2r-1 and 2r, and the colours say
+        which. No timing, no order, nothing the log has to have shown. A game the schedule doesn't know is appended."""
+        try:
+            pair = int(round_)
+        except (TypeError, ValueError):
+            pair = None
+        if pair is not None:
+            for number in (2 * pair - 1, 2 * pair):
+                entry = self.get(number)
+                if entry is not None and (entry.white, entry.black) == (white, black):
+                    entry.bound = True
+                    return entry
+            for number in (2 * pair - 1, 2 * pair):       # the colours guessed the other way round
+                entry = self.get(number)
+                if entry is not None and entry.state != "finished" and {entry.white, entry.black} == {white, black}:
+                    entry.white, entry.black = white, black
+                    entry.bound = True
+                    return entry
         opponent = black if white == self.subject else white
         entry = Entry(len(self.entries) + 1, opponent or "?", white or "?", black or "?")
         entry.bound = True
