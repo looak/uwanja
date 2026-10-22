@@ -8,6 +8,11 @@ The match document and the games have a thread each, each with its own requests,
 round's games and a slow or failing game route leaves the reports going (ramani plans/live-updates.md, milestone 1).
 Games wait for the match only where nyayo needs it: until it has answered a document, and again when it answers a
 game with 404. The last document of a run waits for the games, so nyayo's final state comes after every game.
+
+The schedule goes by changes (changes.py) once an answer has carried `Nyayo-Seq`: the report says its seq and the
+base, the seq nyayo last acknowledged, and carries the entries that changed since. Whole documents go first, after
+anything unexpected (a refusal, a failed request, an answer without the headers or with another digest than ours),
+at the end of a run and from `uwanja report`.
 """
 from __future__ import annotations
 
@@ -21,7 +26,26 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
+from dataclasses import dataclass
 from typing import Callable
+
+from .changes import Held, plan_report
+
+
+@dataclass
+class Answer:
+    """What nyayo answered: the status and the headers (names lowercased) that say what it holds."""
+    status: int
+    headers: dict[str, str]
+
+    @property
+    def seq(self) -> int | None:
+        value = self.headers.get("nyayo-seq", "")
+        return int(value) if value.isdigit() else None
+
+    @property
+    def digest(self) -> str | None:
+        return self.headers.get("nyayo-schedule-digest")
 
 
 def nyayo_config() -> tuple[str | None, str | None]:
@@ -49,6 +73,8 @@ class Reporter:
         self._match: dict | None = None         # the newest document not yet sent, an older one is replaced
         self._final = False                     # it's the run's last, it goes once the games have
         self._match_busy = False
+        self._seq = 0                           # the last report's number, 1 for the first of the run
+        self._held: Held | None = None          # the schedule nyayo holds, None until an answer said it has a seq
         self._last_sent: dict | None = None     # sent again when a game finds nyayo doesn't know the match
         self._known = False                     # nyayo has answered a document: games may go
         self._refused = False                   # ... and the answer was a refusal
@@ -59,6 +85,7 @@ class Reporter:
         self._stop = False
         self._threads: list[threading.Thread] = []
         self.sent = {"match": 0, "games": 0}
+        self.bytes = {"match": 0, "games": 0}   # the bodies as they went, compressed
         self._failed: dict[str, str | None] = {"match": None, "games": None}   # the last error of each path
 
     @property
@@ -134,8 +161,8 @@ class Reporter:
                 match, final, self._match, self._final = self._match, self._final, None, False
                 early = final and not self._release and bool(self._games or self._games_busy)
                 self._match_busy = True
-            body = json.dumps(match, separators=(",", ":")).encode("utf-8")
-            status = self._put("", body, "application/json", gz=True)
+            answer = self._put_match(match, whole=final)
+            status = answer.status if answer else None
             with self._lock:
                 self._match_busy = False
                 if status is None:
@@ -155,6 +182,29 @@ class Reporter:
             else:
                 backoff = 1.0
 
+    def _put_match(self, match: dict, whole: bool) -> Answer | None:
+        """One report: the changes since nyayo's last acknowledged one when it has told its seq, else whole."""
+        with self._lock:
+            self._seq += 1
+            plan = plan_report(match, None if whole else self._held, self._seq)
+            if plan is not None:
+                match = plan.document
+        body = json.dumps(match, separators=(",", ":")).encode("utf-8")
+        answer = self._put("", body, "application/json", gz=True)
+        with self._lock:
+            if plan is None:
+                self._held = None
+            elif answer is not None and 200 <= answer.status < 300 and answer.seq == plan.seq:
+                if answer.digest == plan.digest_hex:
+                    self._held = plan.accepted(self._held)
+                else:
+                    self._held = None
+                    held = (answer.digest or "none")[:12]
+                    self._note("match", f"nyayo's schedule differs from ours (digest {held}), the next report is whole")
+            else:
+                self._held = None       # a refusal, a failure, or an answer without a seq: whole next
+        return answer
+
     # --- the games ---
     def _run_games(self) -> None:
         backoff = 1.0
@@ -169,8 +219,9 @@ class Reporter:
                 self._games_busy = True
             failed = False
             for index, (key, pgn) in enumerate(games):
-                status = self._put(f"/games/{urllib.parse.quote(key, safe='')}", pgn.encode("utf-8"),
+                answer = self._put(f"/games/{urllib.parse.quote(key, safe='')}", pgn.encode("utf-8"),
                                    "application/x-chess-pgn", gz=False)
+                status = answer.status if answer else None
                 if status == 404 and not self._refused:
                     self._unknown_match(games[index:])
                     break
@@ -197,25 +248,26 @@ class Reporter:
             for key, pgn in games:
                 self._games.setdefault(key, pgn)
             self._known = False
+            self._held = None
             if self._match is None and not self._match_busy and self._last_sent is not None:
                 self._match = self._last_sent
             self._lock.notify_all()
 
-    def _put(self, suffix: str, body: bytes, content_type: str, gz: bool) -> int | None:
-        """nyayo's HTTP status, a refusal's too (not tried again); None when it's unreachable or failing (tried
-        again)."""
+    def _put(self, suffix: str, body: bytes, content_type: str, gz: bool) -> Answer | None:
+        """nyayo's answer, a refusal's too (not tried again); None when it's unreachable or failing (tried again)."""
         path = "games" if suffix else "match"
         headers = {"Content-Type": content_type}
         if gz:
             body, headers["Content-Encoding"] = gzip.compress(body), "gzip"
         if self.token:
             headers["Authorization"] = f"Bearer {self.token}"
+        self.bytes[path] += len(body)
         url = f"{self.url}/api/matches/{urllib.parse.quote(self.match_id, safe='')}{suffix}"
         request = urllib.request.Request(url, data=body, method="PUT", headers=headers)
         try:
             with urllib.request.urlopen(request, timeout=self.timeout) as response:
                 self._failed[path] = None
-                return response.status
+                return Answer(response.status, {name.lower(): value for name, value in response.headers.items()})
         except urllib.error.HTTPError as error:
             reason = error.read(300).decode("utf-8", "replace").strip()
             if error.code >= 500:
@@ -223,7 +275,7 @@ class Reporter:
                 return None
             if error.code != 404 or not suffix:     # a game's 404 is the match not there (yet), it's sent first
                 self._note(path, f"nyayo refused {suffix or 'the match'}: HTTP {error.code} {reason}")
-            return error.code
+            return Answer(error.code, {name.lower(): value for name, value in error.headers.items()})
         except (urllib.error.URLError, OSError) as error:
             self._note(path, f"nyayo unreachable: {error}")
             return None
