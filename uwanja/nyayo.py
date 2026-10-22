@@ -308,7 +308,7 @@ class Reporter:
             self._plies.pop(key, None)
 
     def _unknown_match(self, games: list[tuple[str, tuple]]) -> None:
-        """nyayo doesn't know the match (not yet, or not any more): the match goes first, these games after it, whole."""
+        """nyayo doesn't know the match (not yet, or not any more): the match goes first, the games after it, whole."""
         with self._lock:
             for key, state in games:
                 self._games.setdefault(key, state)
