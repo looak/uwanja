@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "uwanja"
-version = "0.1.0"
+version = "0.2.0"
 description = "Engine-agnostic gauntlet runner: fetches UCI engines, plays them through fastchess, streams games and results to nyayo"
 readme = "README.md"
 requires-python = ">=3.11"
