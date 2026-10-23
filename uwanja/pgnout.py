@@ -50,6 +50,12 @@ def comment(record: MoveRecord, fields: frozenset[str] | set[str] = frozenset())
     return ", ".join(parts)
 
 
+def live_moves(game: Game, fields: frozenset[str] | set[str] = frozenset()) -> list[tuple[str, str]]:
+    """Every move of the game so far as (SAN, comment), the comment without its braces: what a PATCH to nyayo
+    carries, and what `live_pgn` writes."""
+    return [(record.san, comment(record, fields)) for record in game.moves]
+
+
 def live_pgn(game: Game, event: str, tc: str | None, names: dict[str, str] | None = None,
              round_: int | None = None, fields: frozenset[str] | set[str] = frozenset()) -> str:
     """The game so far, whole, `[Result "*"]`, written the way fastchess writes a PGN (python-chess would add
