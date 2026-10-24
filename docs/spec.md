@@ -235,7 +235,7 @@ The sender is tested against stand-ins for nyayo that keep the match schema's ru
 | in | the gauntlet file | above, uwanja's own input format |
 | in | fastchess' log, PGN and stdout | fastchess's formats, `v1.8.2-alpha`; the stdout lines and the log's `[Engine]` lines are parsed by regex, they break if fastchess rewords them |
 | in | GitHub releases API and downloads | asset names as publishers spell them, `asset` and `binary` override |
-| in | the engines' UCI, `buildinfo`, `bench` | [elephant-engine.md](https://github.com/looak/ramani/blob/main/elephant-engine.md#uci) in ramani; other engines answer `uci` and nothing else |
+| in | the engines' UCI, `buildinfo`, `bench` | elephant's [engine spec](https://github.com/looak/elephant/blob/main/docs/spec/engine.md#uci); other engines answer `uci` and nothing else |
 | in | nyayo's answers | the headers `Nyayo-Seq`, `Nyayo-Schedule-Digest` and `Nyayo-Plies`, and `Retry-After` on a `503`, as in the match schema |
 | out | the match document | `PUT /api/matches/{id}`, nyayo's [match schema](https://github.com/looak/nyayo/blob/main/docs/match-schema.md), nyayo owns it |
 | out | games | `PUT` and `PATCH /api/matches/{id}/games/{n}`, the same |
