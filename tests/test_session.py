@@ -18,14 +18,17 @@ class FakeReporter:
     def __init__(self):
         self.games: dict[str, list[tuple[str, bool]]] = {}
         self.documents: list[dict] = []
+        self.live: list[tuple[str, list | None]] = []     # every live state with the moves handed over
         self.started = self.closed = False
 
     def start(self): self.started = True
     def close(self): self.closed = True
     def put_match(self, document, final=False): self.documents.append(document)
 
-    def put_game(self, number, pgn, final=False):
+    def put_game(self, number, pgn, final=False, moves=None):
         self.games.setdefault(str(number), []).append((pgn, final))
+        if not final:
+            self.live.append((pgn, moves))
 
 
 def play(tmp_path, log="fc.log", pgn="fc.pgn", subject="dev", opponent="main", rounds=8):
@@ -87,6 +90,19 @@ def test_every_game_streams_move_by_move_and_ends_sealed(tmp_path):
         lengths = [len(chess.pgn.read_game(__import__("io").StringIO(pgn)).end().board().move_stack) for pgn in live]
         assert lengths == sorted(lengths)
     assert (paths.games / "1.pgn").exists()
+
+
+def test_live_games_hand_over_their_moves_as_the_pgn_has_them(tmp_path):
+    """What a PATCH carries is the PGN's own moves: each SAN and the comment between the braces."""
+    _, _, reporter, _ = play(tmp_path, "fc-opts.log", "fc-opts.pgn", "a", "b", rounds=2)
+    assert reporter.live
+    for pgn, moves in reporter.live:
+        game = chess.pgn.read_game(__import__("io").StringIO(pgn))
+        board, nodes = game.board(), list(game.mainline())
+        assert moves is not None and len(moves) == len(nodes)
+        for (san, comment), node in zip(moves, nodes):
+            assert san == board.san(node.move) and comment == node.comment
+            board.push(node.move)
 
 
 def comments(pgn_text):

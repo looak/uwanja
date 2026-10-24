@@ -13,6 +13,9 @@ The schedule goes by changes (changes.py) once an answer has carried `Nyayo-Seq`
 base, the seq nyayo last acknowledged, and carries the entries that changed since. Whole documents go first, after
 anything unexpected (a refusal, a failed request, an answer without the headers or with another digest than ours),
 at the end of a run and from `uwanja report`.
+
+A live game goes by changes the same way: once an answer has carried `Nyayo-Plies`, the moves after that ply go as a
+PATCH, and the whole PGN again after anything unexpected, for the sealed game and from `uwanja report`.
 """
 from __future__ import annotations
 
@@ -47,6 +50,24 @@ class Answer:
     def digest(self) -> str | None:
         return self.headers.get("nyayo-schedule-digest")
 
+    @property
+    def plies(self) -> int | None:
+        value = self.headers.get("nyayo-plies", "")
+        return int(value) if value.isdigit() else None
+
+    @property
+    def failing(self) -> bool:
+        """A server error: tried again, after `retry_after` when nyayo said how long."""
+        return self.status >= 500
+
+    @property
+    def retry_after(self) -> float | None:
+        """Seconds nyayo asks to wait (a 503 when it is busy), None for no header or a date."""
+        try:
+            return min(max(float(self.headers.get("retry-after", "")), 0.0), 60.0)
+        except ValueError:
+            return None
+
 
 def nyayo_config() -> tuple[str | None, str | None]:
     """URL and token from the environment (NYAYO_URL, NYAYO_TOKEN), else git config (nyayo.url, nyayo.token), the
@@ -78,13 +99,15 @@ class Reporter:
         self._last_sent: dict | None = None     # sent again when a game finds nyayo doesn't know the match
         self._known = False                     # nyayo has answered a document: games may go
         self._refused = False                   # ... and the answer was a refusal
-        self._games: dict[str, str] = {}
+        self._games: dict[str, tuple[str, list[tuple[str, str]] | None]] = {}   # the newest PGN, and its moves
+        self._plies: dict[str, int] = {}        # per game, the plies nyayo acknowledged; the games thread's own
+        self._tails: dict[str, tuple[str, str]] = {}   # ... and the last of them, to know it's still the same game
         self._games_busy = False
         self._sealed: set[str] = set()          # games whose final PGN went (or is queued), nothing later replaces it
         self._release = False                   # closing, the games are done or out of time: the last document goes
         self._stop = False
         self._threads: list[threading.Thread] = []
-        self.sent = {"match": 0, "games": 0}
+        self.sent = {"match": 0, "games": 0, "moves": 0}
         self.bytes = {"match": 0, "games": 0}   # the bodies as they went, compressed
         self._failed: dict[str, str | None] = {"match": None, "games": None}   # the last error of each path
 
@@ -111,12 +134,15 @@ class Reporter:
             self._final = self._final or final
             self._lock.notify_all()
 
-    def put_game(self, number: int | str, pgn: str, final: bool = False) -> None:
+    def put_game(self, number: int | str, pgn: str, final: bool = False,
+                 moves: list[tuple[str, str]] | None = None) -> None:
+        """The game as it is now. `moves` is every move of it as (SAN, fastchess' comment without the braces), which
+        lets the sender send only the moves nyayo hasn't got; without it the PGN goes whole."""
         key = str(number)
         with self._lock:
             if key in self._sealed:
                 return
-            self._games[key] = pgn
+            self._games[key] = (pgn, None if final else moves)
             if final:
                 self._sealed.add(key)
             self._lock.notify_all()
@@ -162,10 +188,11 @@ class Reporter:
                 early = final and not self._release and bool(self._games or self._games_busy)
                 self._match_busy = True
             answer = self._put_match(match, whole=final)
+            retry = answer is None or answer.failing
             status = answer.status if answer else None
             with self._lock:
                 self._match_busy = False
-                if status is None:
+                if retry:
                     if self._match is None:             # unless a newer one came meanwhile
                         self._match, self._final = match, self._final or final
                 else:
@@ -176,11 +203,15 @@ class Reporter:
                     if early and self._match is None:   # it went ahead of the games for one of them, and goes again
                         self._match, self._final = match, True
                 self._lock.notify_all()
-            if status is None:
-                time.sleep(backoff)
-                backoff = min(backoff * 2, 15.0)
-            else:
-                backoff = 1.0
+            backoff = self._wait(answer, backoff) if retry else 1.0
+
+    def _wait(self, answer: Answer | None, backoff: float) -> float:
+        """Waits before the request is tried again: as long as nyayo asked, else the backoff. Returns the next
+        backoff. A closing sender doesn't wait."""
+        asked = answer.retry_after if answer is not None else None
+        with self._lock:
+            self._lock.wait_for(lambda: self._stop, timeout=backoff if asked is None else asked)
+        return backoff if asked is not None else min(backoff * 2, 15.0)
 
     def _put_match(self, match: dict, whole: bool) -> Answer | None:
         """One report: the changes since nyayo's last acknowledged one when it has told its seq, else whole."""
@@ -217,44 +248,80 @@ class Reporter:
                 games = list(self._games.items())
                 self._games.clear()
                 self._games_busy = True
-            failed = False
-            for index, (key, pgn) in enumerate(games):
-                answer = self._put(f"/games/{urllib.parse.quote(key, safe='')}", pgn.encode("utf-8"),
-                                   "application/x-chess-pgn", gz=False)
-                status = answer.status if answer else None
-                if status == 404 and not self._refused:
+            retry: Answer | None | bool = False
+            for index, (key, state) in enumerate(games):
+                answer = self._send_game(key, *state)
+                if answer is not None and answer.status == 404 and not self._refused:
                     self._unknown_match(games[index:])
                     break
-                if status is None:
-                    failed = True
+                if answer is None or answer.failing:
+                    retry = answer or True
                     with self._lock:
-                        self._games.setdefault(key, pgn)    # unless a newer one came meanwhile
-                elif status < 300 or status == 409:         # 409: sealed already, nothing to resend
+                        self._games.setdefault(key, state)      # unless a newer one came meanwhile
+                elif answer.status < 300 or answer.status == 409:     # 409: sealed already, nothing to resend
                     self.sent["games"] += 1
-                elif status == 404:
+                elif answer.status == 404:
                     self._note("games", "nyayo refused the match, so it has no games either")
             with self._lock:
                 self._games_busy = False
                 self._lock.notify_all()
-            if failed:
-                time.sleep(backoff)
-                backoff = min(backoff * 2, 15.0)
+            if retry:
+                backoff = self._wait(None if retry is True else retry, backoff)
             else:
                 backoff = 1.0
 
-    def _unknown_match(self, games: list[tuple[str, str]]) -> None:
-        """nyayo doesn't know the match (not yet, or not any more): the match goes first, these games after it."""
+    def _send_game(self, key: str, pgn: str, moves: list[tuple[str, str]] | None) -> Answer | None:
+        """One game's newest state: the moves nyayo hasn't got when it has told how many it holds and they still
+        follow what it has, else the whole PGN."""
+        path = f"/games/{urllib.parse.quote(key, safe='')}"
+        plies = self._plies.get(key)
+        if moves is not None and plies is not None and plies <= len(moves) \
+                and (plies == 0 or moves[plies - 1] == self._tails.get(key)):
+            if plies == len(moves):
+                return Answer(200, {})            # nothing nyayo hasn't got
+            body = json.dumps({"from": plies, "moves": [{"san": san, "comment": comment}
+                                                       for san, comment in moves[plies:]]}, separators=(",", ":"))
+            answer = self._put(path, body.encode("utf-8"), "application/json", gz=False, method="PATCH")
+            if answer is None or answer.failing:
+                self._plies.pop(key, None)        # it may or may not have been applied
+                return answer
+            if answer.status < 300 and answer.plies is not None:
+                self.sent["moves"] += 1
+                self._acknowledged(key, answer, moves)
+                return answer
+            if answer.status == 404:
+                return answer
+            self._plies.pop(key, None)            # 409 or 400 or no count: the whole PGN settles it
+        answer = self._put(path, pgn.encode("utf-8"), "application/x-chess-pgn", gz=False)
+        if answer is None or answer.failing or answer.status >= 300 or answer.plies is None or moves is None:
+            self._plies.pop(key, None)
+        else:
+            self._acknowledged(key, answer, moves)
+        return answer
+
+    def _acknowledged(self, key: str, answer: Answer, moves: list[tuple[str, str]]) -> None:
+        if answer.plies is not None and 0 < answer.plies <= len(moves):
+            self._plies[key], self._tails[key] = answer.plies, moves[answer.plies - 1]
+        elif answer.plies == 0:
+            self._plies[key] = 0
+        else:
+            self._plies.pop(key, None)
+
+    def _unknown_match(self, games: list[tuple[str, tuple]]) -> None:
+        """nyayo doesn't know the match (not yet, or not any more): the match goes first, the games after it, whole."""
         with self._lock:
-            for key, pgn in games:
-                self._games.setdefault(key, pgn)
+            for key, state in games:
+                self._games.setdefault(key, state)
             self._known = False
             self._held = None
             if self._match is None and not self._match_busy and self._last_sent is not None:
                 self._match = self._last_sent
             self._lock.notify_all()
+        self._plies.clear()
 
-    def _put(self, suffix: str, body: bytes, content_type: str, gz: bool) -> Answer | None:
-        """nyayo's answer, a refusal's too (not tried again); None when it's unreachable or failing (tried again)."""
+    def _put(self, suffix: str, body: bytes, content_type: str, gz: bool, method: str = "PUT") -> Answer | None:
+        """nyayo's answer, a refusal's too (not tried again) and a server error's (tried again, `Answer.failing`);
+        None when it's unreachable (tried again)."""
         path = "games" if suffix else "match"
         headers = {"Content-Type": content_type}
         if gz:
@@ -263,7 +330,7 @@ class Reporter:
             headers["Authorization"] = f"Bearer {self.token}"
         self.bytes[path] += len(body)
         url = f"{self.url}/api/matches/{urllib.parse.quote(self.match_id, safe='')}{suffix}"
-        request = urllib.request.Request(url, data=body, method="PUT", headers=headers)
+        request = urllib.request.Request(url, data=body, method=method, headers=headers)
         try:
             with urllib.request.urlopen(request, timeout=self.timeout) as response:
                 self._failed[path] = None
@@ -272,8 +339,9 @@ class Reporter:
             reason = error.read(300).decode("utf-8", "replace").strip()
             if error.code >= 500:
                 self._note(path, f"HTTP {error.code} from nyayo: {reason}")
-                return None
-            if error.code != 404 or not suffix:     # a game's 404 is the match not there (yet), it's sent first
+            elif method == "PATCH" and error.code == 409:
+                pass                                    # nyayo holds another number of plies, the whole PGN follows
+            elif error.code != 404 or not suffix:       # a game's 404 is the match not there (yet), it's sent first
                 self._note(path, f"nyayo refused {suffix or 'the match'}: HTTP {error.code} {reason}")
             return Answer(error.code, {name.lower(): value for name, value in error.headers.items()})
         except (urllib.error.URLError, OSError) as error:

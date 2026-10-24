@@ -30,7 +30,7 @@ from .config import Gauntlet
 from .document import Identity, now_iso
 from .events import parse_fastchess_line
 from .nyayo import Reporter
-from .pgnout import live_pgn, read_games, to_finished
+from .pgnout import live_moves, live_pgn, read_games, to_finished
 from .results import Results
 from .schedule import FINISHED, STARTED, Entry, Schedule
 from .tracker import FinishedGame, Game, Tracker
@@ -201,11 +201,12 @@ class Session:
         if entry.state == "scheduled":
             entry.state = "playing"
             self._dirty = True
+        fields = set(self.gauntlet.pgn_options)
         pgn = live_pgn(game, self.identity.name, self.gauntlet.tc, self.tracker.engine_ids, round_=entry.round,
-                        fields=set(self.gauntlet.pgn_options))
+                        fields=fields)
         write_atomic(self.paths.games / f"{entry.number}.pgn", pgn)
         if self.reporter:
-            self.reporter.put_game(entry.number, pgn)
+            self.reporter.put_game(entry.number, pgn, moves=live_moves(game, fields))
 
     def _game_finished(self, found: FinishedGame) -> None:
         """A game fastchess has written to its PGN: its slot in the schedule is its round and colours, whatever the
