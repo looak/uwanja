@@ -21,6 +21,14 @@ decisions, say so in the final report. This repo owns no contract of its own: it
 `docs/match-schema.md`, changed only there, by agreement with the owner), and the gauntlet file is its own input
 format, described in `docs/spec.md`.
 
+## Workflow
+
+How work is tracked here (issues per repo on a release milestone, plans for cross-repo work, at most three
+issues in progress, an SPRT before a strength change merges) is in ramani's `WORKFLOW.md`. Read it before
+starting work; don't copy it. It is at `../ramani/WORKFLOW.md` in a sibling checkout; from a worktree, or if
+that is missing, read it with `gh api repos/looak/ramani/contents/WORKFLOW.md -q .content | base64 -d`. If
+neither works, say so in your report and don't guess the rules.
+
 ## Working here
 
 - `python -m venv .venv`, then `.venv/Scripts/pip install -r requirements.txt` and `pip install pytest`
