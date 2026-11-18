@@ -82,7 +82,7 @@ def cmd_run(args: argparse.Namespace) -> int:
     say(f"uwanja: fastchess {runner.version}: {runner.exe}")
     engines = _engines(gauntlet, host)
 
-    root = Path(args.out or "runs") / f"{gauntlet.name}-{time.strftime('%Y%m%d-%H%M%S')}"
+    root = Path(args.out or "runs").resolve() / f"{gauntlet.name}-{time.strftime('%Y%m%d-%H%M%S')}"
     paths = RunPaths(root)
     # an EPD book's openings are chosen here, so a stopped gauntlet can play the ones it has left (see openings.py)
     seed = random.getrandbits(63)
@@ -110,7 +110,7 @@ def cmd_run(args: argparse.Namespace) -> int:
 
 def cmd_resume(args: argparse.Namespace) -> int:
     """The same match again: its games counted from games.pgn, each opponent's missing pairs played, `running`."""
-    paths = RunPaths(Path(args.resume))
+    paths = RunPaths(Path(args.resume).resolve())
     if not paths.identity.exists() or not paths.config.exists():
         raise ResumeError(f"{paths.root} is not a run directory (no identity.json and gauntlet.toml)")
     identity = Identity.from_json(json.loads(paths.identity.read_text(encoding="utf-8")))
@@ -138,7 +138,7 @@ def cmd_resume(args: argparse.Namespace) -> int:
 
 def cmd_follow(args: argparse.Namespace) -> int:
     gauntlet = load(args.config)
-    root = Path(args.out or "runs") / f"{gauntlet.name}-{time.strftime('%Y%m%d-%H%M%S')}"
+    root = Path(args.out or "runs").resolve() / f"{gauntlet.name}-{time.strftime('%Y%m%d-%H%M%S')}"
     paths = RunPaths(root)
     root.mkdir(parents=True)
     shutil.copy2(gauntlet.source, paths.config)
@@ -153,7 +153,7 @@ def cmd_follow(args: argparse.Namespace) -> int:
 
 
 def cmd_report(args: argparse.Namespace) -> int:
-    paths = RunPaths(Path(args.run_dir))
+    paths = RunPaths(Path(args.run_dir).resolve())
     url, token = nyayo_config()
     if not url:
         say("uwanja: nyayo isn't configured (NYAYO_URL / git config nyayo.url), nothing to send to")

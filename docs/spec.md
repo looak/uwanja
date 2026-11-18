@@ -252,6 +252,10 @@ The moves a `PATCH` carries are the live PGN's own: the SAN and this comment (`p
 
 ### The run directory
 
+The directory is resolved against the current directory once, when it's named (`--out`, `--resume`, `report`, `rebuild`), so
+every path handed to fastchess (`openings.epd`, the PGN, the log, the config) is absolute, whatever directory the gauntlet
+file is in.
+
 | | |
 |:--|:--|
 | `gauntlet.toml` | the file the run started from |

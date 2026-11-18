@@ -48,6 +48,9 @@ HEARTBEAT_SECONDS = 30.0
 class RunPaths:
     root: Path
 
+    def __post_init__(self):
+        self.root = Path(self.root).resolve()       # fastchess is handed these: never relative to somewhere else
+
     @property
     def config(self) -> Path: return self.root / "gauntlet.toml"
     @property
