@@ -37,3 +37,20 @@ def test_duplicate_ids_get_a_suffix():
 def test_rejects(change, message):
     with pytest.raises(ConfigError, match=message):
         parse({**BASE, **change})
+
+
+def test_a_rating_takes_a_source_url():
+    raw = {**BASE, "opponent": [{"cmd": "x", "rating": {"value": 2465, "source": "https://computerchess.org.uk/ccrl/404/x"}}]}
+    rating = parse(raw).opponents[0].rating
+    assert rating.source == "https://computerchess.org.uk/ccrl/404/x"
+    assert rating.to_json()["source"] == rating.source
+
+
+def test_a_rating_without_a_source_sends_none():
+    assert "source" not in parse(BASE).opponents[0].rating.to_json()
+
+
+def test_a_rating_source_must_be_a_string():
+    raw = {**BASE, "opponent": [{"cmd": "x", "rating": {"value": 1, "source": 5}}]}
+    with pytest.raises(ConfigError, match="source"):
+        parse(raw)
