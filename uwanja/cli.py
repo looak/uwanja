@@ -1,6 +1,7 @@
 """uwanja's command line.
 
     uwanja run gauntlet.toml [--out DIR] [--no-report] [--dry-run]
+    uwanja run --resume RUN_DIR [--no-report] [--dry-run]  continue a stopped gauntlet as the same match
     uwanja follow gauntlet.toml --log FILE --pgn FILE      play nothing, follow a recorded or replayed gauntlet
     uwanja rebuild RUN_DIR                                 redo a run directory's games and document from fastchess' PGN
     uwanja report RUN_DIR [--config gauntlet.toml]         send a run's document and games to nyayo again
@@ -10,7 +11,9 @@
 from __future__ import annotations
 
 import argparse
+import dataclasses
 import json
+import random
 import shutil
 import sys
 import time
@@ -26,6 +29,8 @@ from .hostinfo import HostInfo, detect
 from .nyayo import Reporter, nyayo_config
 from .pgnout import read_games, to_finished
 from .results import Results
+from .openings import book_lines, own_book, owns
+from .resume import ResumeError, known_engines, play_block, segments
 from .session import RunPaths, Session
 
 
@@ -58,6 +63,10 @@ def _stub(gauntlet: Gauntlet) -> list[Resolved]:
 
 
 def cmd_run(args: argparse.Namespace) -> int:
+    if args.resume:
+        return cmd_resume(args)
+    if not args.config:
+        raise ConfigError("run takes a gauntlet file, or --resume and a run directory")
     gauntlet = load(args.config)
     host = detect()
     say(f"uwanja {__version__} on {host.os} {host.arch}, {host.cpu_name or 'unknown CPU'}")
@@ -67,16 +76,52 @@ def cmd_run(args: argparse.Namespace) -> int:
 
     root = Path(args.out or "runs") / f"{gauntlet.name}-{time.strftime('%Y%m%d-%H%M%S')}"
     paths = RunPaths(root)
-    argv = fastchess_mod.command(gauntlet, runner, engines, paths.pgn, paths.log, paths.fastchess_config)
+    # an EPD book's openings are chosen here, so a stopped gauntlet can play the ones it has left (see openings.py)
+    seed = random.getrandbits(63)
+    owned = owns(gauntlet) and len(book_lines(gauntlet.path(gauntlet.book))) >= gauntlet.rounds
+    played = (dataclasses.replace(gauntlet, book=str(root / "openings.epd"), book_order="sequential", book_format="epd")
+              if owned else gauntlet)
+    argv = fastchess_mod.command(played, runner, engines, paths.pgn, paths.log, paths.fastchess_config)
     if args.dry_run:
         say("uwanja: would run (dry run, nothing played):")
         print(" ".join(f'"{token}"' if " " in token else token for token in argv))
         return 0
     root.mkdir(parents=True)
     shutil.copy2(gauntlet.source, paths.config)
+    if owned:
+        own_book(gauntlet, seed, root / "openings.epd")
     identity = Identity(str(uuid.uuid4()), gauntlet, engines[0], engines[1:], host, runner.version)
+    identity.play = play_block(runner, engines, seed, owned)
     paths.identity.write_text(json.dumps(identity.to_json(), indent=2) + "\n", encoding="utf-8")
     return Session(gauntlet, identity, paths, _reporter(args, identity.match_id), say).run(argv)
+
+
+def cmd_resume(args: argparse.Namespace) -> int:
+    """The same match again: its games counted from games.pgn, each opponent's missing pairs played, `running`."""
+    paths = RunPaths(Path(args.resume))
+    if not paths.identity.exists() or not paths.config.exists():
+        raise ResumeError(f"{paths.root} is not a run directory (no identity.json and gauntlet.toml)")
+    identity = Identity.from_json(json.loads(paths.identity.read_text(encoding="utf-8")))
+    gauntlet = load(paths.config)
+    kept = known_engines(gauntlet, identity)
+    if kept is None:
+        say("uwanja: this run didn't keep its binaries, resolving them again from gauntlet.toml")
+        host = detect()
+        runner = fastchess_mod.locate(gauntlet, host, log=say)
+        engines = _engines(gauntlet, host)
+    else:
+        runner, engines = kept
+    session = Session(gauntlet, identity, paths, None if args.no_report else _reporter(args, identity.match_id), say)
+    counted = session.restore()
+    plan = segments(session._counted, gauntlet, runner, engines, paths)
+    say(f"uwanja: resuming match {identity.match_id}: {counted} of {session.total_games} games counted"
+        + (f", {session.repeats} repeats ignored" if session.repeats else "")
+        + "; to play: " + (", ".join(f"{len(s.pairs) * 2} against {s.opponent}" for s in plan) or "nothing"))
+    if args.dry_run:
+        for segment in plan:
+            print(" ".join(f'"{token}"' if " " in token else token for token in segment.argv))
+        return 0
+    return session.run(None, segments=plan)
 
 
 def cmd_follow(args: argparse.Namespace) -> int:
@@ -183,7 +228,8 @@ def build_parser() -> argparse.ArgumentParser:
     commands = parser.add_subparsers(dest="command", required=True)
 
     run = commands.add_parser("run", help="fetch engines and fastchess, play the gauntlet, report it")
-    run.add_argument("config", help="the gauntlet file (TOML)")
+    run.add_argument("config", nargs="?", help="the gauntlet file (TOML)")
+    run.add_argument("--resume", metavar="RUN_DIR", help="continue this run directory's match, playing what's left")
     run.add_argument("--out", metavar="DIR", help="where run directories go (default ./runs)")
     run.add_argument("--no-report", action="store_true", help="don't send anything to nyayo")
     run.add_argument("--dry-run", action="store_true", help="fetch and resolve everything, print fastchess' command line")
