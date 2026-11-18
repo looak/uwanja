@@ -40,11 +40,18 @@ def engine_json(engine: Resolved, with_id: bool) -> dict:
         "name": engine.name or spec.id, "version": engine.version, "commit": engine.commit,
         "bench": engine.bench_nodes, "options": spec.options,
     }
+    origin = engine.origin
+    if origin.get("kind") == "release":
+        # where it was fetched from, the tag as resolved (`latest` is the real one), and the file's own globs
+        data["url"], data["ref"] = origin.get("url"), origin.get("tag")
+        for key in ("asset", "binary"):
+            if getattr(spec, key):
+                data[key] = getattr(spec, key)
     if with_id:
         data = {"id": spec.id, **data, "rating": spec.rating.to_json() if spec.rating else None}
     else:
         data["branch"] = engine.branch
-        data["repo"] = engine.origin.get("url") if engine.origin.get("kind") == "release" else None
+        data["repo"] = origin.get("url") if origin.get("kind") == "release" else None
     return data
 
 

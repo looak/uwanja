@@ -1,0 +1,139 @@
+# Elephant Gambit 1.4.0 against engines from the CCRL Blitz list (2'+1"), the same field as
+# elephant-1.2.0-ccrl-blitz.toml, plus Elephant 1.2.0 itself. 1.2.0 measured 2894 +- 16 against this field; 1.3 (king
+# safety) and 1.4 (pieces, the rebalanced tables) passed SPRTs since. Same time control, book and pairs per opponent as
+# the 1.0.0 and 1.2.0 runs, so the three compare.
+#
+#   uwanja run gauntlets/elephant-1.4.0-ccrl-blitz.toml --dry-run   # fetch & probe every engine, play nothing
+#   uwanja run gauntlets/elephant-1.4.0-ccrl-blitz.toml
+#
+# Elephant 1.2.0 plays as an opponent without a rating. Its 2894 is this field's own estimate, not a CCRL number, and
+# self-play stretches Elo differences (an engine beats its own predecessor by more than the two differ against
+# others), so as an anchor it would pull 1.4.0's number up. Unrated, its result is the head-to-head gain over 1.2.0,
+# read on its own next to the CCRL fit.
+#
+# For Linux x86-64 (played on Fedora), see elephant-1.2.0-ccrl-blitz.toml for the opponents' builds and the `binary`
+# pitfall. The 1.2.0 binary is the one that run used. Both Elephants are local builds with the OpenBench makefile:
+#
+#   git -C ../elephant checkout 1.4.0
+#   make -C ../elephant/ob_build EXE=../../uwanja/engines/elephant-1.4.0
+#   git -C ../elephant checkout 1.2.0                                    # only if engines/elephant-1.2.0 is gone
+#   make -C ../elephant/ob_build EXE=../../uwanja/engines/elephant-1.2.0
+
+name = "elephant-1.4.0-ccrl-blitz"
+tc = "120+1"
+book = "../books/UHO_Lichess_4852_v1.epd"
+rounds = 50                  # game pairs per opponent: 14 opponents x 2 x 50 = 1400 games
+concurrency = 10
+
+[subject]
+cmd = "elephant-1.4.0"
+name = "Elephant Gambit"
+options = { Threads = 1, Hash = 256 }
+
+# --- the predecessor, unrated: the head-to-head
+
+[[opponent]]
+cmd = "elephant-1.2.0"
+id = "elephant-1.2.0"
+name = "Elephant Gambit"
+version = "1.2.0"
+options = { Threads = 1, Hash = 256 }
+
+# --- CCRL Blitz 2650-2800
+
+[[opponent]]                 # 2663
+url = "https://github.com/deanmchris/blunder"
+ref = "v8.5.5"
+binary = "*/linux/blunder-8.5.5-avx2"  # one zip with every OS and CPU build
+options = { Hash = 256 }                # no Threads option
+rating = { value = 2663, list = "CCRL Blitz", as_of = "2026-10-18" }
+
+[[opponent]]                 # 2735
+url = "https://github.com/FitzOReilly/fatalii"
+ref = "v0.10.0"
+binary = "fatalii-0.10.0"
+options = { Hash = 256 }                # no Threads option
+rating = { value = 2735, list = "CCRL Blitz", as_of = "2026-10-18" }
+
+[[opponent]]                 # 2747
+url = "https://github.com/spamdrew128/Apotheosis"
+ref = "v4.0.1"
+id = "apotheosis-4"
+binary = "ApotheosisV4.0.1_Linux"
+options = { Hash = 256 }                # no Threads option
+rating = { value = 2747, list = "CCRL Blitz", as_of = "2026-10-18" }
+
+# --- CCRL Blitz 2800-2950
+
+[[opponent]]                 # 2830
+url = "https://github.com/lithander/Leorik"
+ref = "2.4"
+binary = "*/Leorik-2.4"
+options = { Hash = 256 }                # no Threads option
+rating = { value = 2830, list = "CCRL Blitz", as_of = "2026-10-10" }
+
+[[opponent]]                 # 2863
+url = "https://github.com/DeveloperPaul123/byte-knight"
+ref = "v4.0.0"
+binary = "byte-knight-v4.0.0-*"
+options = { Hash = 256 }
+rating = { value = 2863, list = "CCRL Blitz", as_of = "2026-10-18" }
+
+[[opponent]]                 # 2883
+url = "https://github.com/JoostHouben/Euwe-chess-engine"
+ref = "v2.1.0"
+id = "euwe"
+binary = "Euwe-v2.1.0"
+options = { Hash = 256 }
+rating = { value = 2883, list = "CCRL Blitz", as_of = "2026-10-18" }
+
+[[opponent]]                 # 2922
+url = "https://github.com/buildingwheels/ShallowGuess"
+ref = "v1.1.0"
+id = "shallow-guess"
+binary = "*/avx2/shallow_guess_avx2"  # the zip holds sse, avx2 & avx512 builds
+options = { Hash = 256 }
+rating = { value = 2922, list = "CCRL Blitz", as_of = "2026-10-18" }
+
+# --- CCRL Blitz 2950-3100. Threads left at each engine's default of 1.
+
+[[opponent]]                 # 2978
+url = "https://github.com/kurt1288/Puffin"
+ref = "5.0"
+binary = "Puffin-5.0"
+options = { Hash = 256 }
+rating = { value = 2978, list = "CCRL Blitz", as_of = "2026-10-18" }
+
+[[opponent]]                 # 3033
+url = "https://github.com/Algorhythm-sxv/Cheers"
+ref = "v1.0.0"
+binary = "cheers-v1.0.0-*"
+options = { Hash = 256 }
+rating = { value = 3033, list = "CCRL Blitz", as_of = "2026-10-18" }
+
+[[opponent]]                 # 3058
+url = "https://github.com/ppipelin/radiance"
+ref = "5.0"
+binary = "radiance_5.0_*"
+options = { Hash = 256 }
+rating = { value = 3058, list = "CCRL Blitz", as_of = "2026-10-18" }
+
+[[opponent]]                 # 3059
+url = "https://github.com/kz04px/4ku"
+ref = "v5.1"
+asset = "4ku-5.1-popcnt*"              # not 4ku-5.1-mini, the size-golfed build
+binary = "4ku-5.1-popcnt"
+options = { Hash = 256 }
+rating = { value = 3059, list = "CCRL Blitz", as_of = "2026-10-18" }
+
+[[opponent]]                 # 3091
+url = "https://github.com/Tearth/Inanis"
+ref = "v1.6.0"
+options = { Hash = 256 }
+rating = { value = 3091, list = "CCRL Blitz", as_of = "2026-10-18" }
+
+[[opponent]]                 # 3095
+url = "https://github.com/spamdrew128/Wahoo"
+ref = "4.0.0"
+options = { Hash = 256 }
+rating = { value = 3095, list = "CCRL Blitz", as_of = "2026-10-18" }

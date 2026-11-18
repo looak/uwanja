@@ -19,7 +19,7 @@ FASTCHESS_KEYS = {"version", "path", "args"}
 ENGINE_KEYS = {"id", "name", "version", "url", "ref", "asset", "binary", "build", "cmd", "dir", "options", "args",
                "bench", "rating", "fastchess_args"}
 ADJUDICATION_KEYS = {"win", "draw"}
-RATING_KEYS = {"value", "list", "as_of"}
+RATING_KEYS = {"value", "list", "as_of", "source"}
 
 DEFAULT_FASTCHESS = "v1.8.2-alpha"      # the release the runner's log parsing was written against
 
@@ -33,9 +33,13 @@ class Rating:
     value: float
     list: str | None = None
     as_of: str | None = None
+    source: str | None = None              # URL of the list's page for this engine version
 
     def to_json(self) -> dict:
-        return {"value": self.value, "list": self.list, "as_of": self.as_of}
+        data = {"value": self.value, "list": self.list, "as_of": self.as_of}
+        if self.source is not None:
+            data["source"] = self.source
+        return data
 
 
 @dataclass
@@ -184,7 +188,11 @@ def _rating(value: Any, where: str) -> Rating | None:
     _only(value, RATING_KEYS, f"{where} rating")
     if "value" not in value:
         raise ConfigError(f"{where}: rating needs a value")
-    return Rating(float(value["value"]), value.get("list"), None if value.get("as_of") is None else str(value["as_of"]))
+    source = value.get("source")
+    if source is not None and not isinstance(source, str):
+        raise ConfigError(f"{where}: rating source must be a URL string")
+    return Rating(float(value["value"]), value.get("list"), None if value.get("as_of") is None else str(value["as_of"]),
+                  source)
 
 
 def _opt_str(value: Any) -> str | None:

@@ -52,7 +52,7 @@ of Elephant 1.0.0 and 1.2.0 as examples.
 | `ref`, `asset`, `binary` | the release tag (latest without), a glob over asset names, a glob over paths in the asset |
 | `options`, `args`, `dir` | UCI options (any name), the engine's command line, its working directory |
 | `bench` | `true` or `false`; by default only an engine that answers `buildinfo` is asked |
-| `rating` | opponents only, a number or `{ value, list, as_of }`, from the file and never fetched |
+| `rating` | opponents only, a number or `{ value, list, as_of, source }` (`source` the URL of the rating list's page for this engine version, a string), from the file and never fetched |
 | `fastchess_args` | raw `-engine` tokens for fastchess |
 | `build` | accepted and ignored, engines are not built from source |
 
@@ -175,7 +175,9 @@ fastchess round against one opponent; null when a game had no round), and per si
 moves. A fault is read from fastchess's reason (`White loses on time`, `Black makes an illegal move`, `White
 disconnects`); the side named is at fault, the loser when none is. The document also carries the producer
 (`uwanja` and its version, 0.2.0), the subject and each opponent (`id name` split into name and version, commit,
-bench, options, rating), settings (TC, book and its SHA-256, fastchess's version, concurrency, adjudication, host) and
+bench, options, rating with its `source`; an engine fetched from GitHub also `url` (the repository) and `ref` (the tag
+as resolved, so `latest` is the real tag), and `asset` and `binary` when the file names them, a `cmd` engine none of
+them; the subject keeps its `repo`, the same as `url`), settings (TC, book and its SHA-256, fastchess's version, concurrency, adjudication, host) and
 `progress` with `games`.
 
 ### Move comments
