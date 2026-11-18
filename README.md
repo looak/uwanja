@@ -23,6 +23,7 @@ python -m venv .venv
 
 uwanja run gauntlet.toml               # fetch, play, report
 uwanja run gauntlet.toml --dry-run     # fetch and resolve everything, print fastchess' command line, play nothing
+uwanja run --from-match <nyayo match URL>   # play a stored match again, as a new match
 uwanja run --resume runs/<dir>         # continue a stopped gauntlet as the same match, playing what's left
 uwanja report runs/<dir>               # send a run's document and games to nyayo again
 uwanja follow gauntlet.toml --log fc.log --pgn fc.pgn   # follow a recorded or replayed gauntlet, play nothing

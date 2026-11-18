@@ -65,6 +65,7 @@ the top of `config.py`.
 | | |
 |:--|:--|
 | `uwanja run FILE [--out DIR] [--no-report] [--dry-run]` | fetch, probe, play, report. `--dry-run` resolves everything and prints fastchess' command line. An option an engine doesn't list in its `uci` answer is warned about |
+| `uwanja run --from-match URL [--out DIR] [--no-report] [--dry-run]` | play a stored match again as a **new** match: reads the gauntlet nyayo shows on the match's page (see Rerunning), `URL` being that page or a match id on the configured nyayo. The book is looked for by its name in `./books`, `../books` and here |
 | `uwanja run --resume DIR [--no-report] [--dry-run]` | continue a stopped run directory's match, playing only what it lacks (see Resuming). `--dry-run` prints the fastchess command lines |
 | `uwanja follow FILE --log F --pgn F [--idle-exit S]` | play nothing, follow a recorded or replayed fastchess log and PGN; ends at fastchess's finish line, or after `S` seconds (30) without news |
 | `uwanja replay SRC DST [--pgn SRC DST]` | a recorded log at its original pace, to develop `follow` against |
@@ -144,6 +145,23 @@ the games:
    `resume-<n>-<opponent>.*`, and their games are appended to `games.pgn` under the Round of the gauntlet's pair.
 4. Send the document as `running` again, with every game's state, and then as `finished` (or `stopped`, `error`) as
    any run. The match id is the same, nothing of nyayo's is reset.
+
+### The config, and running a match again
+
+Every document carries `config`, the same block each time (it is fixed once nyayo has it): `format` `uwanja.gauntlet/1`;
+`gauntlet`, the gauntlet file as JSON with its defaults filled in (`name`, `tc`, `rounds`, `concurrency`, the book by file
+name with `book_format` and `book_order`, `adjudication`, `recover`, `pgn_options`, `fastchess`, `subject`, `opponent`,
+each engine's keys as the file has them; `config.parse` reads it back as it is); `resolved`, what that became:
+fastchess's version and SHA-256, each engine's release (`url`, `tag`, `asset`, `published_at`), SHA-256 and what it said
+it was, and the book's name and SHA-256; `portable`, false when the file names a `cmd` or `dir` or `[fastchess] path`.
+No token, environment variable, nyayo address or path of a book is in it. It is built once, from what the run resolved
+(`rerun.config_block`), and kept in `identity.json`; a run from before it has none and sends none.
+
+`uwanja run --from-match URL` starts a new match (a new id) from a stored one. nyayo has no endpoint that returns a
+match, so uwanja reads the match page's *Copy as gauntlet.toml* field (`<textarea id="copy-match-config">`), which nyayo
+builds from `config.gauntlet`, keys uwanja doesn't know left out. That is the whole of what is used: `resolved` is not
+on the page, so the run asks for the same tags (and `latest` stays `latest`) and the SHA-256s are not pinned. The page
+is fetched without credentials, except that the nyayo token goes to the configured nyayo's own host.
 
 ### Placing finished games
 
@@ -237,7 +255,7 @@ The moves a `PATCH` carries are the live PGN's own: the SAN and this comment (`p
 | | |
 |:--|:--|
 | `gauntlet.toml` | the file the run started from |
-| `identity.json` | what's fixed: engines as probed, settings, host, match id, `play` (what a resume starts fastchess with) |
+| `identity.json` | what's fixed: engines as probed, settings, host, match id, `config` (what every document carries), `play` (what a resume starts fastchess with) |
 | `openings.epd` | the openings the gauntlet's pairs are played from, when uwanja chose them |
 | `resume-<n>-<opponent>.*` | the files of a resume's fastchess for one opponent: command's book, PGN, log, output, config |
 | `match.json` | the latest document, whole |
@@ -248,7 +266,7 @@ The moves a `PATCH` carries are the live PGN's own: the SAN and this comment (`p
 
 | | |
 |:--|:--|
-| `cli.py`, `session.py`, `resume.py`, `openings.py` | commands; one run: the loop, the callbacks, the state; continuing a stopped one; choosing and finding the openings |
+| `cli.py`, `session.py`, `resume.py`, `openings.py`, `rerun.py` | commands; one run: the loop, the callbacks, the state; continuing a stopped one; choosing and finding the openings; the `config` block and `--from-match` |
 | `config.py`, `document.py`, `schedule.py`, `results.py`, `rebuild.py` | the file, the match document, the games before they're played and where a finished one goes, counts, the rebuild |
 | `hostinfo.py`, `assets.py`, `fetch.py`, `engines.py`, `fastchess.py` | host and CPU, picking an asset, downloading, probing engines, fastchess' command line |
 | `events.py`, `uci.py`, `tracker.py`, `pgnout.py`, `replay.py` | log lines to UCI events to games, a game as PGN and as moves, a recorded log replayed |
@@ -269,7 +287,8 @@ The sender is tested against stand-ins for nyayo that keep the match schema's ru
 | in | GitHub releases API and downloads | asset names as publishers spell them, `asset` and `binary` override |
 | in | the engines' UCI, `buildinfo`, `bench` | elephant's [engine spec](https://github.com/looak/elephant/blob/main/docs/spec/engine.md#uci); other engines answer `uci` and nothing else |
 | in | nyayo's answers | the headers `Nyayo-Seq`, `Nyayo-Schedule-Digest` and `Nyayo-Plies`, and `Retry-After` on a `503`, as in the match schema |
-| out | the match document | `PUT /api/matches/{id}`, nyayo's [match schema](https://github.com/looak/nyayo/blob/main/docs/match-schema.md), nyayo owns it |
+| out | the match document | `PUT /api/matches/{id}`, nyayo's [match schema](https://github.com/looak/nyayo/blob/main/docs/match-schema.md), nyayo owns it; its `config` is uwanja's own, nyayo reads `format`, `gauntlet` and `portable` |
+| in | a match's page on nyayo | `GET /matches/{id}`, the `copy-match-config` field, for `--from-match`; breaks if nyayo renames it |
 | out | games | `PUT` and `PATCH /api/matches/{id}/games/{n}`, the same |
 | out | `NYAYO_URL`, `NYAYO_TOKEN` | as `results.py` takes them |
 | out | the run directory | above, read back by `uwanja report` and `uwanja rebuild` |

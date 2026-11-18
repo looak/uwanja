@@ -1,6 +1,7 @@
 """uwanja's command line.
 
     uwanja run gauntlet.toml [--out DIR] [--no-report] [--dry-run]
+    uwanja run --from-match URL [--out DIR] [--no-report]  a new match from a stored one
     uwanja run --resume RUN_DIR [--no-report] [--dry-run]  continue a stopped gauntlet as the same match
     uwanja follow gauntlet.toml --log FILE --pgn FILE      play nothing, follow a recorded or replayed gauntlet
     uwanja rebuild RUN_DIR                                 redo a run directory's games and document from fastchess' PGN
@@ -30,6 +31,7 @@ from .nyayo import Reporter, nyayo_config
 from .pgnout import read_games, to_finished
 from .results import Results
 from .openings import book_lines, own_book, owns
+from .rerun import config_block, fetch_page, gauntlet_from_page, match_url
 from .resume import ResumeError, known_engines, play_block, segments
 from .session import RunPaths, Session
 
@@ -65,9 +67,15 @@ def _stub(gauntlet: Gauntlet) -> list[Resolved]:
 def cmd_run(args: argparse.Namespace) -> int:
     if args.resume:
         return cmd_resume(args)
-    if not args.config:
-        raise ConfigError("run takes a gauntlet file, or --resume and a run directory")
-    gauntlet = load(args.config)
+    if args.from_match:
+        url, token = nyayo_config()
+        page = fetch_page(match_url(args.from_match, url), token, url)
+        gauntlet, text = gauntlet_from_page(page, Path.cwd())
+        say(f"uwanja: playing {gauntlet.name} again from {args.from_match}")
+    elif args.config:
+        gauntlet, text = load(args.config), None
+    else:
+        raise ConfigError("run takes a gauntlet file, --from-match and a match's URL, or --resume and a run directory")
     host = detect()
     say(f"uwanja {__version__} on {host.os} {host.arch}, {host.cpu_name or 'unknown CPU'}")
     runner = fastchess_mod.locate(gauntlet, host, log=say)
@@ -87,11 +95,15 @@ def cmd_run(args: argparse.Namespace) -> int:
         print(" ".join(f'"{token}"' if " " in token else token for token in argv))
         return 0
     root.mkdir(parents=True)
-    shutil.copy2(gauntlet.source, paths.config)
+    if text is not None:
+        paths.config.write_text(text, encoding="utf-8", newline="\n")
+    else:
+        shutil.copy2(gauntlet.source, paths.config)
     if owned:
         own_book(gauntlet, seed, root / "openings.epd")
     identity = Identity(str(uuid.uuid4()), gauntlet, engines[0], engines[1:], host, runner.version)
     identity.play = play_block(runner, engines, seed, owned)
+    identity.config = config_block(gauntlet, runner, engines)
     paths.identity.write_text(json.dumps(identity.to_json(), indent=2) + "\n", encoding="utf-8")
     return Session(gauntlet, identity, paths, _reporter(args, identity.match_id), say).run(argv)
 
@@ -229,6 +241,8 @@ def build_parser() -> argparse.ArgumentParser:
 
     run = commands.add_parser("run", help="fetch engines and fastchess, play the gauntlet, report it")
     run.add_argument("config", nargs="?", help="the gauntlet file (TOML)")
+    run.add_argument("--from-match", metavar="URL", help="play a stored match again as a new match: its page on nyayo "
+                     "(or a match id on the configured nyayo); needs the book in ./books")
     run.add_argument("--resume", metavar="RUN_DIR", help="continue this run directory's match, playing what's left")
     run.add_argument("--out", metavar="DIR", help="where run directories go (default ./runs)")
     run.add_argument("--no-report", action="store_true", help="don't send anything to nyayo")

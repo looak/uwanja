@@ -74,6 +74,7 @@ class Identity:
         self.subject = engine_json(subject, with_id=False)
         self.opponents = [engine_json(engine, with_id=True) for engine in opponents]
         self.subject_id = subject.spec.id
+        self.config: dict | None = None      # the producer's `config` block, sent whole in every document (rerun.py)
         self.play: dict | None = None        # what a resume needs to start fastchess again, see cli.play_block
 
     def document(self, results: Results, state: str, finished_at: str | None = None,
@@ -93,12 +94,14 @@ class Identity:
             "results": results.to_json(),
             "machines": [{"name": self.host["name"], "games": results.totals()["games"]}],
             "pgn": None,
-        } | ({"progress": schedule.progress(), "games": schedule.to_json()} if schedule else {})
+        } | ({"config": self.config} if self.config else {}) \
+          | ({"progress": schedule.progress(), "games": schedule.to_json()} if schedule else {})
 
     def to_json(self) -> dict:
         return {"match_id": self.match_id, "started_at": self.started_at, "name": self.name, "host": self.host,
                 "settings": self.settings, "subject": self.subject, "opponents": self.opponents,
-                "subject_id": self.subject_id} | ({"play": self.play} if self.play else {})
+                "subject_id": self.subject_id} | ({"play": self.play} if self.play else {}) \
+            | ({"config": self.config} if self.config else {})
 
     @classmethod
     def from_json(cls, data: dict) -> "Identity":
@@ -106,4 +109,5 @@ class Identity:
         for key in ("match_id", "started_at", "name", "host", "settings", "subject", "opponents", "subject_id"):
             setattr(found, key, data[key])
         found.play = data.get("play")
+        found.config = data.get("config")
         return found
