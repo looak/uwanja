@@ -49,11 +49,15 @@ class Schedule:
     def get(self, number: int) -> Entry | None:
         return self.entries[number - 1] if 1 <= number <= len(self.entries) else None
 
-    def bind(self, white: str | None, black: str | None) -> Entry:
+    def bind(self, white: str | None, black: str | None, among: list[int] | None = None,
+             taken: set[int] = frozenset()) -> Entry:
         """The entry for a game seen in the log: the first not yet matched where these two play these colours. A
-        game the schedule has no place for (a recorded gauntlet with more rounds) is appended."""
-        for entry in self.entries:
-            if not entry.bound and entry.state != "finished" and (entry.white, entry.black) == (white, black):
+        game the schedule has no place for (a recorded gauntlet with more rounds) is appended. A resumed gauntlet
+        passes the entry numbers its process plays, and those already taken by one of its games: among them a finished
+        entry is a game played again."""
+        for entry in (self.entries if among is None else (self.entries[number - 1] for number in among)):
+            free = entry.number not in taken if among is not None else not entry.bound and entry.state != "finished"
+            if free and (entry.white, entry.black) == (white, black):
                 entry.bound = True
                 return entry
         opponent = black if white == self.subject else white

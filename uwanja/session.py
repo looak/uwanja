@@ -11,6 +11,10 @@ was reported so it can be sent again later (`uwanja report`):
     games.pgn         fastchess' own PGN, the games as it wrote them
     fastchess.log     fastchess' log, every UCI line
     fastchess.out     what fastchess printed
+    openings.epd      the openings every pair is played from (EPD books), what a resume plays what's left from
+
+A resumed run adds `resume-<n>-<opponent>.*` (a log, a PGN and the output of fastchess for the games an opponent still
+needs) and appends those games to games.pgn under the Round they had in the gauntlet.
 """
 from __future__ import annotations
 
@@ -60,6 +64,35 @@ class RunPaths:
     def out(self) -> Path: return self.root / "fastchess.out"
     @property
     def fastchess_config(self) -> Path: return self.root / "fastchess-config.json"
+
+
+@dataclass
+class Segment:
+    """One fastchess process of a run. A run is one; a resume is one per opponent with games left, each playing only
+    those, so its own game and round numbers are mapped back to the gauntlet's: `pairs[q]` is the gauntlet's pair
+    (0-based, so its PGN `Round` less one) that the segment's q-th pair plays."""
+    argv: list[str]
+    pgn: Path
+    log: Path
+    out: Path
+    pairs: list[int] | None = None
+    opponent: str = ""
+
+    def number_of(self, game: int) -> int:
+        """The schedule's entry number of the segment's game `game` (1-based): a pair's first game has the subject
+        white."""
+        return 2 * self.pairs[(game - 1) // 2] + 1 + (game - 1) % 2
+
+    def entries(self) -> list[int]:
+        return [number for pair in self.pairs for number in (2 * pair + 1, 2 * pair + 2)]
+
+    def remap(self, text: str, round_: str | None) -> tuple[str, int | None]:
+        """The game's PGN under the gauntlet's Round, and that Round."""
+        try:
+            original = self.pairs[int(round_) - 1] + 1
+        except (TypeError, ValueError, IndexError):
+            return text, None
+        return re.sub(r'^\[Round "[^"]*"\]', f'[Round "{original}"]', text, count=1, flags=re.MULTILINE), original
 
 
 @contextmanager
@@ -175,6 +208,9 @@ class Session:
                                  gauntlet.rounds)
         self.total_games = len(self.schedule.entries)
         self._entries: dict[int, Entry] = {}          # the tracker's game number -> its place in the schedule
+        self._counted: set[int] = set()               # schedule entries whose finished game is in the results
+        self.segment: Segment | None = None
+        self.repeats = 0                              # finished games of a slot that already had one
         self._out_follow = FileFollower(paths.out)
         self._log_follow = FileFollower(paths.log)
         self._pgn_follow = PgnFollower(paths.pgn)
@@ -189,7 +225,8 @@ class Session:
         colours, fastchess starts a pair's games in order."""
         entry = self._entries.get(number)
         if entry is None:
-            entry = self._entries[number] = self.schedule.bind(white, black)
+            among = self.segment.entries() if self.segment and self.segment.pairs is not None else None
+            entry = self._entries[number] = self.schedule.bind(white, black, among, {e.number for e in self._entries.values()})
         return entry
 
     def _game_updated(self, game: Game) -> None:
@@ -210,8 +247,16 @@ class Session:
 
     def _game_finished(self, found: FinishedGame) -> None:
         """A game fastchess has written to its PGN: its slot in the schedule is its round and colours, whatever the
-        log did or didn't show."""
+        log did or didn't show. Only the first finished game of a slot counts, a repeat (a resumed game's partner,
+        played again) is in the PGN and nowhere else."""
+        self._count(found, send=True)
+
+    def _count(self, found: FinishedGame, send: bool) -> bool:
         entry = self.schedule.locate(found.round, found.white, found.black)
+        if entry.number in self._counted:
+            self.repeats += 1
+            return False
+        self._counted.add(entry.number)
         reason = reason_of(found.comment) or (found.termination if found.termination != "normal" else None)
         if entry.state != "finished":
             self.schedule.finished(entry, found.result, reason)
@@ -219,24 +264,39 @@ class Session:
             entry.termination = reason
         self._dirty = True
         write_atomic(self.paths.games / f"{entry.number}.pgn", found.text)
-        if self.reporter:
+        if send and self.reporter:
             self.reporter.put_game(entry.number, found.text, final=True)
         if self.results.add(found.white, found.black, found.result, found.termination, found.comment, found.round):
             totals = self.results.totals()
-            self.log(f"uwanja: game {entry.number} {found.white} - {found.black} {found.result}"
-                     f"{' (' + entry.termination + ')' if entry.termination else ''}"
-                     f"  [{totals['games']}/{self.total_games}]")
+            if send:
+                self.log(f"uwanja: game {entry.number} {found.white} - {found.black} {found.result}"
+                         f"{' (' + entry.termination + ')' if entry.termination else ''}"
+                         f"  [{totals['games']}/{self.total_games}]")
+        return True
+
+    def restore(self) -> int:
+        """Counts the games already in games.pgn, for a run that's continued: the first of each slot, nothing sent."""
+        if not self.paths.pgn.exists():
+            return 0
+        counted = 0
+        for game, text in read_games(self.paths.pgn.read_text(encoding="utf-8", errors="replace")):
+            counted += self._count(to_finished(game, text), send=False)
+        return counted
+
+    def _number(self, game: int) -> int:
+        """The schedule's number of fastchess' game `game`."""
+        return self.segment.number_of(game) if self.segment and self.segment.pairs is not None else game
 
     def _runner_line(self, line: str) -> None:
         """What fastchess printed: a game started or finished, with its number and, at the end, why."""
         found = STARTED.match(line)
         if found:
-            if self.schedule.started(int(found[1]), found[3], found[4]):
+            if self.schedule.started(self._number(int(found[1])), found[3], found[4]):
                 self._dirty = True
             return
         found = FINISHED.match(line)
         if found:
-            entry = self.schedule.get(int(found[1]))
+            entry = self.schedule.get(self._number(int(found[1])))
             if entry is not None and entry.state != "finished":
                 self.schedule.finished(entry, found[4], found[5])
                 self._dirty = True
@@ -256,6 +316,12 @@ class Session:
                 self.finished_marker = True
         games = self._pgn_follow.read()
         for game, text in games:
+            if self.segment and self.segment.pairs is not None:
+                text, round_ = self.segment.remap(text, game.headers.get("Round"))
+                if round_ is not None:
+                    game.headers["Round"] = str(round_)
+                with open(self.paths.pgn, "a", encoding="utf-8", newline="\n") as handle:
+                    handle.write(text)
             self._game_finished(to_finished(game, text))
         return bool(printed or lines or games)
 
@@ -272,25 +338,41 @@ class Session:
             self.reporter.put_match(document, final=final)
         self._dirty, self._last_document = False, now
 
-    def run(self, argv: list[str] | None, idle_exit: float | None = None) -> int:
+    def run(self, argv: list[str] | None, idle_exit: float | None = None,
+            segments: list[Segment] | None = None) -> int:
+        """`argv` is fastchess' command line, or None to only follow the files already there; `segments` are the
+        processes of a resumed run, one after the other, instead."""
+        if segments is None and argv is not None:
+            segments = [Segment(argv, self.paths.pgn, self.paths.log, self.paths.out)]
         with stop_on_signals():
-            return self._run(argv, idle_exit)
+            return self._run(segments, idle_exit)
 
-    def _run(self, argv: list[str] | None, idle_exit: float | None) -> int:
-        """Plays the gauntlet (`argv` is fastchess' command line), or with None only follows the files already
-        there, for a recorded gauntlet or a replay. Returns the exit code: 0 finished, 130 stopped, 1 error."""
+    def _launch(self, segment: Segment):
+        """Starts a fastchess and follows its files."""
+        self.segment = segment
+        self._out_follow = FileFollower(segment.out)
+        self._log_follow = FileFollower(segment.log)
+        self._pgn_follow = PgnFollower(segment.pgn)
+        out = open(segment.out, "wb")
+        return subprocess.Popen(segment.argv, stdout=out, stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL), out
+
+    def _run(self, segments: list[Segment] | None, idle_exit: float | None) -> int:
+        """Plays the gauntlet's processes in turn, or with None only follows the files already there, for a recorded
+        gauntlet or a replay. Returns the exit code: 0 finished, 130 stopped, 1 error."""
         process: subprocess.Popen | None = None
         out = None
         state = "running"
+        following = 0
         if self.reporter:
             self.reporter.start()
         self.publish(force=True)
         try:
-            if argv is not None:
-                out = open(self.paths.out, "wb")
-                process = subprocess.Popen(argv, stdout=out, stderr=subprocess.STDOUT, stdin=subprocess.DEVNULL)
+            if segments:
+                process, out = self._launch(segments[0])
+            elif segments is not None:          # a resume with nothing left to play
+                state = "finished"
             quiet_since = time.monotonic()
-            while True:
+            while state == "running":
                 if self.pump():
                     quiet_since = time.monotonic()
                 else:
@@ -298,10 +380,16 @@ class Session:
                 self.publish()
                 if process is not None and process.poll() is not None:
                     self._drain()
-                    state = "finished" if process.returncode == 0 else "error"
-                    if state == "error":
-                        self.log(f"uwanja: fastchess exited with {process.returncode}, see {self.paths.out}")
-                    break
+                    out.close()
+                    if process.returncode != 0:
+                        state = "error"
+                        self.log(f"uwanja: fastchess exited with {process.returncode}, see {self.segment.out}")
+                    elif following + 1 < len(segments):
+                        following += 1
+                        process, out = self._launch(segments[following])
+                    else:
+                        state = "finished"
+                    continue
                 if process is None and self.finished_marker:
                     self._drain()
                     state = "finished"

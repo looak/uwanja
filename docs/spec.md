@@ -25,7 +25,8 @@ sent again.
 
 **Doesn't:** play games itself (fastchess), compute statistics (counts go to nyayo, which computes Elo, LLR and
 performance), fetch ratings (they come from the gauntlet file), validate time controls, books or engine paths (they're
-fastchess's), build engines from source, resume a stopped gauntlet, or show anything: nyayo does.
+fastchess's), build engines from source, or show anything: nyayo does. It resumes a stopped gauntlet itself, not
+through fastchess's `-config file=` (see Resuming).
 
 ## Current
 
@@ -64,6 +65,7 @@ the top of `config.py`.
 | | |
 |:--|:--|
 | `uwanja run FILE [--out DIR] [--no-report] [--dry-run]` | fetch, probe, play, report. `--dry-run` resolves everything and prints fastchess' command line. An option an engine doesn't list in its `uci` answer is warned about |
+| `uwanja run --resume DIR [--no-report] [--dry-run]` | continue a stopped run directory's match, playing only what it lacks (see Resuming). `--dry-run` prints the fastchess command lines |
 | `uwanja follow FILE --log F --pgn F [--idle-exit S]` | play nothing, follow a recorded or replayed fastchess log and PGN; ends at fastchess's finish line, or after `S` seconds (30) without news |
 | `uwanja replay SRC DST [--pgn SRC DST]` | a recorded log at its original pace, to develop `follow` against |
 | `uwanja report DIR [--config FILE]` | send a run directory's document and games again, all whole |
@@ -104,7 +106,11 @@ written against) and fetched the same way.
 2. Create `runs/<name>-<timestamp>/` and a match id (a uuid, fixed for the run).
 3. Send the first document: state `running`, every game `scheduled`, counts at zero, whole.
 4. Start fastchess: `-tournament gauntlet`, the subject first, `-games 2 -repeat`, `-pgnout`, `-log level=info
-   engine=true realtime=true`, `-config outname=`, `-recover` unless turned off.
+   engine=true realtime=true`, `-config outname=`, `-recover` unless turned off. For an EPD book uwanja chooses the
+   openings (the book's lines, shuffled by a seed for `random` order, the first `rounds` of them) and writes them
+   to `openings.epd`, which fastchess plays in order; pair `p` (0-based, round-major) is line `p mod rounds`, as
+   fastchess's own gauntlet hands them out. identity.json also keeps `play`: fastchess's and each engine's
+   executable, SHA-256 and the seed, which a resume needs.
 5. Follow three files on one thread: fastchess's stdout (`Started game N of M (A vs B)` and `Finished game N (A vs B):
    R {reason}`, which set a game's state, termination and fault), its log (UCI traffic, from which the tracker rebuilds
    every game in progress) and its PGN (the game as fastchess wrote it, which seals the game and feeds the counts).
@@ -116,6 +122,28 @@ written against) and fetched the same way.
 The schedule: game N of `rounds × 2 × opponents` is a function of the config, round by round, each opponent's pair
 (subject with white first, then with black) on one opening. fastchess's own `Started game` line has the last word
 on who has white while a game is played.
+
+### Resuming
+
+fastchess resumes from its saved config (`-config file=`, saved at `-autosaveinterval`), but not here: given more
+than two engines it drops the saved stats and starts at game 1, and with two it continues after the *count* of games
+finished, which loses games that were in flight while later ones finished. (Tested on v1.8.2-alpha, Windows, hard
+kills at concurrency 10 and 1: every slot was played again from the start.) So `uwanja run --resume DIR` works from
+the games:
+
+1. Read `identity.json` (the match id, settings, the engines' executables as the run resolved them: nothing is
+   fetched or probed again) and check every executable, fastchess's too, exists and has the recorded SHA-256. A run
+   from before `play` was kept resolves them again from its `gauntlet.toml`, without the check.
+2. Count `games.pgn`: the first finished game of each slot (`Round`, White, Black) counts, a repeat stays in the PGN
+   and is never counted or sent, so counts only grow. A slot is a game, a pair is both games of a round.
+3. For each opponent with pairs lacking a game, start a fastchess for it alone (the subject and that opponent,
+   `-rounds` the number of its missing pairs, same time control, concurrency and options) on the openings those
+   pairs have in the gauntlet: from `openings.epd`, else (a PGN book, or a run from before) from the FEN of the games
+   already played, which fails naming the pair when none has. The opponents' runs go one after another. Both games
+   of a pair are played, one already counted is played again and ignored. The processes' own files are
+   `resume-<n>-<opponent>.*`, and their games are appended to `games.pgn` under the Round of the gauntlet's pair.
+4. Send the document as `running` again, with every game's state, and then as `finished` (or `stopped`, `error`) as
+   any run. The match id is the same, nothing of nyayo's is reset.
 
 ### Placing finished games
 
@@ -207,7 +235,9 @@ The moves a `PATCH` carries are the live PGN's own: the SAN and this comment (`p
 | | |
 |:--|:--|
 | `gauntlet.toml` | the file the run started from |
-| `identity.json` | what's fixed: engines as probed, settings, host, match id |
+| `identity.json` | what's fixed: engines as probed, settings, host, match id, `play` (what a resume starts fastchess with) |
+| `openings.epd` | the openings the gauntlet's pairs are played from, when uwanja chose them |
+| `resume-<n>-<opponent>.*` | the files of a resume's fastchess for one opponent: command's book, PGN, log, output, config |
 | `match.json` | the latest document, whole |
 | `games/<n>.pgn` | each game's latest PGN, final once it ended |
 | `games.pgn`, `fastchess.log`, `fastchess.out`, `fastchess-config.json` | fastchess's own |
@@ -216,7 +246,7 @@ The moves a `PATCH` carries are the live PGN's own: the SAN and this comment (`p
 
 | | |
 |:--|:--|
-| `cli.py`, `session.py` | commands; one run: the loop, the callbacks, the state |
+| `cli.py`, `session.py`, `resume.py`, `openings.py` | commands; one run: the loop, the callbacks, the state; continuing a stopped one; choosing and finding the openings |
 | `config.py`, `document.py`, `schedule.py`, `results.py`, `rebuild.py` | the file, the match document, the games before they're played and where a finished one goes, counts, the rebuild |
 | `hostinfo.py`, `assets.py`, `fetch.py`, `engines.py`, `fastchess.py` | host and CPU, picking an asset, downloading, probing engines, fastchess' command line |
 | `events.py`, `uci.py`, `tracker.py`, `pgnout.py`, `replay.py` | log lines to UCI events to games, a game as PGN and as moves, a recorded log replayed |

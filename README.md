@@ -12,8 +12,8 @@ same on Windows, Linux and macOS, Python 3.11+ with one dependency (python-chess
 
 A stop signal (Ctrl-C, SIGTERM, SIGHUP, Ctrl-Break) stops fastchess and reports the match `stopped`.
 
-Status: working end to end against fastchess and a mock nyayo. Building engines from source, resuming a stopped
-gauntlet and `selfplay` are not done, see Not yet. The design is in ramani's `plans/gauntlet-runner.md`.
+Status: working end to end against fastchess and a mock nyayo. Building engines from source and `selfplay` are not done, see Not yet.
+The design is in ramani's `plans/gauntlet-runner.md`.
 
 ## Using it
 
@@ -23,6 +23,7 @@ python -m venv .venv
 
 uwanja run gauntlet.toml               # fetch, play, report
 uwanja run gauntlet.toml --dry-run     # fetch and resolve everything, print fastchess' command line, play nothing
+uwanja run --resume runs/<dir>         # continue a stopped gauntlet as the same match, playing what's left
 uwanja report runs/<dir>               # send a run's document and games to nyayo again
 uwanja follow gauntlet.toml --log fc.log --pgn fc.pgn   # follow a recorded or replayed gauntlet, play nothing
 uwanja replay fc.log live.log --pgn fc.pgn live.pgn     # a recorded log at its original pace, to develop against
@@ -124,7 +125,6 @@ The match document is match schema v1 (ramani `plans/match-schema.md`), the game
 ## Not yet
 
 - Building an engine from source (`build = ...` is accepted and ignored: a release is needed).
-- Resuming a stopped gauntlet. A stopped one reports `stopped`, a new run is a new match.
 - `selfplay` through the same machinery.
 
 ## License
